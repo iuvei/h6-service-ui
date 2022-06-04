@@ -39,13 +39,10 @@ function init(){
 				"uuid": "37e00636-9ac6-4016-8ecf-11092df33c61",
 				"captchaVerification": val
 			}
-			Send(httpUrlData.login, JSON.stringify(data), function(obj) {
-				localStorage.setItem("token", obj.accessToken);
-				localStorage.setItem("refreshToken", obj.refreshToken);
-				localStorage.setItem("account", obj.account);
-				localStorage.setItem("animalIndex", obj.animalIndex);
-				localStorage.setItem("changePwd", obj.changePwd);
-				localStorage.setItem("logoUrl", obj.logoUrl);
+			Send(httpUrlData.login, JSON.stringify(data), function(res) {
+				localStorage.setItem("token", res.data.accessToken);
+				localStorage.setItem("refreshToken", res.data.refreshToken);
+				localStorage.setItem("expiresIn", res.data.expiresIn);
 				window.open("agreement.html?v=" + version, "_self");
 			}, null, function() {
 				$("#txt_validate").val("");
