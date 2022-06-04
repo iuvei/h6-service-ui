@@ -1,5 +1,7 @@
 var httpUrlData = {                            
-	login: {name: "登录", url: "/MarkSixGame/User/login", server: "MarkSixGame"},
+	login: {name: "登录", url: "/login", server: "MarkSixGame"},
+	getVerifyCode: {name: "获取验证码", url: "/captcha/captcha.jpg?uuid=", server: "MarkSixGame"},
+	verifyCheckCode: {name: "检查验证码", url: "/index/checkCode", type: 'get', server: "MarkSixGame"},
 	getGameData: {name: "获取游戏数据", url: "/MarkSixGame/Game/getGameData", server: "MarkSixGame"},
 	generalBet : {name: "普通下注", url: "/MarkSixBet/Bet/generalBet", server: "MarkSixBet"},
 	multiNumBet: {name: "连码下注", url: "/MarkSixBet/Bet/multiNumBet", server: "MarkSixBet"},
@@ -12,5 +14,4 @@ var httpUrlData = {
 	listNotice: {name: "查询公告", url: "/MarkSixGame/Notice/listNotice", server: "MarkSixGame"},
 	getMemberMaterial: {name: "查询会员资料", url: "/MarkSixGame/User/getMemberMaterial", server: "MarkSixGame"},
 	getCurrentResultNum: {name: "查询当前期开奖号码", url: "/MarkSixGame/Game/getCurrentResultNum", server: "MarkSixGame"},
-	verifyCheckCodeToken: {name: "验证安全token", url: "/MarkSixGame/CheckCode/verifyCheckCodeToken", server: "MarkSixGame"}
-} 
+}

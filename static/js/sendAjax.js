@@ -1,32 +1,27 @@
 var httpID = 0;
 var curToken = "";
 function Send(url, data, successCall, timeoutCallback, errorCall){
-	if(curToken != "" && data.token != null && curToken != data.token){
-		GotoLogin();
-		return;
-	}	
+	// if(curToken != "" && data.token != null && curToken != data.token){
+	// 	GotoLogin();
+	// 	return;
+	// }	
 	var isCall = false;
 	data.httpID = httpID++;
-	console.log("hi====" + data.httpID);
 	var sendTime = new Date().getTime();
-	// if(httpUrlData.heartBeat.url != url){
-	// 	loading();
-	// }
 		$.ajax({
-			type : "post",
+			type : url.type || 'post',
 			url : serverMap[url.server] + url.url,
 			data : data,
 			dataType : "json",
+			contentType: url.contentType || 'application/json;charset=UTF-8',
 			async : true,
 			timeout : 30000,
 			success : function(obj){
 				if(obj == null)  return;
-				console.log("st====" + (new Date().getTime() - sendTime));
-				console.log("ti====" + obj.timeInfo);
 				// if(httpUrlData.heartBeat.url != url){
 				// 	removeLoading();
 				// }
-				if(obj.result == 0)
+				if(obj.code == 1)
 				{
 					if (successCall != null && successCall != "") {            
 						successCall(obj);
@@ -35,7 +30,7 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 				else{
 					console.log("错误码：" + localData.httpServer + url + "     " + obj.errorMsg)
 					alert(obj.errorMsg);
-					if(obj.result == 2){
+					if(obj.code == 2){
 						GotoLogin();
 						return;
 					};
