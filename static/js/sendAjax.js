@@ -4,7 +4,7 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 	// if(curToken != "" && data.token != null && curToken != data.token){
 	// 	GotoLogin();
 	// 	return;
-	// }	
+	// }
 	var isCall = false;
 	data.httpID = httpID++;
 	var sendTime = new Date().getTime();
@@ -16,6 +16,9 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 			contentType: url.contentType || 'application/json;charset=UTF-8',
 			async : true,
 			timeout : 30000,
+			headers: {
+				authorization: localStorage.getItem('token')
+			},
 			success : function(obj){
 				if(obj == null)  return;
 				// if(httpUrlData.heartBeat.url != url){
