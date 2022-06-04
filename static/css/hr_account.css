@@ -1,0 +1,85 @@
+.ctrlCont{
+	height: 30px;
+	line-height: 30px;
+}
+
+.ctrlCont label{
+	margin-left: 20px;
+}
+
+.ctrlCont .btn{
+	width: 60px;
+	text-align: center;
+}
+
+.ctrlCont select{
+	width: 120px;
+}
+
+.systemTable .row{
+	height: 22px;
+}
+
+.systemTable .dateCell{
+	width: 200px;
+}
+
+.systemTable .issueCell{
+	width: 67px;
+}
+
+.systemTable .allCountCell{
+	width: 130px;
+}
+
+.systemTable .allMoneyCell{
+	width: 200px;
+}
+
+.systemTable .allFeedbackCell{
+	width: 200px;
+}
+
+.systemTable .allwinCell{
+	width: 190px;
+}
+
+.systemTable .timeCell{
+	width: 180px;
+}
+
+.systemTable .betInfoCell{
+	width: 369px;
+}
+
+.systemTable .betMoneyCell{
+	width: 80px;
+}
+
+.systemTable .oddCell{
+	width: 130px;
+}
+
+.systemTable .feedbackCell{
+	width: 80px;
+}
+
+.systemTable .winCell{
+	width: 80px;
+}
+
+#returnBtn{
+	width: 120px;
+	height: 18px;
+	line-height: 18px;
+	margin-left: 440px;
+	margin-top: 1px;
+	float: center;
+}
+
+.systemTable .cell {
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

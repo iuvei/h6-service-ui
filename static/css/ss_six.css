@@ -1,0 +1,729 @@
+.ctrlPanel .ctrlTitle{
+	margin-top: 5px;
+	height: 20px;
+	line-height: 20px;
+	vertical-align: middle;
+}
+
+.ctrlPanel .ctrlTitle label,
+.ctrlPanel .ctrlTitle div{
+	display: inline-block;
+}
+
+.ctrlPanel .ctrlTitle .issue{
+	position: absolute;
+	left: 20px;
+}
+
+.ctrlPanel .ctrlTitle .lotteryType{
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.ctrlPanel .ctrlTitle .preinstall{
+	height: 20px;
+	line-height: 20px;
+	margin-left: 20px;
+	vertical-align: middle;
+}
+
+#preinstallVal{
+	height: 12px;
+	line-height: 12px;
+	width: 80px;
+}
+
+.ctrlPanel .ctrlTitle .curTime{
+	position: absolute;
+	left: 250px;
+}
+
+.ctrlPanel .ctrlTitle .closeTime{
+	position: absolute;
+	left: 490px;
+}
+
+.ctrlPanel .ctrlTitle .result{
+	position: absolute;
+	left: 690px;
+}
+
+.ctrlCont .ctrlBox{
+	display: none;
+}
+
+.ctrlCont .quickBet{
+	height: 30px;
+	line-height: 30px;
+}
+
+.ctrlCont .ctrlItem{
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.ctrlCont .quickBet .betMoneyValue{
+	width: 60px;
+}
+
+.ctrlCont .radio, .ctrlCont .label{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.ctrlCont .linkCombType,
+.ctrlCont .animalLinkType,
+.ctrlCont .unitLinkType{
+	width: 100%;
+	text-align: center;
+	margin-top: 8px;
+}
+
+.ctrlCont .linkCombType .btn{
+	width: 60px;
+}
+
+.ctrlCont .animalLinkType .btn,
+.ctrlCont .unitLinkType .btn{
+	width: 80px;
+}
+
+.ctrlCont .linkCombType .btn.curBtn,
+.ctrlCont .animalLinkType .btn.curBtn,
+.ctrlCont .unitLinkType .btn.curBtn{
+	color: red;
+	border-color: red;
+}
+
+.systemTable{
+	width: 1000px;
+	display: none;
+}
+
+.systemTable .w50{
+	width: 48px;
+}
+
+.systemTable .w80{
+	width: 78px;
+}
+
+.systemTable .w90{
+	width: 88px;
+}
+
+.systemTable .w120{
+	width: 118px;
+}
+
+.systemTable .w150{
+	width: 148px;
+}
+
+.systemTable .w190{
+	width: 188px;
+}
+
+.systemTable .w200{
+	width: 198px;
+}
+
+.systemTable .w240{
+	width: 238px;
+}
+
+.systemTable .w250{
+	width: 248px;
+}
+
+.systemTable .w330{
+	width: 328px;
+}
+
+.systemTable .w390{
+	width: 388px;
+}
+
+.systemTable .w340{
+	width: 338px;
+}
+
+.systemTable .w450{
+	width: 448px;
+}
+
+.systemTable .w500{
+	width: 498px;
+}
+
+.systemTable .w530{
+	width: 528px;
+}
+
+.systemTable .w680{
+	width: 678px;
+}
+
+.systemTable .w750{
+	width: 748px;
+}
+
+.systemTable .w880{
+	width: 878px;
+	text-align: left;
+}
+
+.systemTable .w1000{
+	width: 998px;
+}
+
+.systemTable .numRow{
+	height: 32px;
+	line-height: 30px;
+}
+
+.systemTable .numRow.head{
+	height: 24px;
+	line-height: 24px;
+}
+
+.systemTable .numRow .numCell{
+	display: table-cell;
+	width: 29px;
+	border-right: solid 1px #d1a832;
+}
+
+.systemTable .numRow .oddsCell{
+	display: table-cell;
+	width: 69px;
+	border-right: solid 1px #d1a832;
+}
+
+.systemTable .numRow .betMoneyCell{
+	display: table-cell;
+	width: 100px;
+}
+
+.systemTable .numRow .betMoneyCell .betMoneyValue{
+	width: 90px;
+}
+
+.systemTable .numRow .checkCell{
+	display: table-cell;
+	width: 85px;
+}
+
+.systemTable .systemCont .oddsCell{
+	color: red;
+	font-weight: bold;
+}
+
+.systemTable .twoRow{
+	height: 24px;
+	line-height: 24px;
+}
+
+.systemTable .twoRow .twoCell{
+	display: table-cell;
+	width: 50px;
+	border-right: solid 1px #d1a832;
+	font-weight: bold;
+}
+
+.systemTable .twoRow .oddsCell{
+	display: table-cell;
+	width: 80px;
+	border-right: solid 1px #d1a832;
+}
+
+.systemTable .twoRow .betMoneyCell{
+	display: table-cell;
+	width: 115px;
+}
+
+.systemTable .twoRow .betMoneyCell .betMoneyValue{
+	width: 100px;
+}
+
+.systemTable .btnRow{
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+.btnBox{
+	margin-top: 3px;
+	margin-bottom: 3px;
+	display: none;
+}
+
+.btnBox .btn{
+	width: 80px;
+}
+
+.btnBox .curBtn.btn, .quickBet .curBtn.btn{
+	color: red;
+}
+
+.systemTable .numCtrl .OddsBtn{
+	width: 40px;
+	float: right;
+	margin: 2px;
+	height: 16px;
+	line-height: 16px;
+	font-weight: normal;;
+	margin: 5px;
+}
+
+#quickBetBtn{
+	width: 60px;
+	float: left;
+	height: 16px;
+	line-height: 16px;
+	font-weight: normal;
+	margin: 5px;
+	vertical-align: middle;
+}
+
+.systemTable .numCtrl .opNumBtnBox{
+	display: inline-block;
+}
+
+.systemTable .numCtrl .opNumBtnBox .btn{
+	width: 60px;
+	height: 16px;
+	line-height: 16px;
+	margin: 5px;
+}
+
+.systemTable .animalCtrl .btn{
+	width: 100px;
+	height: 16px;
+	line-height: 16px;
+	margin: 5px;
+}
+
+.systemTable .numCtrl .curBtn.btn,
+.systemTable .animalCtrl .curBtn.btn{
+	color: red;
+	border-color: red;
+}
+
+.systemTable .numCtrl .btnRow td{
+	text-align: left;
+}
+
+.systemTable .head{
+	text-align: center;
+    color: #000;
+    background: url(../img/ss_tableHead.png) repeat-x left top;
+    height: 30px;
+	font-weight: bold;
+	border: solid 1px #d1a832;
+	border-bottom: none;
+	vertical-align: middle;
+}
+
+.systemTable .betRow{
+	background: url(../img/ss_ctrlRow.png) repeat-x;
+	border: solid 1px #d1a832;
+	border-top: none;
+}
+
+.systemTable .betRow .quickBox{
+	display: inline-block;
+}
+
+.systemTable .betRow .ctrlItem{
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.systemTable .betRow .ctrlItem .radio{
+	position: relative;
+	top: 4px;
+}
+
+.systemTable .betRow .ctrlItem div{
+	display: inline-block;
+}
+
+.systemTable .betRow .ctrlItem .betMoneyValue{
+	width: 60px;
+}
+
+.systemTable .betRow .betBox{
+	display: inline-block;
+	float: right;
+}
+
+#linkHeadPanel .systemCont{
+	width: 450px;
+	display: inline-block;
+}
+
+.linkSystemTable .systemCont .oddsCell{
+	color: red;
+	display: table-cell;
+	width: 130px;
+	font-size: 12px;
+	font-weight: bold;
+	vertical-align: top;
+}
+.systemTable{
+	margin-top: 5px;
+}
+
+.systemTable .systemCont .oddsCell .odds1{
+	display: none;
+}
+
+.systemTable .systemCont .oddsCell .odds2{
+	display: none;
+	line-height: 15px;
+	vertical-align: top;
+}
+
+.systemTable .systemCont .oddsCell .odds3{
+	display: none;
+	line-height: 15px;
+	vertical-align: top;
+}
+
+.linkSystemTable .systemCont .checkCell{
+	display: table-cell;
+	width: 40px;
+}
+
+.systemTable .linkMode .ctrlItem{
+	display: inline-block;
+	margin: 5px;
+}
+
+.systemTable .linkMode .ctrlItem .radio{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.systemTable .linkMode .ctrlItem .label{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.systemTable .animalBtnRow{
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 5px;
+	text-align: left;
+}
+
+.systemTable .btnRow .btn.animalBtn{
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	margin: 4px 1px;
+}
+
+.systemTable .btnRow .btn{
+	width: 50px;
+	height: 24px;
+	line-height: 24px;
+	margin: 4px 3px;
+}
+
+.systemTable .betRow{
+	height: 30px;
+	line-height: 30px;
+	text-align: left;
+}
+
+.systemTable .betRow .cell{
+	text-align: left;
+	height: 30px;
+	line-height: 30px;
+}
+
+.systemTable .betRow .label{
+	display: inline-block;
+}
+
+.systemTable .betRow .btn{
+	width: 50px;
+	margin: 2px 3px;
+}
+
+.systemTable .groupCount,
+.systemTable .animalCount,
+.systemTable .ballCount{
+	color: red;
+}
+
+.systemTable .linkInfo{
+	margin-left: 5px;
+	float: left;    
+	color: #874d01;
+    font-weight: bold;
+}
+
+.systemTable .betBox{
+	float: right;
+}
+
+.systemTable .betRow .betMoneyValue{
+	width: 100px;
+}
+
+.systemTable .betRow .betBtn
+.systemTable .betRow .clearBtn{
+	width: 60px;
+}
+
+.systemTable .titleCell{
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.linkSystemTable .animalRow .animalCell,
+.linkSystemTable .unitRow .unitCell{
+	display: table-cell;
+	width: 50px;
+	border-right: solid 1px #d1a832;
+	text-align: center;
+}
+
+.linkSystemTable .animalRow .animalNumCell,
+.linkSystemTable .unitRow .unitNumCell{
+	display: table-cell;
+	width: 400px;
+	border-right: solid 1px #d1a832;
+	text-align: center;
+}
+
+.linkSystemTable .animalRow .animalCheckCell,
+.linkSystemTable .unitRow .unitCheckCell,
+.linkSystemTable .animalRow .animalRadioCell,
+.linkSystemTable .unitRow .unitRadioCell{
+	display: table-cell;
+	width: 45px;
+	text-align: center;
+}
+
+.systemTable table table{
+	width: 100.5%;
+}
+
+.linkSystemTable{
+	display: none;
+}
+
+#sAnimalPanel .animalRow .animalCell,
+#animal1Panel .animalRow .animalCell,
+#animalLinkPanel .animalRow .animalCell,
+#animal6Panel .animalRow .animalCell,
+#unitNumPanel .unitRow .unitCell,
+#unitLinkPanel .unitRow .unitCell{
+	display: table-cell;
+	width: 59px;
+	border-right: solid 1px #d1a832;
+}
+
+#sAnimalPanel .animalRow .animalNumCell,
+#animal1Panel .animalRow .animalNumCell,
+#animalLinkPanel .animalRow .animalNumCell,
+#animal6Panel .animalRow .animal6NumCell,
+#unitNumPanel .unitRow .unitNumCell,
+#unitLinkPanel .unitRow .unitNumCell{
+	display: table-cell;
+	width: 149px;
+	border-right: solid 1px #d1a832;
+}
+
+#sAnimalPanel .animalRow.title .oddsCell,
+#animalLinkPanel .animalRow.title .oddsCell,
+#animal6Panel .animalRow.title .oddsCell,
+#unitLinkPanel .unitRow.title .oddsCell{
+	color: #000000;
+	font-weight: normal;
+}
+
+#animal1Panel .animalRow.title .oddsCell,
+#unitNumPanel .unitRow.title .oddsCell{
+	color: #000000;
+}
+
+#sAnimalPanel .animalRow .oddsCell,
+#animal1Panel .animalRow .oddsCell,
+#animalLinkPanel .animalRow .oddsCell,
+#animal6Panel .animalRow .oddsCell,
+#unitNumPanel .unitRow .oddsCell,
+#unitLinkPanel .unitRow .oddsCell{
+	display: table-cell;
+	width: 149px;
+	border-right: solid 1px #d1a832;
+	color: red;
+	font-weight: bold;
+}
+
+#sAnimalPanel .animalRow .betMoneyCell,
+#animal1Panel .animalRow .betMoneyCell,
+#animalLinkPanel .animalRow .animalCheckCell,
+#animal6Panel .animalRow .animalCheckCell,
+#unitNumPanel .unitRow .betMoneyCell,
+#unitLinkPanel .unitRow .unitCheckCell{
+	display: table-cell;
+	width: 130px;
+}
+
+#sAnimalPanel .animalRow .betMoneyCell .betMoneyValue,
+#animal1Panel .animalRow .betMoneyCell .betMoneyValue,
+#unitNumPanel .unitRow .betMoneyCell .betMoneyValue{
+	width: 110px;
+}
+
+#animal6Panel thead div{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.systemTable .numRow .colorTwoCell{
+	display: table-cell;
+	width: 69px;
+	border-right: solid 1px #d1a832;
+}
+
+#colorTwoPanel .numRow .allNumCell{
+	display: table-cell;
+	width: 295px;
+	border-right: solid 1px #d1a832;
+}
+
+#colorTwoPanel .numRow.head .oddsCell{
+	color: #000000;
+	font-weight: normal;
+}
+
+#colorTwoPanel .numRow .oddsCell{
+	display: table-cell;
+	width: 199px;
+	border-right: solid 1px #d1a832;
+	color: red;
+	font-weight: bold;
+}
+
+#colorTwoPanel .numRow .betMoneyCell{
+	display: table-cell;
+	width: 172px;
+}
+
+#colorTwoPanel .numRow .betMoneyCell .betMoneyValue{
+	width: 150px;
+}
+
+.animal6Ctrl .odds{
+	color: red;
+	font-weight: bold;
+	display: inline-block;
+}
+
+.systemTable .numRow .checkCell{
+	display: table-cell;
+	width: 50px;
+}
+
+.systemTable .numRow .unitNumCell{
+	display: table-cell;
+	width: 69px;
+	border-right: solid 1px #d1a832;
+}
+
+#missPanel .linkMode div{
+	display: inline-block;
+}
+
+#missPanel .linkMode .curBtn{
+	border: solid 1px red;
+	color: red;
+}
+
+#missPanel .oddsCell{
+	width: 129px;
+}
+
+.systemTable .radioRow .animalLinkCell,
+.systemTable .radioRow .unitLinkCell,
+.systemTable .radioRow .animalLinkTypeCell,
+.systemTable .radioRow .animalMissCell{
+	text-align: left;
+}
+
+.systemTable .radioRow .radioItem,
+.systemTable .betRow .radioItem{
+	display: inline-block;
+	text-align: left;
+	vertical-align: top;
+	margin: 0px 10px;
+}
+
+.systemTable .betRow .radioItem{
+	margin-top: 8px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.systemTable .radioRow .radioItem .radio,
+.systemTable .radioRow .radioItem .label,
+.systemTable .betRow .radioItem .radio,
+.systemTable .betRow .radioItem .label
+{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.systemTable .linkHeadCell{
+	text-align: left;
+}
+
+.systemTable .linkHeadCell .headCell{
+	display: inline-block;
+	margin-left: 10px;
+	margin-right: 20px;
+}
+
+#linkBetPanel{
+	display: none;
+	width: 100%;
+	min-height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: #FFFFFF;
+}
+
+#linkBetPanel .btn{
+	width: 80px;
+	margin: 10px;
+}
+
+#linkNormalPanel .linkNum{
+	width: 328px;
+}
+
+.systemTable .linkNum{
+	width: 878px;
+	height: 30px;
+	vertical-align: middle;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.update{
+	background-color: yellow;
+}
+
+#lotteryName{
+	position: absolute;
+	top: 2px;
+	left: 870px;
+	height: 25px;
+}

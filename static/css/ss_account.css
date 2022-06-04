@@ -1,0 +1,81 @@
+/* .ctrlCont{
+	height: 30px;
+	line-height: 30px;
+}
+
+.ctrlCont label{
+	margin-left: 20px;
+}
+
+.ctrlCont .btn{
+	width: 60px;
+	text-align: center;
+}
+
+.ctrlCont select{
+	width: 120px;
+} */
+
+.dateCell{
+	width: 200px;
+}
+
+.issueCell{
+	width: 67px;
+}
+
+.allCountCell{
+	width: 130px;
+}
+
+.allMoneyCell{
+	width: 200px;
+}
+
+.allFeedbackCell{
+	width: 200px;
+}
+
+.allwinCell{
+	width: 190px;
+}
+
+.timeCell{
+	width: 180px;
+}
+
+.betInfoCell{
+	width: 369px;
+}
+
+.betMoneyCell{
+	width: 80px;
+}
+
+.oddCell{
+	width: 130px;
+}
+
+.feedbackCell{
+	width: 80px;
+}
+
+.winCell{
+	width: 80px;
+}
+
+#returnBtn{
+	width: 120px;
+	height: 18px;
+	line-height: 18px;
+	margin-top: 1px;
+	float: center;
+}
+
+td div{
+	width: 100%;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

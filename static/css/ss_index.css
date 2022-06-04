@@ -1,0 +1,359 @@
+.top{
+	background: url(../img/ss_top_bg.png) repeat-x left top;
+    height: 120px;
+	color: #874d01;
+}
+
+.logo {
+	position: absolute;
+    width: 220px;
+    height: 104px;
+	text-align: center;
+}
+
+#logo {
+    margin-top: 15px;
+    width: 160px;
+    height: 80px;
+}
+
+.mainMenuBox .topLotteryInfo{
+	position: absolute;
+	left: 230px;
+	top: 4px;
+}
+
+.mainMenuBox .topLotteryInfo .issueInfo{
+	display: inline-block;
+}
+
+.mainMenuBox .topLotteryInfo .openStatus{
+	margin-left: 10px;
+	display: inline-block;
+}
+
+.mainMenuBox .mainMenu{
+	position: absolute;
+	right: 10px;
+	top: 4px;
+}
+
+.mainMenuBox .mainMenu .comMenu{
+	display: inline-block;
+	cursor: pointer;
+}
+
+.mainMenuBox .mainMenu .comMenu.current{
+	font-weight: bold;
+}
+
+.lotteryMenuBox{
+	width: 100%;
+	position: absolute;
+	top: 32px;
+}
+
+.lotteryMenuBox .lotteryMenu{
+	position: absolute;
+	left: 230px;
+}
+
+.lotteryMenuBox .lotteryMenu .lotteryItem{
+	display: inline-block;
+	background-color: #fdf2bf;
+	border: 1px solid #ad8200;
+	cursor: pointer;
+	color: #966422;
+	padding: 0px 10px;
+	font-weight: bold;
+}
+
+.lotteryMenuBox .lotteryMenu .lotteryItem.current{
+	background-color: #ad8200;
+	border: 1px solid #FFFFFF;
+	color: #FFFFFF;
+}
+
+.lotteryMenuBox .lotteryResult{
+	position: absolute;
+	right: 10px;
+	top: -2px;
+}
+
+.lotteryMenuBox .lotteryResult .animal{
+	display: inline-block;
+	width: 18px;
+	text-align: center;
+}
+
+.lotteryMenuBox .lotteryResult .add{
+	display: inline-block;
+	color: red;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.noticePanel{
+	height: 16px;
+	line-height: 16px;
+	position: absolute;
+	top: 58px;
+	left: 230px;
+	right: 10px;
+	border-radius: 8px;
+    border: 1px solid #d7ca9d;
+	overflow: hidden;
+	font-size: 12px;
+}
+
+.noticePanel{
+	height: 16px;
+	position: absolute;
+	top: 58px;
+	left: 230px;
+	right: 10px;
+	border-radius: 8px;
+    border: 1px solid #d7ca9d;
+}
+
+.secMenuBox{
+	position: absolute;
+	top: 80px;
+    border-bottom: 1px solid #d7ca9d;
+	padding-bottom: 5px;
+	width: 100%;
+}
+
+.secMenuBox .secMenu{
+	position: relative;
+	left: 230px;
+	display: inline-block;
+}
+
+.secMenuBox .secMenu .secMenuCont{
+	display: inline-block;
+}
+
+.secMenuBox .secMenu .secItem{    
+	color: #311701;
+	background-color: #fdf2bf;
+	margin-right: 8px;
+	height: 20px;
+	display: inline-block;
+	line-height: 18px;
+	text-align: center;
+	width: 54px;
+	height: 18px;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+}
+
+.secMenuBox .secMenu .secItem.current{    
+	color: #fff;
+	background-color: #fe5000;
+	font-weight: bold;
+}
+
+.content{
+	width: 100%;
+	position: absolute;
+	top: 106px;
+	bottom: 0px;
+}
+
+.content .left{
+	display: inline-block;
+	width: 220px;
+	overflow-y: auto;
+}
+
+.content .left .leftPanel{
+	width: 100%;    
+}
+
+.content .left .leftPanel table{
+	width: 100%;
+	overflow-y: auto;
+	font-size: 12px;
+}
+
+.content .left .leftPanel thead{
+	height: 24px;
+	line-height: 24px;
+	font-weight: 900;
+	color: #966422;
+}
+
+.content .left .userInfoPanel .userItemCell{
+	width: 40%;
+}
+
+.content .left .userInfoPanel .userValCell{
+	width: 60%;
+	text-align: left;
+	padding-left: 5px;
+}
+
+.content .left .leftPanel .titleCell{
+	font-weight: bold;
+	background-color: #fffae0;
+}
+
+.content .left .userInfoPanel .skinSelect{
+	width: 80px;
+}
+
+.content .left .leftPanel .contentCell{
+	width: 130px;
+}
+
+.content .left .leftPanel .contentCell div{
+	width: 130px;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.content .left .leftPanel .moneyCell{
+	width: 40%;
+}
+
+.content .left .userInfoPanel .lastRecordSumCell{
+	text-align: right;
+}
+
+.content .left .quickBetPanel{
+	text-align: center;
+}
+
+.content .left .confirmPanel .btnBox{
+	margin-top: 5px;
+	width: 100%;
+	text-align: center;
+}
+
+.content .left .quickBetPanel td{
+	cursor: pointer;
+}
+
+.content .left .quickBetPanel td.selected{
+	background-color: #fae696;
+}
+
+.content .left .quickBetPanel .numTable{
+	font-weight: bold;
+}
+
+.content .left .quickBetPanel .typeTable{
+	margin-top: 5px;
+}
+
+.content .left .quickBetPanel .betInfoBox{
+	margin-top: 5px;
+}
+
+.content .left .quickBetPanel .betInfoBox .betMoneyValue{
+	width: 60px;
+	display: inline-block;
+}
+
+.content .left .quickBetPanel .btn{
+	display: inline-block;
+}
+
+.content .left .quickBetPanel .betBtnBox .btn{
+	margin-top: 5px;
+	margin-left: 136px;
+}
+
+.content .left .quickBetPanel .betNumBox{
+	margin-top: 5px;
+	width: 90%;
+	height: 60px;
+	border: solid 1px #000000;
+	overflow: auto;
+	display: inline-block;
+	text-align: left;
+}
+
+.leftPanel .btn{
+	width: 60px;
+	height: 18px;
+	background-color: #FFFFFF;
+	vertical-align: middle;
+}
+
+.betInfoTable{
+	display: none;
+}
+
+.content .contentPage{
+	position: absolute;
+	left: 230px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+}
+
+.noticePopupPanel{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+.noticePopupPanel .noticePopupPanelBg{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+	opacity: 0.3;
+}
+
+.noticePopupPanel .noticePopupPanelContBox{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.noticePopupPanel .noticePopupPanelCont{
+	display: inline-block;
+	margin-top: 100px;
+	background-color: #FFFFFF;
+	padding: 10px;
+	border-radius: 2px;
+}
+
+.noticePopupPanel .noticePopupPanelCont .systemTable{
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.noticePopupPanel .noticePopupPanelCont .row{
+	height: auto;
+}
+
+.noticePopupPanel .noticePopupPanelCont .cell{
+}
+
+.noticePopupPanel .noticePopupPanelCont .indexCell{
+	width: 80px;
+}
+
+.noticePopupPanel .noticePopupPanelCont .timeCell{
+	width: 180px;
+}
+
+.noticePopupPanel .noticePopupPanelCont .infoCell{
+	width: 734px;
+	text-align: left;
+}
+
+.noticePopupPanel .noticePopupPanelCont .btn{
+	margin-top: 10px;
+	width: 80px;
+}

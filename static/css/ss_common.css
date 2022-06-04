@@ -1,0 +1,173 @@
+body {
+    height: 100%;
+    width: 100%;
+    font: 12px/20px Verdana, å®‹ä½“, ç´°æ˜Žé«”, å¾®è»Ÿæ­£é»‘é«”, Arial, Sans;
+    color: #000000;
+	margin: 0px;
+	-moz-user-select:none; /* Firefoxç§æœ‰å±žæ€§ */
+    -webkit-user-select:none; /* WebKitå†…æ ¸ç§æœ‰å±žæ€§ */
+    -ms-user-select:none; /* IEç§æœ‰å±žæ€§(IE10åŠä»¥åŽ) */
+    -khtml-user-select:none; /* KHTMLå†…æ ¸ç§æœ‰å±žæ€§ */
+    -o-user-select:none; /* Operaç§æœ‰å±žæ€§ */
+    user-select:none; /* CSS3å±žæ€§ */
+}
+
+.childrenPage{
+	width: 1030px;
+}
+
+table{
+	border: solid 1px #d1a832;
+	width: 1000px;
+	border-spacing: 0px;
+}
+
+table table{
+	border: none;
+	border-spacing: 0px;
+}
+
+thead tr{
+    color: #000;
+    background: url(../img/ss_tableHead.png) repeat-x left top;
+    height: 36px;
+	font-weight: bold;
+}
+
+tr{
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+}
+
+tr.ctrlRow{
+	background: url(../img/ss_ctrlRow.png) repeat-x;
+}
+
+thead td{
+	border-top: none;
+	border-bottom: none;
+	text-align: center;
+	vertical-align: middle;
+    height: 36px;
+	line-height: 36px;
+}
+
+td{
+	display: table-cell;
+	border-right: 1px solid #d7ca9d;
+	border-top: 1px solid #d7ca9d;
+	text-align: center;
+	vertical-align: top;
+	height: 20px;
+}
+
+.redBall, .greenBall, .blueBall, .ball{
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	display: inline-block;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-align: center;
+}
+
+.redBall{
+	background: url(../img/ss_redBall.png);
+}
+
+.greenBall{
+	background: url(../img/ss_greenBall.png);
+}
+
+.blueBall{
+	background: url(../img/ss_blueBall.png);
+}
+
+.ball{
+	background: url(../img/ss_ball.png);
+}
+
+.prev, .next, .page{
+	display: inline-block;
+	width: 20px;
+	line-height: 30px;
+	cursor: pointer;
+	color: blue;
+	text-align: center;
+}
+
+.curPage{
+	display: inline-block;
+	width: 20px;
+	line-height: 30px;
+	cursor: pointer;
+	color: red;
+	margin-left: 10px;
+}
+
+tr.btnRow{
+	height: 26px;
+}
+
+.btn{
+	border: 1px solid #af8301;
+	background-color: #dddddd;
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	text-align: center;
+	border-radius: 2px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.radio{
+	width: 18px;
+	height: 18px;
+	background: url(../img/ss_radio2.png);
+	display: inline-block;
+	cursor: pointer;
+}
+
+.radio.selected{
+	background: url(../img/ss_radio1.png);
+}
+
+.check{
+	width: 18px;
+	height: 18px;
+	background: url(../img/ss_check2.png);
+	display: inline-block;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+.check.selected{
+	background: url(../img/ss_check1.png);
+}
+
+.check.disable{
+	background: url(../img/ss_check3.png);
+}
+
+.check.selected.disable{
+	background: url(../img/ss_check4.png);
+}
+
+.red{
+	color: red;
+}
+
+.blue{
+	color: blue;
+}
+
+.green{
+	color: green;
+}
+
+.cancelInfo{
+	text-decoration:line-through;
+}

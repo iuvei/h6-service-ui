@@ -1,0 +1,66 @@
+.systemTable .numCell{
+	width: 150px;
+}
+
+.systemTable .timeCell{
+	width: 150px;
+}
+
+.systemTable .infoCell{
+	width: 326px;
+}
+
+.systemTable .moneyCell{
+	width: 70px;
+}
+
+.systemTable .oddsCell{
+	width: 150px;
+}
+
+.systemTable .winCell{
+	width: 70px;
+}
+
+.systemTable .feedbackCell{
+	width: 70px;
+}
+
+.systemTable .pageCell{
+	width: 998px;
+}
+
+.systemTable .sumCell{
+	width: 630px;
+}		
+
+.pageRow{
+	text-align: left;
+}
+
+.page, .curPage, .prev, .next{
+	height: 20px;
+	line-height: 20px;
+}
+
+.systemTable .cell{
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.systemCont .clickCell{
+	color: blue;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+#returnBtn{
+	width: 60px;
+	height: 18px;
+	line-height: 18px;
+	margin-left: 0px;
+	margin-top: 1px;
+	float: center;
+}

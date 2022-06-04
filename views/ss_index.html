@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta http-equiv="Cache" content="no-cache">		
+		<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=0.28, maxmum-scale=1.0, minimum-scale=0.28">
+		<title></title>
+		<link href="../static/css/ss_common.css" rel="stylesheet" />
+		<link href="../static/css/ss_index.css" rel="stylesheet" />
+		<script src="../static/js/lib/jquery.min.js"></script>
+		<script src="../static/js/config/config.js"></script>
+		<script src="../static/js/config/localConfig.js"></script>
+		<script src="../static/js/config/networkConfig.js"></script>
+		<script src="../static/js/sendAjax.js"></script>
+		<script src="../static/js/ss_index.js"></script>
+	</head>
+	<body onresize="resize()">
+		<div class="top">
+			<div class="logo">
+				<img id="logo" src="">
+			</div>
+			<div class="mainMenuBox">
+				<div class="topLotteryInfo">
+					<div class="issueInfo">当前期数：<span class="issue">21120</span></div>
+					<div class="openStatus">已封盘 已开奖</div><!-- 1、已封盘 已开奖 2、距离开盘：0天 1时 14分 2秒, 3、 距离封盘：0天 4时 10分 40秒-->
+				</div>
+				<div class="mainMenu">
+					<div class="comMenu"><a onclick="toPage('ss_betDetail.html', this)">下注明细</a></div> |
+					<div class="comMenu"><a onclick="toPage('ss_account.html', this)">账务历史</a></div> |
+					<div class="comMenu"><a onclick="toPage('ss_memberInfo.html', this)">会员资料</a></div> |
+					<div class="comMenu"><a onclick="toPage('ss_history.html', this)">开奖结果</a></div> |
+					<div class="comMenu"><a onclick="toPage('ss_rule.html', this)">游戏规则</a></div> |
+					<div class="comMenu"><a onclick="toPage('ss_password.html', this)">密码设定</a></div> |
+					<div class="comMenu"><a onclick="exit()">登出</a></div>
+				</div>
+			</div>
+			<div class="lotteryMenuBox">
+				<div class="lotteryMenu">
+					<div class="lotteryMenuCont">
+						<div class="lotteryItem current" onclick="toLottery(0)">香港六合彩</div>
+						<div class="lotteryItem " onclick="toLottery(1)">澳门六合彩</div>
+					</div>
+				</div>
+				<div class="lotteryResult">
+				</div>
+			</div>
+			<div class="noticePanel">
+				<span id="noticeContent"></span>
+			</div>
+			<div class="secMenuBox">
+				<div class="secMenu">
+					<div class="secMenuCont">
+						<div class="secItem current" onclick="toLotteryTab(0, false)">特码</div>
+						<div class="secItem" onclick="toLotteryTab(1, false)">正码</div>
+						<div class="secItem" onclick="toLotteryTab(2, false)">正码特</div>
+						<div class="secItem" onclick="toLotteryTab(3, false)">连码</div>
+						<div class="secItem" onclick="toLotteryTab(4, false)">特肖</div>
+						<div class="secItem" onclick="toLotteryTab(5, false)">半波</div>
+						<div class="secItem" onclick="toLotteryTab(6, false)">六肖</div>
+						<div class="secItem" onclick="toLotteryTab(7, false)">一肖</div>
+						<div class="secItem" onclick="toLotteryTab(8, false)">一肖不中</div>
+						<div class="secItem" onclick="toLotteryTab(9, false)">尾数</div>
+						<div class="secItem" onclick="toLotteryTab(10, false)">五不中</div>
+						<div class="secItem" onclick="toLotteryTab(11, false)">生肖连</div>
+						<div class="secItem" onclick="toLotteryTab(12, false)">尾数连</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="left">
+				<div class="userInfoPanel leftPanel">
+					<table>
+						<thead><tr><td colspan="2">帐号信息</td></tr></thead>
+						<tbody>
+							<tr>
+								<td class="userItemCell">账号</td>
+								<td class="userValCell" id="userName"></td>
+							</tr>
+							<!-- <tr>
+								<td class="userItemCell">单注最低</td>
+								<td class="userValCell" id="orderMinQuota">ccabc88</td>
+							</tr>
+							<tr>
+								<td class="userItemCell">单注最高</td>
+								<td class="userValCell" id="orderMaxQuota">ccabc88</td>
+							</tr>
+							<tr>
+								<td class="userItemCell">单项最高</td>
+								<td class="userValCell" id="issueMaxQuota">ccabc88</td>
+							</tr> -->
+							<tr>
+								<td class="userItemCell">信用额度</td>
+								<td class="userValCell" id="creditAmount"></td>
+							</tr>
+							<tr>
+								<td class="userItemCell">下注金额</td>
+								<td class="userValCell" id="usedAmount"></td>
+							</tr>
+							<tr>
+								<td class="userItemCell">信用余额</td>
+								<td class="userValCell" id="balance"></td>
+							</tr>
+							<tr>
+								<td class="userItemCell">期数</td>
+								<td class="userValCell" id="issue"></td>
+							</tr>
+							<tr>
+								<td class="userItemCell">投注风格</td>
+								<td class="userValCell">
+									<select class="skinSelect" onchange="changeSkin(this)">
+										<option value="hr">标准版</option>
+										<option value="ss" selected="selected">经典版</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+						<tbody class="betInfoTable">
+							<tr class="btnRow">
+								<td colspan="2"><div class="btn closeBetInfoBtn" onclick="closeBetInfoTable()">关闭</div></td>
+							</tr>
+							<tr>
+								<td class="titleCell" colspan="2">最新注单</td>
+							</tr>
+							<tr>
+								<td class="lastRecordCell titleCell">金钱</td>
+								<td class="lastRecordCell titleCell">内容</td>
+							</tr>
+						</tbody>
+						<tbody id="betInfoCont" class="betInfoTable">
+						</tbody>
+						<tbody class="betInfoTable">
+							<tr>
+								<td id="betInfoSum" class="lastRecordSumCell" colspan="2"></td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+								<td class="titleCell" colspan="2">最近十笔</td>
+							</tr>
+							<tr>
+								<td class="moneyCell titleCell">金钱</td>
+								<td class="contentCell titleCell">内容</td>
+							</tr>
+						</tbody>
+						<tbody id="lastRecordCont">
+						</tbody>
+						<tbody>
+							<tr>
+								<td id="lastRecordSum" class="lastRecordSumCell" colspan="2"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="confirmPanel leftPanel">
+					<table>
+						<thead><tr><td colspan="2">下注信息确认</td></tr></thead>
+						<tbody>
+							<tr>
+								<td colspan="2">
+									<div class="btn" onclick="hideConfirmPanel()">取消</div>
+									<div class="btn betBtn" onclick="bet(this)">确定</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="contentCell titleCell">内容</td>
+								<td class="moneyCell titleCell">金额</td>
+							</tr>
+						</tbody>
+						<tbody class="confirmContent">
+						</tbody>
+						<tbody>
+							<tr>
+								<td class="lastRecordSumCell" colspan="2"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="btnBox">
+						<div class="btn" onclick="hideConfirmPanel()">取消</div>
+						<div class="btn betBtn" onclick="bet(this)">确定</div>
+					</div>
+				</div>
+				<div class="quickBetPanel leftPanel">
+					<table class="numTable">
+						<thead><tr><td class="quickBetTitle" colspan="5"></td></tr></thead>
+						<tbody>
+							<tr>
+								<td class="red num01" onclick="clickQuickBetNum(this)">01</td>
+								<td class="green num11" onclick="clickQuickBetNum(this)">11</td>
+								<td class="green num21" onclick="clickQuickBetNum(this)">21</td>
+								<td class="blue num31" onclick="clickQuickBetNum(this)">31</td>
+								<td class="blue num41" onclick="clickQuickBetNum(this)">41</td>
+							</tr>
+							<tr>
+								<td class="red num02" onclick="clickQuickBetNum(this)">02</td>
+								<td class="red num12" onclick="clickQuickBetNum(this)">12</td>
+								<td class="green num22" onclick="clickQuickBetNum(this)">22</td>
+								<td class="green num32" onclick="clickQuickBetNum(this)">32</td>
+								<td class="blue num42" onclick="clickQuickBetNum(this)">42</td>
+							</tr>
+							<tr>
+								<td class="blue num03" onclick="clickQuickBetNum(this)">03</td>
+								<td class="red num13" onclick="clickQuickBetNum(this)">13</td>
+								<td class="red num23" onclick="clickQuickBetNum(this)">23</td>
+								<td class="green num33" onclick="clickQuickBetNum(this)">33</td>
+								<td class="green num43" onclick="clickQuickBetNum(this)">43</td>
+							</tr>
+							<tr>
+								<td class="blue num04" onclick="clickQuickBetNum(this)">04</td>
+								<td class="blue num14" onclick="clickQuickBetNum(this)">14</td>
+								<td class="red num24" onclick="clickQuickBetNum(this)">24</td>
+								<td class="red num34" onclick="clickQuickBetNum(this)">34</td>
+								<td class="green num44" onclick="clickQuickBetNum(this)">44</td>
+							</tr>
+							<tr>
+								<td class="green num05" onclick="clickQuickBetNum(this)">05</td>
+								<td class="blue num15" onclick="clickQuickBetNum(this)">15</td>
+								<td class="blue num25" onclick="clickQuickBetNum(this)">25</td>
+								<td class="red num35" onclick="clickQuickBetNum(this)">35</td>
+								<td class="red num45" onclick="clickQuickBetNum(this)">45</td>
+							</tr>
+							<tr>
+								<td class="green num06" onclick="clickQuickBetNum(this)">06</td>
+								<td class="green num16" onclick="clickQuickBetNum(this)">16</td>
+								<td class="blue num26" onclick="clickQuickBetNum(this)">26</td>
+								<td class="blue num36" onclick="clickQuickBetNum(this)">36</td>
+								<td class="red num46" onclick="clickQuickBetNum(this)">46</td>
+							</tr>
+							<tr>
+								<td class="red num07" onclick="clickQuickBetNum(this)">07</td>
+								<td class="green num17" onclick="clickQuickBetNum(this)">17</td>
+								<td class="green num27" onclick="clickQuickBetNum(this)">27</td>
+								<td class="blue num37" onclick="clickQuickBetNum(this)">37</td>
+								<td class="blue num47" onclick="clickQuickBetNum(this)">47</td>
+							</tr>
+							<tr>
+								<td class="red num08" onclick="clickQuickBetNum(this)">08</td>
+								<td class="red num18" onclick="clickQuickBetNum(this)">18</td>
+								<td class="green num28" onclick="clickQuickBetNum(this)">28</td>
+								<td class="green num38" onclick="clickQuickBetNum(this)">38</td>
+								<td class="blue num48" onclick="clickQuickBetNum(this)">48</td>
+							</tr>
+							<tr>
+								<td class="blue num09" onclick="clickQuickBetNum(this)">09</td>
+								<td class="red num19" onclick="clickQuickBetNum(this)">19</td>
+								<td class="red num29" onclick="clickQuickBetNum(this)">29</td>
+								<td class="green num39" onclick="clickQuickBetNum(this)">39</td>
+								<td class="green num49" onclick="clickQuickBetNum(this)">49</td>
+							</tr>
+							<tr>
+								<td class="blue num10" onclick="clickQuickBetNum(this)">10</td>
+								<td class="blue num20" onclick="clickQuickBetNum(this)">20</td>
+								<td class="red num30" onclick="clickQuickBetNum(this)">30</td>
+								<td class="red num40" onclick="clickQuickBetNum(this)">40</td>
+								<td class=""></td>
+							</tr>
+						</tbody>
+					</table>
+					<table>
+						<tbody>
+						</tbody>
+					</table>
+					<table class="typeTable">
+						<tbody>
+							<tr>
+								<td class="" onclick="clickQuickBetAnimal(0, this)">鼠</td>
+								<td class="" onclick="clickQuickBetAnimal(1, this)">牛</td>
+								<td class="" onclick="clickQuickBetAnimal(2, this)">虎</td>
+								<td class="" onclick="clickQuickBetAnimal(3, this)">兔</td>
+								<td class="" onclick="clickQuickBetAnimal(4, this)">龙</td>
+								<td class="" onclick="clickQuickBetAnimal(5, this)">蛇</td>
+							</tr>
+							<tr>
+								<td class="" onclick="clickQuickBetAnimal(6, this)">马</td>
+								<td class="" onclick="clickQuickBetAnimal(7, this)">羊</td>
+								<td class="" onclick="clickQuickBetAnimal(8, this)">猴</td>
+								<td class="" onclick="clickQuickBetAnimal(9, this)">鸡</td>
+								<td class="" onclick="clickQuickBetAnimal(10, this)">狗</td>
+								<td class="" onclick="clickQuickBetAnimal(11, this)">猪</td>
+							</tr>
+							<tr>
+								<td class="" onclick="clickQuickBetType(6, this)">大单</td>
+								<td class="" onclick="clickQuickBetType(7, this)">大双</td>
+								<td class="" onclick="clickQuickBetType(8, this)">小单</td>
+								<td class="" onclick="clickQuickBetType(9, this)">小双</td>
+								<td class="" onclick="clickQuickBetType(25, this)">尾大</td>
+								<td class="" onclick="clickQuickBetType(26, this)">尾小</td>
+							</tr>
+							<tr>
+								<td class="red" onclick="clickQuickBetType(11, this)">红单</td>
+								<td class="blue" onclick="clickQuickBetType(16, this)">蓝单</td>
+								<td class="green" onclick="clickQuickBetType(21, this)">绿单</td>
+								<td class="red" onclick="clickQuickBetType(12, this)">红双</td>
+								<td class="blue" onclick="clickQuickBetType(17, this)">蓝双</td>
+								<td class="green" onclick="clickQuickBetType(22, this)">绿双</td>
+							</tr>
+							<tr>
+								<td class="red" onclick="clickQuickBetType(13, this)">红大</td>
+								<td class="blue" onclick="clickQuickBetType(18, this)">蓝大</td>
+								<td class="green" onclick="clickQuickBetType(23, this)">绿大</td>
+								<td class="red" onclick="clickQuickBetType(14, this)">红小</td>
+								<td class="blue" onclick="clickQuickBetType(19, this)">蓝小</td>
+								<td class="green" onclick="clickQuickBetType(24, this)">绿小</td>
+							</tr>
+							<tr>
+								<td class="red" onclick="clickQuickBetType(10, this)">红</td>
+								<td class="" onclick="clickQuickBetFirst(0, this)">0头</td>
+								<td class="" onclick="clickQuickBetFirst(1, this)">1头</td>
+								<td class="" onclick="clickQuickBetFirst(2, this)">2头</td>
+								<td class="" onclick="clickQuickBetFirst(3, this)">3头</td>
+								<td class="" onclick="clickQuickBetFirst(4, this)">4头</td>
+							</tr>
+							<tr>
+								<td class="blue" onclick="clickQuickBetType(15, this)">蓝</td>
+								<td class="" onclick="clickQuickBetType(4, this)">合单</td>
+								<td class="" onclick="clickQuickBetType(5, this)">合双</td>
+								<td class="" onclick="clickQuickBetAnimalType(0, this)">家禽</td>
+								<td class="" onclick="clickQuickBetAnimalType(1, this)">野兽</td>
+								<td class=""></td>
+							</tr>
+							<tr>
+								<td class="green" onclick="clickQuickBetType(20, this)">绿</td>
+								<td class="" onclick="clickQuickBetType(0, this)">单</td>
+								<td class="" onclick="clickQuickBetType(1, this)">双</td>
+								<td class="" onclick="clickQuickBetType(2, this)">大</td>
+								<td class="" onclick="clickQuickBetType(3, this)">小</td>
+								<td class="red" onclick="clearQuickSelected()">取消</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="betInfoBox">
+						单注金额
+						<input class="betMoneyValue" type="number" />
+						<div class="btn" onclick="hideQuickBetPanel()">返回</div>
+					</div>
+					<div class="betBtnBox">
+						<div class="btn" onclick="quickBet()">确定</div>
+					</div>
+					<div class="betNumBox">
+					</div>
+				</div>
+			</div>
+			<div class="contentPage">
+				<iframe id="lotteryFrame" name="lotteryFrame" style="position:relative;" src="ss_six.html" width="100%" height="100%" frameborder="0" scroll="auto"></iframe>
+				<iframe id="systemFrame" name="systemFrame" style="position:relative; display: none;" src="" width="100%" height="100%" frameborder="0" scroll="auto"></iframe>
+			</div>
+			<div class="noticePopupPanel">
+				<div class="noticePopupPanelBg"></div>
+				<div class="noticePopupPanelContBox">
+					<div class="noticePopupPanelCont">
+						<table>
+							<thead>
+								<tr>
+									<td class="cell indexCell">序号</td>
+									<td class="cell timeCell">时间</td>
+									<td class="cell infoCell" style="text-align: center;">内容</td>
+								</tr>
+							</thead>
+							<tbody class="systemCont">
+							</tbody>
+						</table>
+						<div class="btn">关闭</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

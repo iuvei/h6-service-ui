@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta http-equiv="Cache" content="no-cache">
+		<title></title>
+		<link href="/static/css/ss_common.css" rel="stylesheet" />
+		<link href="/static/css/ss_betDetail.css" rel="stylesheet" />
+		<script src="/static/js/lib/jquery.min.js"></script>
+		<script src="/static/js/config/config.js"></script>
+		<script src="/static/js/config/localConfig.js"></script>
+		<script src="/static/js/config/networkConfig.js"></script>
+		<script src="/static/js/sendAjax.js"></script>
+		<script src="/static/js/ss_page.js"></script>
+		<script src="/static/js/ss_betDetail.js"></script>
+	</head>
+	<body class="childrenPage">
+		<table id="betListTable">
+			<thead>
+				<tr>
+					<td class="numCell">单号</td>
+					<td class="timeCell">时间</td>
+					<td class="infoCell">内容</td>
+					<td class="moneyCell">下注金额</td>
+					<td class="oddsCell">赔率</td>
+					<td class="winCell">彩金</td>
+					<td class="feedbackCell">退佣</td>
+				</tr>
+			</thead>
+			<tbody class="systemCont">
+			</tbody>
+			<tbody>
+				<tr class="statisticsRow">
+					<td colspan="3" class="sumCell">小计（0笔）</td>
+					<td class="moneyCell">下注金额</td>
+					<td class="oddsCell">赔率</td>
+					<td class="winCell">彩金</td>
+					<td class="feedbackCell">退佣</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td colspan="24">
+						<div class="pageBox"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table id="betInfoTable" style="display: none;">
+			<tbody class="systemCont">
+			</tbody>
+			<tbody class="row">
+				<tr>
+					<td><div class="btn" id="returnBtn" onclick="showBetListTable()">返回</div></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

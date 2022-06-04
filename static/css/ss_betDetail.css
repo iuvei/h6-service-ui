@@ -1,0 +1,73 @@
+.lotteryList{
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.pageBox{
+	float: right;
+	margin-top: 5px;
+	margin-right: 35px;
+}
+
+.page, .curPage, .prev, .next{
+	height: 20px;
+	line-height: 20px;
+}
+
+table{
+	margin-top: 5px;
+}
+
+.numCell{
+	width: 150px;
+}
+
+.timeCell{
+	width: 150px;
+}
+
+.infoCell{
+	width: 326px;
+}
+
+.moneyCell{
+	width: 70px;
+}
+
+.oddsCell{
+	width: 150px;
+}
+
+.winCell{
+	width: 70px;
+}
+
+.feedbackCell{
+	width: 70px;
+}
+
+.sumCell{
+	width: 630px;
+}		
+
+td div{
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.clickInfo{
+	color: blue;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+#returnBtn{
+	width: 60px;
+	height: 18px;
+	line-height: 18px;
+	margin-left: 0px;
+	margin-top: 1px;
+	float: center;
+}

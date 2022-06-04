@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta http-equiv="Cache" content="no-cache">
+		<title></title>
+		<link href="/static/css/hr_common.css" rel="stylesheet" />
+		<link href="/static/css/hr_account.css" rel="stylesheet" />
+		<script src="/static/js/lib/jquery.min.js"></script>
+		<script src="/static/js/config/config.js"></script>
+		<script src="/static/js/config/localConfig.js"></script>
+		<script src="/static/js/config/networkConfig.js"></script>
+		<script src="/static/js/sendAjax.js"></script>
+		<script src="/static/js/common.js"></script>
+		<script src="/static/js/hr_account.js"></script>
+	</head>
+	<body class="childrenPage">
+		<div class="ctrlPanel">
+			<div class="ctrlTitle">
+				<span>下注历史</span>
+			</div>
+			<div class="ctrlCont">
+				<label>起始日期：</label>
+				<select id="beginDate"><option></option></select>
+				<label>终止日期：</label>
+				<select id="endDate"><option></option></select>
+				<div class="btn" onclick="findAccountData()">查询</div>
+				<div class="btn" onclick="findCurWeekAccountData()">本周</div>
+				<div class="btn" onclick="findLastWeekAccountData()">上周</div>
+			</div>
+		</div>
+		<div class="systemTable" id="issueTable">
+			<div class="head">
+				<div class="cell dateCell">日期</div><div class="cell issueCell">期数</div><div class="cell allCountCell">总下注笔数</div><div class="cell allMoneyCell">总下注金额</div><div class="cell allFeedbackCell">总退水金额</div><div class="cell allwinCell">总赢亏</div>
+			</div>
+			<div class="systemCont">
+			</div>
+		</div>
+		<div class="systemTable" id="betTable" style="display: none;">
+			<div class="head">
+				<div class="cell issueCell">期数</div><div class="cell timeCell">下注时间</div><div class="cell betInfoCell">下注内容</div><div class="cell betMoneyCell">下注金额</div><div class="cell oddCell">赔率</div><div class="cell feedbackCell">退佣</div><div class="cell winCell">赢亏</div>
+			</div>
+			<div class="systemCont">
+			</div>
+			<div class="row">
+				<div class="btn" id="returnBtn" onclick="findAccountData()">返回</div>
+			</div>
+		</div>
+	</body>
+</html>

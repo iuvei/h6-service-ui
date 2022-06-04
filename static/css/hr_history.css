@@ -1,0 +1,79 @@
+.systemTable .head{
+	height: 40px;
+	line-height: 40px;
+}
+
+.systemTable .row{
+	height: 32px;
+	line-height: 32px;
+}
+
+.systemTable .row .cell{
+	height: 32px;
+	line-height: 32px;
+	/* display: inline-block; */
+}
+
+.systemTable .dateCell{
+	width: 90px;
+}
+
+.systemTable .issueCell{
+	width: 44px;
+}
+
+.systemTable .numCell{
+	width: 60px;
+}
+
+.systemTable .numBallCell{
+	width: 40px;
+}
+
+.systemTable .numAnimalCell{
+	width: 18px;
+}
+
+.systemTable .addCell{
+	width: 10px;
+}
+
+.systemTable .specialNumCell{
+	width: 40px;
+}
+
+.systemTable .specialAnimalCell{
+	width: 30px;
+}
+
+.systemTable .animalTypeCell{
+	width: 60px;
+}
+
+.systemTable .sumCell{
+	width: 30px;
+}
+
+.systemTable .sNumOeCell{
+	width: 60px;
+}
+
+.systemTable .sNumOeCell{
+	width: 60px;
+}
+
+.systemTable .sNumBsCell{
+	width: 60px;
+}
+
+.systemTable .aNumOeCell{
+	width: 60px;
+}
+
+.systemTable .sumOeCell{
+	width: 60px;
+}
+
+.systemTable .sumBsCell{
+	width: 60px;
+}

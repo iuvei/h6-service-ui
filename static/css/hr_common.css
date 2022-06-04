@@ -1,0 +1,161 @@
+body {
+    height: 100%;
+    width: 100%;
+    font: 12px/20px Verdana, 宋体, 細明體, 微軟正黑體, Arial, Sans;
+    color: #000000;
+	margin: 0px;
+	-moz-user-select:none; /* Firefox私有属性 */
+    -webkit-user-select:none; /* WebKit内核私有属性 */
+    -ms-user-select:none; /* IE私有属性(IE10及以后) */
+    -khtml-user-select:none; /* KHTML内核私有属性 */
+    -o-user-select:none; /* Opera私有属性 */
+    user-select:none; /* CSS3属性 */
+}
+
+childrenPage{
+	width: 1040px;
+}
+
+.ctrlPanel{
+	border: solid 1px #64a8d8;
+	width: 1000px;
+}
+
+.ctrlPanel .ctrlTitle{
+	background: #4a9dd8;
+	height: 30px;
+	line-height: 30px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.ctrlPanel .ctrlTitle span{
+	margin-left: 20px;
+}
+
+.systemTable{
+	border: solid 1px #d1a832;
+	width: 1000px;
+}
+
+.systemTable .head{
+	background: #d8bb64;
+	height: 20px;
+	line-height: 20px;
+}
+
+.systemTable .row{
+	height: 20px;
+	line-height: 20px;
+}
+
+.systemTable .head .cell{
+	border-top: none;
+	border-bottom: none;
+}
+
+.systemTable .cell{
+	display: table-cell;
+	border: solid 1px #d1a832;
+	text-align: center;
+	vertical-align: top;
+	height: 20px;
+}
+
+.redBall, .greenBall, .blueBall, .ball{
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	font-size: 14px;
+	display: inline-block;
+	color: #000000;
+	font-weight: normal;
+	text-align: center;
+}
+
+.redBall{
+	background: url(../img/hr_redBall.png);
+}
+
+.greenBall{
+	background: url(../img/hr_greenBall.png);
+}
+
+.blueBall{
+	background: url(../img/hr_blueBall.png);
+}
+
+.ball{
+	background: url(../img/hr_ball.png);
+}
+
+.prev, .next, .page{
+	display: inline-block;
+	width: 20px;
+	line-height: 30px;
+	cursor: pointer;
+	color: blue;
+	text-align: center;
+}
+
+.curPage{
+	display: inline-block;
+	width: 20px;
+	line-height: 30px;
+	cursor: pointer;
+	color: red;
+	margin-left: 10px;
+}
+
+.btn{
+	border: solid 1px #8c8c8c;
+	background: linear-gradient(to bottom, #ffffff, #d6d6d6);
+	display: inline-block;
+	height: 22px;
+	line-height: 22px;
+	text-align: center;
+	border-radius: 2px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.radio{
+	width: 18px;
+	height: 18px;
+	background: url(../img/hr_radio2.png);
+	display: inline-block;
+	cursor: pointer;
+}
+
+.radio.selected{
+	background: url(../img/hr_radio1.png);
+}
+
+.check{
+	width: 18px;
+	height: 18px;
+	background: url(../img/hr_check2.png);
+	display: inline-block;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+.check.selected{
+	background: url(../img/hr_check1.png);
+}
+
+.check.disable{
+	background: url(../img/hr_check3.png);
+}
+
+.check.selected.disable{
+	background: url(../img/hr_check4.png);
+}
+
+.cancelInfo{
+	text-decoration:line-through;
+}
+
+.redFont{
+	color: red;
+}

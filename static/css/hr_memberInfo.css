@@ -1,0 +1,23 @@
+.systemTable .typeCell{
+	width: 120px;
+}
+
+.systemTable .betMinCell{
+	width: 108px;
+}
+
+.systemTable .betMaxCell{
+	width: 200px;
+}
+
+.systemTable .itemMaxCell{
+	width: 200px;
+}
+
+.systemTable .aCell{
+	width: 180px;
+}
+
+.systemTable .bCell{
+	width: 180px;
+}

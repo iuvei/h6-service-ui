@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html class="childrenPage">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta http-equiv="Cache" content="no-cache">
+		<title></title>
+		<link href="/static/css/hr_common.css" rel="stylesheet" />
+		<link href="./static/css/hr_six.css" rel="stylesheet" />
+		<script src="/static/js/lib/jquery.min.js"></script>
+		<script src="/static/js/config/config.js"></script>
+		<script src="/static/js/config/localConfig.js"></script>
+		<script src="/static/js/common.js"></script>
+		<script src="/static/js/config/networkConfig.js"></script>
+		<script src="/static/js/sendAjax.js"></script>
+		<script src="./static/js/hr_six.js"></script>
+	</head>
+	<body class="childrenPage">
+		<div class="ctrlPanel">
+			<div class="ctrlTitle">
+				<div class="issue">
+					<label>期数:</label><div id="cueIssue"></div>
+				</div>
+				<div class="lotteryType">
+					<label id="cueRate"></label>
+				</div>
+				<div class="curTime">
+					<label>中原时间:</label><div id="curTime"></div>
+				</div>
+				<div class="closeTime">
+					<label>距离封盘:</label>
+					<div id="closeTime"></div>
+				</div>
+				<div class="result">
+					<label>即时赛果:</label>
+					<div id="curResult">
+					</div>
+				</div>
+			</div>
+			<div class="ctrlCont">
+				<div class="opNumBtnBox btnBox ctrlBox">
+					<div class="btn curBtn" onclick="clickOpNumBtn(1, this);">正1特</div>
+					<div class="btn" onclick="clickOpNumBtn(2, this);">正2特</div>
+					<div class="btn" onclick="clickOpNumBtn(3, this);">正3特</div>
+					<div class="btn" onclick="clickOpNumBtn(4, this);">正4特</div>
+					<div class="btn" onclick="clickOpNumBtn(5, this);">正5特</div>
+					<div class="btn" onclick="clickOpNumBtn(6, this);">正6特</div>
+				</div>
+				<div class="quickBet ctrlBox">
+					<div class="ctrlItem">
+						<div class="label">下注金额：</div>
+						<input class="betMoneyValue" type="number" />
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(0)"></div>
+						<div class="label">单</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(1)"></div>
+						<div class="label">双</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(2)"></div>
+						<div class="label">大</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(3)"></div>
+						<div class="label">小</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(4)"></div>
+						<div class="label">合单</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(5)"></div>
+						<div class="label">合双</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(6)"></div>
+						<div class="label">红</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(7)"></div>
+						<div class="label">蓝</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" onclick="clickQuickBetType(8)"></div>
+						<div class="label">绿</div>
+					</div>
+					<div class="btn OddsBtn OddsBtn0 curBtn" info="0" onclick="setNumPanelRate(0);">A盘</div>
+					<div class="btn OddsBtn OddsBtn1" info="1" onclick="setNumPanelRate(1);">B盘</div>
+					<div class="btn" id="quickBetBtn" onclick="clickQuickBetBtn();">快速下注</div>
+				</div>
+				<div class="linkNumBtnBox btnBox ctrlBox">
+					<div class="btn curBtn" onclick="clickLinkNumBtn(0, this);">普通模式</div>
+					<div class="btn" onclick="clickLinkNumBtn(1, this);">拖头模式</div>
+					<div class="btn" onclick="clickLinkNumBtn(2, this);">生肖对碰</div>
+					<div class="btn" onclick="clickLinkNumBtn(3, this);">尾数对碰</div>
+					<div class="btn" onclick="clickLinkNumBtn(4, this);">混合对碰</div>
+					<div class="btn" onclick="clickLinkNumBtn(5, this);">号码对碰</div>
+				</div>
+				<div class="linkCombType ctrlBox">
+					<div class="ctrlItem">
+						<div class="label">类别</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" info="1151" onclick="clickLinkCombTypeRadio(0, this)"></div>
+						<div class="label">三全中</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" info="1161" onclick="clickLinkCombTypeRadio(1, this)"></div>
+						<div class="label">三中二</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" info="1181" onclick="clickLinkCombTypeRadio(2, this)"></div>
+						<div class="label">二全中</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" info="1201" onclick="clickLinkCombTypeRadio(3, this)"></div>
+						<div class="label">二中特</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" info="1191" onclick="clickLinkCombTypeRadio(4, this)"></div>
+						<div class="label">特串</div>
+					</div>
+				</div>
+				<div class="animal6Ctrl ctrlBox">
+					<div class="ctrlItem">
+						<div class="radio" info="1141001" onclick="clickAnimal6Radio(0, this);"></div>
+						<div class="label">中</div>
+						<div class="odds">1.225</div>
+					</div>
+					<div class="ctrlItem">
+						<div class="radio" info="1141002" onclick="clickAnimal6Radio(1, this);"></div>
+						<div class="label">不中</div>
+						<div class="odds">1.225</div>
+					</div>
+				</div>
+				<div class="missBtnBox btnBox ctrlBox">
+					<div class="btn curBtn" onclick="setMissPanel(0, false);">五不中</div>
+					<div class="btn" onclick="setMissPanel(1, false);">六不中</div>
+					<div class="btn" onclick="setMissPanel(2, false);">七不中</div>
+					<div class="btn" onclick="setMissPanel(3, false);">八不中</div>
+					<div class="btn" onclick="setMissPanel(4, false);">九不中</div>
+					<div class="btn" onclick="setMissPanel(5, false);">十不中</div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable" id="numPanel" info="">
+			<div class="head numRow">
+				<div class="cell w200"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="betMoneyCell">金额</div></div>
+				<div class="cell w200"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="betMoneyCell">金额</div></div>
+				<div class="cell w200"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="betMoneyCell">金额</div></div>
+				<div class="cell w200"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="betMoneyCell">金额</div></div>
+				<div class="cell w200"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="betMoneyCell">金额</div></div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					 <div class="cell w200 num1 item1001"><div class="numCell"><div class="redBall">01</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1001" /></div></div>
+					 <div class="cell w200 num11 item1011"><div class="numCell"><div class="greenBall">11</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1011" /></div></div>
+					 <div class="cell w200 num21 item1021"><div class="numCell"><div class="greenBall">21</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1021" /></div></div>
+					 <div class="cell w200 num31 item1031"><div class="numCell"><div class="blueBall">31</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1031" /></div></div>
+					 <div class="cell w200 num41 item1041"><div class="numCell"><div class="blueBall">41</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1041" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num2 item1002"><div class="numCell"><div class="redBall">02</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1002" /></div></div>
+					 <div class="cell w200 num12 item1012"><div class="numCell"><div class="redBall">12</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1012" /></div></div>
+					 <div class="cell w200 num22 item1022"><div class="numCell"><div class="greenBall">22</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1022" /></div></div>
+					 <div class="cell w200 num32 item1032"><div class="numCell"><div class="greenBall">32</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1032" /></div></div>
+					 <div class="cell w200 num42 item1042"><div class="numCell"><div class="blueBall">42</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1042" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num3 item1003"><div class="numCell"><div class="blueBall">03</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1003" /></div></div>
+					 <div class="cell w200 num13 item1013"><div class="numCell"><div class="redBall">13</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1013" /></div></div>
+					 <div class="cell w200 num23 item1023"><div class="numCell"><div class="redBall">23</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1023" /></div></div>
+					 <div class="cell w200 num33 item1033"><div class="numCell"><div class="greenBall">33</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1033" /></div></div>
+					 <div class="cell w200 num43 item1043"><div class="numCell"><div class="greenBall">43</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1043" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num4 item1004"><div class="numCell"><div class="blueBall">04</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1004" /></div></div>
+					 <div class="cell w200 num14 item1014"><div class="numCell"><div class="blueBall">14</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1014" /></div></div>
+					 <div class="cell w200 num24 item1024"><div class="numCell"><div class="redBall">24</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1024" /></div></div>
+					 <div class="cell w200 num34 item1034"><div class="numCell"><div class="redBall">34</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1034" /></div></div>
+					 <div class="cell w200 num44 item1044"><div class="numCell"><div class="greenBall">44</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1044" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num5 item1005"><div class="numCell"><div class="greenBall">05</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1005" /></div></div>
+					 <div class="cell w200 num15 item1015"><div class="numCell"><div class="blueBall">15</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1015" /></div></div>
+					 <div class="cell w200 num25 item1025"><div class="numCell"><div class="blueBall">25</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1025" /></div></div>
+					 <div class="cell w200 num35 item1035"><div class="numCell"><div class="redBall">35</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1035" /></div></div>
+					 <div class="cell w200 num45 item1045"><div class="numCell"><div class="redBall">45</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1045" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num6 item1006"><div class="numCell"><div class="greenBall">06</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1006" /></div></div>
+					 <div class="cell w200 num16 item1016"><div class="numCell"><div class="greenBall">16</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1016" /></div></div>
+					 <div class="cell w200 num26 item1026"><div class="numCell"><div class="blueBall">26</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1026" /></div></div>
+					 <div class="cell w200 num36 item1036"><div class="numCell"><div class="blueBall">36</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1036" /></div></div>
+					 <div class="cell w200 num46 item1046"><div class="numCell"><div class="redBall">46</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1046" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num7 item1007"><div class="numCell"><div class="redBall">07</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1007" /></div></div>
+					 <div class="cell w200 num17 item1017"><div class="numCell"><div class="greenBall">17</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1017" /></div></div>
+					 <div class="cell w200 num27 item1027"><div class="numCell"><div class="greenBall">27</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1027" /></div></div>
+					 <div class="cell w200 num37 item1037"><div class="numCell"><div class="blueBall">37</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1037" /></div></div>
+					 <div class="cell w200 num47 item1047"><div class="numCell"><div class="blueBall">47</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1047" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num8 item1008"><div class="numCell"><div class="redBall">08</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1008" /></div></div>
+					 <div class="cell w200 num18 item1018"><div class="numCell"><div class="redBall">18</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1018" /></div></div>
+					 <div class="cell w200 num28 item1028"><div class="numCell"><div class="greenBall">28</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1028" /></div></div>
+					 <div class="cell w200 num38 item1038"><div class="numCell"><div class="greenBall">38</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1038" /></div></div>
+					 <div class="cell w200 num48 item1048"><div class="numCell"><div class="blueBall">48</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1048" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num9 item1009"><div class="numCell"><div class="blueBall">09</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1009" /></div></div>
+					 <div class="cell w200 num19 item1019"><div class="numCell"><div class="redBall">19</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1019" /></div></div>
+					 <div class="cell w200 num29 item1029"><div class="numCell"><div class="redBall">29</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1029" /></div></div>
+					 <div class="cell w200 num39 item1039"><div class="numCell"><div class="greenBall">39</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1039" /></div></div>
+					 <div class="cell w200 num49 item1049"><div class="numCell"><div class="greenBall">49</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1049" /></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w200 num10 item1010"><div class="numCell"><div class="blueBall">10</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1010" /></div></div>
+					 <div class="cell w200 num20 item1020"><div class="numCell"><div class="blueBall">20</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1020" /></div></div>
+					 <div class="cell w200 num30 item1030"><div class="numCell"><div class="redBall">30</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1030" /></div></div>
+					 <div class="cell w200 num40 item1040"><div class="numCell"><div class="redBall">40</div></div><div class="oddsCell">封单</div><div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1040" /></div></div>
+					 <div class="cell w200"><div class="numCell"></div><div class="oddsCell">封单</div><div class="betMoneyCell"></div></div>
+				</div>
+				<div class="towBox">
+				</div>
+				<div class="row btnRow">
+					<div class="btn" onclick="clearBet()">重填</div><div class="btn" onclick="bet('numPanel')">下注</div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable linkSystemTable" id="linkNormalPanel">
+			<div class="systemCont">
+				<div class="row numRow">
+					 <div class="cell w90 num1"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">01</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num11"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">11</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num21"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">21</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num31"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">31</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num41"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">41</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num2"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">02</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num12"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">12</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num22"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">22</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num32"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">32</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num42"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">42</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num3"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">03</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num13"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">13</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num23"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">23</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num33"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">33</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num43"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">43</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num4"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">04</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num14"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">14</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num24"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">24</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num34"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">34</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num44"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">44</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num5"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">05</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num15"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">15</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num25"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">25</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num35"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">35</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num45"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">45</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num6"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">06</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num16"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">16</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num26"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">26</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num36"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">36</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num46"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">46</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num7"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">07</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num17"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">17</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num27"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">27</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num37"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">37</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num47"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">47</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num8"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">08</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num18"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">18</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num28"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">28</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num38"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">38</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num48"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">48</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num9"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">09</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num19"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">19</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num29"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">29</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num39"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">39</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num49"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">49</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num10"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">10</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num20"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">20</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num30"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">30</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num40"><div class="numCell"><div class="ball" onclick="clickLinkBall(this)">40</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90"></div>
+				</div>
+				<div class="row btnRow animalBtnRow">
+					<div class="btn animalBtn" onclick="selectAnimalBall(0, 'linkNormalPanel')">鼠</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(1, 'linkNormalPanel')">牛</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(2, 'linkNormalPanel')">虎</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(3, 'linkNormalPanel')">兔</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(4, 'linkNormalPanel')">龙</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(5, 'linkNormalPanel')">蛇</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(6, 'linkNormalPanel')">马</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(7, 'linkNormalPanel')">羊</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(8, 'linkNormalPanel')">猴</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(9, 'linkNormalPanel')">鸡</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(10, 'linkNormalPanel')">狗</div>
+					<div class="btn animalBtn" onclick="selectAnimalBall(11, 'linkNormalPanel')">猪</div>
+					<div class="btn cancelBtn" onclick="clearBall('linkNormalPanel')">取消</div>
+				</div>
+				<div class="row betRow">
+					<div class="cell w120"><div class="label">选择结果：</div></div><div class="cell w330"><div class="label linkNum"></div></div>
+				</div>
+				<div class="row betRow">
+					<div class="cell w120"><div class="label">方案注数：<span class="groupCount">10</span>注</div></div><div class="cell w330"><div class="label">单注金额：</div><input class="betMoneyValue" /><div class="btn betBtn" onclick="betLinkNormalPanel()">下注</div></div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable linkSystemTable" id="linkHeadPanel">
+			<div class="systemHead">头</div><div class="systemCont">
+				<div class="row numRow">
+					 <div class="cell w90 num1"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">01</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num11"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">11</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num21"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">21</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num31"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">31</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num41"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">41</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num2"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">02</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num12"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">12</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num22"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">22</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num32"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">32</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num42"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">42</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num3"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">03</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num13"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">13</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num23"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">23</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num33"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">33</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num43"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">43</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num4"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">04</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num14"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">14</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num24"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">24</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num34"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">34</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num44"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">44</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num5"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">05</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num15"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">15</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num25"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">25</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num35"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">35</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num45"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">45</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num6"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">06</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num16"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">16</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num26"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">26</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num36"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">36</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num46"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">46</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num7"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">07</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num17"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">17</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num27"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">27</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num37"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">37</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num47"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">47</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num8"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">08</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num18"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">18</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num28"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">28</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num38"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">38</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num48"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">48</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num9"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">09</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num19"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">19</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num29"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">29</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num39"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">39</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num49"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">49</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num10"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">10</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num20"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">20</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num30"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">30</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num40"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 1)">40</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90"></div>
+				</div>
+			</div><div class="systemHead">尾</div><div class="systemCont" id="bodySystemCont">
+				<div class="row numRow">
+					 <div class="cell w90 num1"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">01</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num11"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">11</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num21"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">21</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num31"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">31</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num41"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">41</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num2"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">02</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num12"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">12</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num22"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">22</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num32"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">32</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num42"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">42</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num3"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">03</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num13"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">13</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num23"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">23</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num33"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">33</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num43"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">43</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num4"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">04</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num14"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">14</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num24"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">24</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num34"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">34</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num44"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">44</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num5"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">05</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num15"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">15</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num25"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">25</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num35"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">35</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num45"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">45</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num6"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">06</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num16"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">16</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num26"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">26</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num36"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">36</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num46"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">46</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num7"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">07</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num17"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">17</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num27"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">27</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num37"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">37</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num47"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">47</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num8"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">08</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num18"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">18</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num28"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">28</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num38"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">38</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num48"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">48</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num9"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">09</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num19"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">19</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num29"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">29</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num39"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">39</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num49"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">49</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w90 num10"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">10</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num20"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">20</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num30"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">30</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90 num40"><div class="numCell"><div class="ball" onclick="clickLinkBall(this, 2)">40</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					 <div class="cell w90"></div>
+				</div>
+			</div>
+			<div class="row btnRow animalBtnRow">
+				<div class="btn animalBtn" onclick="selectAnimalBall(0, 'bodySystemCont', 2)">鼠</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(1, 'bodySystemCont', 2)">牛</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(2, 'bodySystemCont', 2)">虎</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(3, 'bodySystemCont', 2)">兔</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(4, 'bodySystemCont', 2)">龙</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(5, 'bodySystemCont', 2)">蛇</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(6, 'bodySystemCont', 2)">马</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(7, 'bodySystemCont', 2)">羊</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(8, 'bodySystemCont', 2)">猴</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(9, 'bodySystemCont', 2)">鸡</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(10, 'bodySystemCont', 2)">狗</div>
+				<div class="btn animalBtn" onclick="selectAnimalBall(11, 'bodySystemCont', 2)">猪</div>
+				<div class="btn cancelBtn" onclick="clearBall('bodySystemCont')">取消</div>
+			</div>
+			<div class="row betRow">
+				<div class="cell w120"><div class="label">选择结果：</div></div><div class="cell w880"><div class="label linkNum"></div></div>
+			</div>
+			<div class="row betRow">
+				<div class="cell w120"><div class="label">方案注数：<span class="groupCount">10</span>注</div></div><div class="cell w880"><div class="label">单注金额：</div><input class="betMoneyValue" /><div class="btn" onclick="betLinkHeadPanel()">下注</div></div>
+			</div>
+		</div>
+		<div class="systemTable linkAnimalSystemTable" id="linkAnimalPanel">
+			<div class="head">
+				<div class="cell w1000"><div class="titleCell">生肖对碰</div></div>
+			</div>
+			<div class="systemCont">
+			</div>
+			<div class="row betRow">
+				<div class="cell w120"><div class="label">选择结果：</div></div><div class="cell w880"><div class="label linkNum"></div></div>
+			</div>
+			<div class="row betRow">
+				<div class="cell w120"><div class="label">方案注数：<span class="groupCount">10</span>注</div></div><div class="cell w880"><div class="label">单注金额：</div><input class="betMoneyValue" /><div class="btn" onclick="betLinkAnimalPanel()">下注</div></div>
+			</div>
+		</div>
+		<div class="systemTable linkAnimalSystemTable" id="linkUnitNumPanel">
+			<div class="head">
+				<div class="cell w1000"><div class="titleCell">尾数对碰</div></div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">0尾</div></div>
+					<div class="cell w80 num10"><div class="numCell"><div class="blueBall">10</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num20"><div class="numCell"><div class="blueBall">20</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num30"><div class="numCell"><div class="redBall">30</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num40"><div class="numCell"><div class="redBall">40</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80"></div>
+					<div class="cell w50"><div class="check" info="0" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">5尾</div></div>
+					<div class="cell w80 num5"><div class="numCell"><div class="greenBall">05</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num15"><div class="numCell"><div class="blueBall">15</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num25"><div class="numCell"><div class="blueBall">25</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num35"><div class="numCell"><div class="redBall">35</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num45"><div class="numCell"><div class="redBall">45</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="5" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">1尾</div></div>
+					<div class="cell w80 num1"><div class="numCell"><div class="redBall">01</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num11"><div class="numCell"><div class="greenBall">11</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num21"><div class="numCell"><div class="greenBall">21</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num31"><div class="numCell"><div class="blueBall">31</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num41"><div class="numCell"><div class="blueBall">41</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="1" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">6尾</div></div>
+					<div class="cell w80 num6"><div class="numCell"><div class="greenBall">06</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num16"><div class="numCell"><div class="greenBall">16</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num26"><div class="numCell"><div class="blueBall">26</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num36"><div class="numCell"><div class="blueBall">36</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num46"><div class="numCell"><div class="redBall">46</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="6" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">2尾</div></div>
+					<div class="cell w80 num2"><div class="numCell"><div class="redBall">02</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num12"><div class="numCell"><div class="redBall">12</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num22"><div class="numCell"><div class="greenBall">22</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num32"><div class="numCell"><div class="greenBall">32</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num42"><div class="numCell"><div class="blueBall">42</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="2" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">7尾</div></div>
+					<div class="cell w80 num7"><div class="numCell"><div class="redBall">07</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num17"><div class="numCell"><div class="greenBall">17</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num27"><div class="numCell"><div class="greenBall">27</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num37"><div class="numCell"><div class="blueBall">37</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num47"><div class="numCell"><div class="blueBall">47</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="7" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">3尾</div></div>
+					<div class="cell w80 num3"><div class="numCell"><div class="blueBall">03</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num13"><div class="numCell"><div class="redBall">13</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num23"><div class="numCell"><div class="redBall">23</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num33"><div class="numCell"><div class="greenBall">33</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num43"><div class="numCell"><div class="greenBall">43</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="3" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">8尾</div></div>
+					<div class="cell w80 num8"><div class="numCell"><div class="redBall">08</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num18"><div class="numCell"><div class="redBall">18</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num28"><div class="numCell"><div class="greenBall">28</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num38"><div class="numCell"><div class="greenBall">38</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num48"><div class="numCell"><div class="blueBall">48</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="8" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">4尾</div></div>
+					<div class="cell w80 num4"><div class="numCell"><div class="blueBall">04</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num14"><div class="numCell"><div class="blueBall">14</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num24"><div class="numCell"><div class="redBall">24</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num34"><div class="numCell"><div class="redBall">34</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num44"><div class="numCell"><div class="greenBall">44</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="4" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">9尾</div></div>
+					<div class="cell w80 num9"><div class="numCell"><div class="blueBall">09</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num19"><div class="numCell"><div class="redBall">19</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num29"><div class="numCell"><div class="redBall">29</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num39"><div class="numCell"><div class="greenBall">39</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num49"><div class="numCell"><div class="greenBall">49</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="9" onclick="clickLinkPairCheck('linkUnitNumPanel', this)"></div></div>
+				</div>
+			</div>
+			<div class="row betRow">
+				<div class="cell w120"><div class="label">选择结果：</div></div><div class="cell w880"><div class="label linkNum"></div></div>
+			</div>
+			<div class="row betRow">
+				<div class="cell w120"><div class="label">方案注数：<span class="groupCount">10</span>注</div></div><div class="cell w880"><div class="label">单注金额：</div><input class="betMoneyValue" /><div class="btn" onclick="betLinkUnitNumPanel()">下注</div></div>
+			</div>
+		</div>
+		<div class="systemTable linkAnimalSystemTable" id="linkMixturePanel">
+			<div class="head">
+				<div class="cell w1000"><div class="titleCell">生肖对碰</div></div>
+			</div>
+			<div class="systemCont" id="animalMixSystemCont">
+			</div>
+			<div class="head">
+				<div class="cell w1000"><div class="titleCell">尾数对碰</div></div>
+			</div>
+			<div class="systemCont" id="unitNumMixSystemCont">
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">0尾</div></div>
+					<div class="cell w80 num10"><div class="numCell"><div class="blueBall">10</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num20"><div class="numCell"><div class="blueBall">20</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num30"><div class="numCell"><div class="redBall">30</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num40"><div class="numCell"><div class="redBall">40</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80"></div>
+					<div class="cell w50"><div class="check" info="0" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">5尾</div></div>
+					<div class="cell w80 num5"><div class="numCell"><div class="greenBall">05</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num15"><div class="numCell"><div class="blueBall">15</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num25"><div class="numCell"><div class="blueBall">25</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num35"><div class="numCell"><div class="redBall">35</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num45"><div class="numCell"><div class="redBall">45</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="5" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">1尾</div></div>
+					<div class="cell w80 num1"><div class="numCell"><div class="redBall">01</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num11"><div class="numCell"><div class="greenBall">11</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num21"><div class="numCell"><div class="greenBall">21</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num31"><div class="numCell"><div class="blueBall">31</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num41"><div class="numCell"><div class="blueBall">41</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="1" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">6尾</div></div>
+					<div class="cell w80 num6"><div class="numCell"><div class="greenBall">06</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num16"><div class="numCell"><div class="greenBall">16</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num26"><div class="numCell"><div class="blueBall">26</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num36"><div class="numCell"><div class="blueBall">36</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num46"><div class="numCell"><div class="redBall">46</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="6" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">2尾</div></div>
+					<div class="cell w80 num2"><div class="numCell"><div class="redBall">02</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num12"><div class="numCell"><div class="redBall">12</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num22"><div class="numCell"><div class="greenBall">22</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num32"><div class="numCell"><div class="greenBall">32</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num42"><div class="numCell"><div class="blueBall">42</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="2" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">7尾</div></div>
+					<div class="cell w80 num7"><div class="numCell"><div class="redBall">07</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num17"><div class="numCell"><div class="greenBall">17</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num27"><div class="numCell"><div class="greenBall">27</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num37"><div class="numCell"><div class="blueBall">37</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num47"><div class="numCell"><div class="blueBall">47</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="7" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">3尾</div></div>
+					<div class="cell w80 num3"><div class="numCell"><div class="blueBall">03</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num13"><div class="numCell"><div class="redBall">13</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num23"><div class="numCell"><div class="redBall">23</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num33"><div class="numCell"><div class="greenBall">33</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num43"><div class="numCell"><div class="greenBall">43</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="3" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">8尾</div></div>
+					<div class="cell w80 num8"><div class="numCell"><div class="redBall">08</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num18"><div class="numCell"><div class="redBall">18</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num28"><div class="numCell"><div class="greenBall">28</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num38"><div class="numCell"><div class="greenBall">38</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num48"><div class="numCell"><div class="blueBall">48</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="8" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w50"><div class="animalCell">4尾</div></div>
+					<div class="cell w80 num4"><div class="numCell"><div class="blueBall">04</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num14"><div class="numCell"><div class="blueBall">14</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num24"><div class="numCell"><div class="redBall">24</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num34"><div class="numCell"><div class="redBall">34</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num44"><div class="numCell"><div class="greenBall">44</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="4" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+					<div class="cell w50"><div class="animalCell">9尾</div></div>
+					<div class="cell w80 num9"><div class="numCell"><div class="blueBall">09</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num19"><div class="numCell"><div class="redBall">19</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num29"><div class="numCell"><div class="redBall">29</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num39"><div class="numCell"><div class="greenBall">39</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w80 num49"><div class="numCell"><div class="greenBall">49</div></div><div class="oddsCell"><div class="odds odds1">4.957</div><div class="odds odds2">4.957</div><div class="odds odds3">4.957</div></div></div>
+					<div class="cell w50"><div class="check" info="9" onclick="clickLinkMixtureCheck('unitNumMixSystemCont', this)"></div></div>
+				</div>
+			</div>
+			<div class="row betRow">
+				<div class="cell w120"><div class="label">选择结果：</div></div><div class="cell w880"><div class="label linkNum"> </div></div>
+			</div>
+			<div class="row betRow">
+				<div class="cell w120"><div class="label">方案注数：<span class="groupCount">10</span>注</div></div><div class="cell w880"><div class="label">单注金额：</div><input class="betMoneyValue" /><div class="btn" onclick="betLinkMixturePanel();">下注</div></div>
+			</div>
+		</div>
+		<div class="systemTable" id="sAnimalPanel" info="109">
+			<div class="head numRow">
+				<div class="cell w500">
+					<div class="animalCell">特肖</div>
+					<div class="allNumCell">号码</div>
+					<div class="oddsCell">赔率</div>
+					<div class="betMoneyCell">金额</div>
+				</div>
+				<div class="cell w500">
+					<div class="animalCell">特肖</div>
+					<div class="allNumCell">号码</div>
+					<div class="oddsCell">赔率</div>
+					<div class="betMoneyCell">金额</div>
+				</div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					<div class="cell w500">
+						<div class="animalCell">鼠</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1001" /></div>
+					</div>
+					<div class="cell w500">
+						<div class="animalCell">牛</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1002" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w500">
+						<div class="animalCell">虎</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1003" /></div>
+					</div>
+					<div class="cell w500">
+						<div class="animalCell">兔</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1004" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w500">
+						<div class="animalCell">龙</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1005" /></div>
+					</div>
+					<div class="cell w500">
+						<div class="animalCell">蛇</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1006" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w500">
+						<div class="animalCell">马</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1007" /></div>
+					</div>
+					<div class="cell w500">
+						<div class="animalCell">羊</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1008" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w500">
+						<div class="animalCell">猴</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1009" /></div>
+					</div>
+					<div class="cell w500">
+						<div class="animalCell">鸡</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1010" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w500">
+						<div class="animalCell">狗</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1011" /></div>
+					</div>
+					<div class="cell w500">
+						<div class="animalCell">猪</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1012" /></div>
+					</div>
+				</div>
+				<div class="row btnRow">
+					<div class="btn">重填</div><div class="btn" onclick="bet('sAnimalPanel');">下注</div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable" id="colorTwoPanel" info="111">
+			<div class="head numRow">
+				<div class="cell w740">
+					<div class="colorTwoCell">半波</div>
+					<div class="allNumCell">号码</div>
+					<div class="oddsCell">赔率</div>
+					<div class="betMoneyCell">金额</div>
+				</div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">红单</div>
+						<div class="numCell"><div class="redBall">01</div></div>
+						<div class="numCell"><div class="redBall">07</div></div>
+						<div class="numCell"><div class="redBall">13</div></div>
+						<div class="numCell"><div class="redBall">19</div></div>
+						<div class="numCell"><div class="redBall">23</div></div>
+						<div class="numCell"><div class="redBall">29</div></div>
+						<div class="numCell"><div class="redBall">35</div></div>
+						<div class="numCell"><div class="redBall">45</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1001"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">红双</div>
+						<div class="numCell"><div class="redBall">02</div></div>
+						<div class="numCell"><div class="redBall">08</div></div>
+						<div class="numCell"><div class="redBall">12</div></div>
+						<div class="numCell"><div class="redBall">18</div></div>
+						<div class="numCell"><div class="redBall">24</div></div>
+						<div class="numCell"><div class="redBall">30</div></div>
+						<div class="numCell"><div class="redBall">34</div></div>
+						<div class="numCell"><div class="redBall">40</div></div>
+						<div class="numCell"><div class="redBall">46</div></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1002"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">红大</div>
+						<div class="numCell"><div class="redBall">29</div></div>
+						<div class="numCell"><div class="redBall">30</div></div>
+						<div class="numCell"><div class="redBall">34</div></div>
+						<div class="numCell"><div class="redBall">35</div></div>
+						<div class="numCell"><div class="redBall">40</div></div>
+						<div class="numCell"><div class="redBall">45</div></div>
+						<div class="numCell"><div class="redBall">46</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1003"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">红小</div>
+						<div class="numCell"><div class="redBall">01</div></div>
+						<div class="numCell"><div class="redBall">02</div></div>
+						<div class="numCell"><div class="redBall">07</div></div>
+						<div class="numCell"><div class="redBall">08</div></div>
+						<div class="numCell"><div class="redBall">12</div></div>
+						<div class="numCell"><div class="redBall">13</div></div>
+						<div class="numCell"><div class="redBall">18</div></div>
+						<div class="numCell"><div class="redBall">19</div></div>
+						<div class="numCell"><div class="redBall">23</div></div>
+						<div class="numCell"><div class="redBall">24</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1004"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">蓝单</div>
+						<div class="numCell"><div class="blueBall">03</div></div>
+						<div class="numCell"><div class="blueBall">09</div></div>
+						<div class="numCell"><div class="blueBall">15</div></div>
+						<div class="numCell"><div class="blueBall">25</div></div>
+						<div class="numCell"><div class="blueBall">31</div></div>
+						<div class="numCell"><div class="blueBall">37</div></div>
+						<div class="numCell"><div class="blueBall">41</div></div>
+						<div class="numCell"><div class="blueBall">47</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1005"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">蓝双</div>
+						<div class="numCell"><div class="blueBall">04</div></div>
+						<div class="numCell"><div class="blueBall">10</div></div>
+						<div class="numCell"><div class="blueBall">14</div></div>
+						<div class="numCell"><div class="blueBall">20</div></div>
+						<div class="numCell"><div class="blueBall">26</div></div>
+						<div class="numCell"><div class="blueBall">36</div></div>
+						<div class="numCell"><div class="blueBall">42</div></div>
+						<div class="numCell"><div class="blueBall">48</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1006"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">蓝大</div>
+						<div class="numCell"><div class="blueBall">25</div></div>
+						<div class="numCell"><div class="blueBall">26</div></div>
+						<div class="numCell"><div class="blueBall">31</div></div>
+						<div class="numCell"><div class="blueBall">36</div></div>
+						<div class="numCell"><div class="blueBall">37</div></div>
+						<div class="numCell"><div class="blueBall">41</div></div>
+						<div class="numCell"><div class="blueBall">42</div></div>
+						<div class="numCell"><div class="blueBall">47</div></div>
+						<div class="numCell"><div class="blueBall">48</div></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1007"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">蓝小</div>
+						<div class="numCell"><div class="blueBall">03</div></div>
+						<div class="numCell"><div class="blueBall">04</div></div>
+						<div class="numCell"><div class="blueBall">09</div></div>
+						<div class="numCell"><div class="blueBall">10</div></div>
+						<div class="numCell"><div class="blueBall">14</div></div>
+						<div class="numCell"><div class="blueBall">15</div></div>
+						<div class="numCell"><div class="blueBall">20</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1008"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">绿单</div>
+						<div class="numCell"><div class="greenBall">05</div></div>
+						<div class="numCell"><div class="greenBall">11</div></div>
+						<div class="numCell"><div class="greenBall">17</div></div>
+						<div class="numCell"><div class="greenBall">21</div></div>
+						<div class="numCell"><div class="greenBall">27</div></div>
+						<div class="numCell"><div class="greenBall">33</div></div>
+						<div class="numCell"><div class="greenBall">39</div></div>
+						<div class="numCell"><div class="greenBall">43</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1009"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">绿双</div>
+						<div class="numCell"><div class="greenBall">06</div></div>
+						<div class="numCell"><div class="greenBall">16</div></div>
+						<div class="numCell"><div class="greenBall">22</div></div>
+						<div class="numCell"><div class="greenBall">28</div></div>
+						<div class="numCell"><div class="greenBall">32</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="numCell"><div class="greenBall">44</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1010"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">绿大</div>
+						<div class="numCell"><div class="greenBall">27</div></div>
+						<div class="numCell"><div class="greenBall">28</div></div>
+						<div class="numCell"><div class="greenBall">32</div></div>
+						<div class="numCell"><div class="greenBall">33</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="numCell"><div class="greenBall">39</div></div>
+						<div class="numCell"><div class="greenBall">43</div></div>
+						<div class="numCell"><div class="greenBall">44</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1011"/></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w740">
+						<div class="colorTwoCell">绿小</div>
+						<div class="numCell"><div class="greenBall">05</div></div>
+						<div class="numCell"><div class="greenBall">06</div></div>
+						<div class="numCell"><div class="greenBall">11</div></div>
+						<div class="numCell"><div class="greenBall">16</div></div>
+						<div class="numCell"><div class="greenBall">17</div></div>
+						<div class="numCell"><div class="greenBall">21</div></div>
+						<div class="numCell"><div class="greenBall">22</div></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1012"/></div>
+					</div>
+				</div>
+				<div class="row btnRow">
+					<div class="btn" onclick="clearBet()">重填</div><div class="btn" onclick="bet('colorTwoPanel')">下注</div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable" id="animal6Panel">
+			<div class="head numRow">
+				<div class="cell w240">
+					<div class="animalCell">生肖</div>
+					<div class="allNumCell">号码</div>
+					<div class="checkCell">选择</div>
+				</div>
+				<div class="cell w240">
+					<div class="animalCell">生肖</div>
+					<div class="allNumCell">号码</div>
+					<div class="checkCell">选择</div>
+				</div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="animalCell">鼠</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="0"></div></div>
+					</div>
+					<div class="cell w240">
+						<div class="animalCell">牛</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="1"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="animalCell">虎</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="2"></div></div>
+					</div>
+					<div class="cell w240">
+						<div class="animalCell">兔</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="3"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="animalCell">龙</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="4"></div></div>
+					</div>
+					<div class="cell w240">
+						<div class="animalCell">蛇</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="5"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="animalCell">马</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="6"></div></div>
+					</div>
+					<div class="cell w240">
+						<div class="animalCell">羊</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="7"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="animalCell">猴</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="8"></div></div>
+					</div>
+					<div class="cell w240">
+						<div class="animalCell">鸡</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="9"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="animalCell">狗</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="10"></div></div>
+					</div>
+					<div class="cell w240">
+						<div class="animalCell">猪</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="checkCell"><div class="check" onclick="checkAnimal6(this)" info="11"></div></div>
+					</div>
+				</div>
+				<div class="row btnRow">
+					下注金额：
+					<input class="betMoneyValue" type="number" />
+					<div class="btn" onclick="clearBetAnimal6()">重填</div><div class="btn" onclick="betAnimal6()">下注</div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable" id="animal1Panel" info="">
+			<div class="head numRow">
+				<div class="cell w390">
+					<div class="animalCell">生肖</div>
+					<div class="allNumCell">号码</div>
+					<div class="oddsCell">赔率</div>
+					<div class="betMoneyCell">金额</div>
+				</div>
+				<div class="cell w390">
+					<div class="animalCell">生肖</div>
+					<div class="allNumCell">号码</div>
+					<div class="oddsCell">赔率</div>
+					<div class="betMoneyCell">金额</div>
+				</div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					<div class="cell w390">
+						<div class="animalCell">鼠</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1001" /></div>
+					</div>
+					<div class="cell w390">
+						<div class="animalCell">牛</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1002" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w390">
+						<div class="animalCell">虎</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1003" /></div>
+					</div>
+					<div class="cell w390">
+						<div class="animalCell">兔</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1004" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w390">
+						<div class="animalCell">龙</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1005" /></div>
+					</div>
+					<div class="cell w390">
+						<div class="animalCell">蛇</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1006" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w390">
+						<div class="animalCell">马</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1007" /></div>
+					</div>
+					<div class="cell w390">
+						<div class="animalCell">羊</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1008" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w390">
+						<div class="animalCell">猴</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1009" /></div>
+					</div>
+					<div class="cell w390">
+						<div class="animalCell">鸡</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1010" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w390">
+						<div class="animalCell">狗</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1011" /></div>
+					</div>
+					<div class="cell w390">
+						<div class="animalCell">猪</div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="numCell"></div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1012" /></div>
+					</div>
+				</div>
+				<div class="row btnRow">
+					<div class="btn" onclick="clearBet()">重填</div><div class="btn" onclick="bet('animal1Panel')">下注</div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable" id="unitNumPanel" info="110">
+			<div class="head numRow">
+				<div class="cell w240">
+					<div class="unitNumCell">尾数</div>
+					<div class="oddsCell">赔率</div>
+					<div class="betMoneyCell">金额</div>
+				</div>
+				<div class="cell w240">
+					<div class="unitNumCell">尾数</div>
+					<div class="oddsCell">赔率</div>
+					<div class="betMoneyCell">金额</div>
+				</div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="unitNumCell">0尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1000" /></div>
+					</div>
+					<div class="cell w240">
+						<div class="unitNumCell">1尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1001" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="unitNumCell">2尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1002" /></div>
+					</div>
+					<div class="cell w240">
+						<div class="unitNumCell">3尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1003" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w300">
+						<div class="unitNumCell">4尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1004" /></div>
+					</div>
+					<div class="cell w240">
+						<div class="unitNumCell">5尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1005" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="unitNumCell">6尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1006" /></div>
+					</div>
+					<div class="cell w240">
+						<div class="unitNumCell">7尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1007" /></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w240">
+						<div class="unitNumCell">8尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1008" /></div>
+					</div>
+					<div class="cell w240">
+						<div class="unitNumCell">9尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="betMoneyCell"><input class="betMoneyValue" type="number" info="1009" /></div>
+					</div>
+				</div>
+				<div class="row btnRow">
+					<div class="btn" onclick="clearBet()">重填</div><div class="btn" onclick="bet('unitNumPanel')">下注</div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable" id="missPanel">
+			<div class="head numRow">
+				<div class="cell w150"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="checkCell">选择</div></div>
+				<div class="cell w150"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="checkCell">选择</div></div>
+				<div class="cell w150"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="checkCell">选择</div></div>
+				<div class="cell w150"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="checkCell">选择</div></div>
+				<div class="cell w150"><div class="numCell">号码</div><div class="oddsCell">赔率</div><div class="checkCell">选择</div></div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					 <div class="cell w150 num1"><div class="numCell"><div class="redBall">01</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="01" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num11"><div class="numCell"><div class="greenBall">11</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="11" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num21"><div class="numCell"><div class="greenBall">21</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="21" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num31"><div class="numCell"><div class="blueBall">31</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="31" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num41"><div class="numCell"><div class="blueBall">41</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="41" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num2"><div class="numCell"><div class="redBall">02</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="02" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num12"><div class="numCell"><div class="redBall">12</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="12" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num22"><div class="numCell"><div class="greenBall">22</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="22" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num32"><div class="numCell"><div class="greenBall">32</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="32" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num42"><div class="numCell"><div class="blueBall">42</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="42" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num3"><div class="numCell"><div class="blueBall">03</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="03" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num13"><div class="numCell"><div class="redBall">13</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="13" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num23"><div class="numCell"><div class="redBall">23</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="23" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num33"><div class="numCell"><div class="greenBall">33</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="33" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num43"><div class="numCell"><div class="greenBall">43</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="43" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num4"><div class="numCell"><div class="blueBall">04</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="04" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num14"><div class="numCell"><div class="blueBall">14</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="14" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num24"><div class="numCell"><div class="redBall">24</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="24" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num34"><div class="numCell"><div class="redBall">34</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="34" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num44"><div class="numCell"><div class="greenBall">44</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="44" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num5"><div class="numCell"><div class="greenBall">05</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="05" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num15"><div class="numCell"><div class="blueBall">15</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="15" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num25"><div class="numCell"><div class="blueBall">25</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="25" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num35"><div class="numCell"><div class="redBall">35</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="35" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num45"><div class="numCell"><div class="redBall">45</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="45" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num6"><div class="numCell"><div class="greenBall">06</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="06" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num16"><div class="numCell"><div class="greenBall">16</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="16" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num26"><div class="numCell"><div class="blueBall">26</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="26" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num36"><div class="numCell"><div class="blueBall">36</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="36" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num46"><div class="numCell"><div class="redBall">46</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="46" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num7"><div class="numCell"><div class="redBall">07</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="07" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num17"><div class="numCell"><div class="greenBall">17</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="17" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num27"><div class="numCell"><div class="greenBall">27</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="27" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num37"><div class="numCell"><div class="blueBall">37</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="37" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num47"><div class="numCell"><div class="blueBall">47</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="47" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num8"><div class="numCell"><div class="redBall">08</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="08" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num18"><div class="numCell"><div class="redBall">18</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="18" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num28"><div class="numCell"><div class="greenBall">28</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="28" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num38"><div class="numCell"><div class="greenBall">38</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="38" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num48"><div class="numCell"><div class="blueBall">48</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="48" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num9"><div class="numCell"><div class="blueBall">09</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="09" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num19"><div class="numCell"><div class="redBall">19</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="19" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num29"><div class="numCell"><div class="redBall">29</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="29" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num39"><div class="numCell"><div class="greenBall">39</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="39" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num49"><div class="numCell"><div class="greenBall">49</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="49" onclick="clickMissCheck(this)"></div></div></div>
+				</div>
+				<div class="row numRow">
+					 <div class="cell w150 num10"><div class="numCell"><div class="blueBall">10</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="10" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num20"><div class="numCell"><div class="blueBall">20</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="20" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num30"><div class="numCell"><div class="redBall">30</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="30" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150 num40"><div class="numCell"><div class="redBall">40</div></div><div class="oddsCell">封单</div><div class="checkCell"><div class="check" info="40" onclick="clickMissCheck(this)"></div></div></div>
+					 <div class="cell w150"><div class="numCell"></div><div class="oddsCell"></div><div class="checkCell"></div></div>
+				</div>
+				<div class="row betRow">
+					<div class="cell w150"><div class="label">球数：<span class="ballCount">10</span></div></div>
+					<div class="cell w150"><div class="label">注数：<span class="groupCount">10</span></div></div>
+					<div class="cell w450"><div class="label">单注金额：</div><input class="betMoneyValue" type="number" /><div class="btn" onclick="clearBet()">重填</div><div class="btn" onclick="betMissPanel();">下注</div></div>
+				</div>
+				<div class="row infoRow">
+					<div class="cell w750"><div class="label">内容：<span class="info"></span></div></div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable" id="animalLinkPanel">
+			<div class="head numRow">
+				<div class="cell w340">
+					<div class="animalCell">生肖</div>
+					<div class="allNumCell">号码</div>
+					<div class="oddsCell">赔率</div>
+					<div class="checkCell">选择</div>
+				</div>
+				<div class="cell w340">
+					<div class="animalCell">生肖</div>
+					<div class="allNumCell">号码</div>
+					<div class="oddsCell">赔率</div>
+					<div class="checkCell">选择</div>
+				</div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="animalCell">鼠</div>
+						<div class="numCell"><div class="redBall">02</div></div>
+						<div class="numCell"><div class="blueBall">14</div></div>
+						<div class="numCell"><div class="blueBall">26</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="animalCell">牛</div>
+						<div class="numCell"><div class="redBall">01</div></div>
+						<div class="numCell"><div class="redBall">13</div></div>
+						<div class="numCell"><div class="blueBall">25</div></div>
+						<div class="numCell"><div class="blueBall">37</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="animalCell">虎</div>
+						<div class="numCell"><div class="redBall">12</div></div>
+						<div class="numCell"><div class="redBall">24</div></div>
+						<div class="numCell"><div class="blueBall">36</div></div>
+						<div class="numCell"><div class="blueBall">48</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="animalCell">兔</div>
+						<div class="numCell"><div class="blueBall">11</div></div>
+						<div class="numCell"><div class="blueBall">23</div></div>
+						<div class="numCell"><div class="blueBall">35</div></div>
+						<div class="numCell"><div class="blueBall">47</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="animalCell">龙</div>
+						<div class="numCell"><div class="blueBall">10</div></div>
+						<div class="numCell"><div class="blueBall">22</div></div>
+						<div class="numCell"><div class="blueBall">34</div></div>
+						<div class="numCell"><div class="blueBall">46</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="animalCell">蛇</div>
+						<div class="numCell"><div class="blueBall">09</div></div>
+						<div class="numCell"><div class="blueBall">21</div></div>
+						<div class="numCell"><div class="blueBall">33</div></div>
+						<div class="numCell"><div class="blueBall">45</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="animalCell">马</div>
+						<div class="numCell"><div class="blueBall">08</div></div>
+						<div class="numCell"><div class="blueBall">20</div></div>
+						<div class="numCell"><div class="blueBall">32</div></div>
+						<div class="numCell"><div class="blueBall">44</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="animalCell">羊</div>
+						<div class="numCell"><div class="blueBall">07</div></div>
+						<div class="numCell"><div class="blueBall">19</div></div>
+						<div class="numCell"><div class="blueBall">31</div></div>
+						<div class="numCell"><div class="blueBall">43</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="animalCell">猴</div>
+						<div class="numCell"><div class="blueBall">06</div></div>
+						<div class="numCell"><div class="blueBall">18</div></div>
+						<div class="numCell"><div class="blueBall">30</div></div>
+						<div class="numCell"><div class="blueBall">42</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="animalCell">鸡</div>
+						<div class="numCell"><div class="blueBall">05</div></div>
+						<div class="numCell"><div class="blueBall">17</div></div>
+						<div class="numCell"><div class="blueBall">29</div></div>
+						<div class="numCell"><div class="blueBall">41</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="animalCell">狗</div>
+						<div class="numCell"><div class="blueBall">04</div></div>
+						<div class="numCell"><div class="blueBall">16</div></div>
+						<div class="numCell"><div class="blueBall">28</div></div>
+						<div class="numCell"><div class="blueBall">40</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="animalCell">猪</div>
+						<div class="numCell"><div class="blueBall">03</div></div>
+						<div class="numCell"><div class="blueBall">15</div></div>
+						<div class="numCell"><div class="blueBall">27</div></div>
+						<div class="numCell"><div class="blueBall">39</div></div>
+						<div class="numCell"><div class="greenBall">38</div></div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check"></div></div>
+					</div>
+				</div>
+			</div>
+			<div class="systemCont ctrlSystemCont">
+				<div class="row radioRow">
+					<div class="cell w680 animalLinkCell">
+						<div class="radioItem">
+							<div class="radio selected animalRadio2" info="2" onclick="setAnimalLinkCount(2);"></div>
+							<div class="label">二肖连</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio animalRadio3" info="3" onclick="setAnimalLinkCount(3);"></div>
+							<div class="label">三肖连</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio animalRadio4" info="4" onclick="setAnimalLinkCount(4);"></div>
+							<div class="label">四肖连</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio animalRadio5" info="5" onclick="setAnimalLinkCount(5);"></div>
+							<div class="label">五肖连</div>
+						</div>
+					</div>
+				</div>
+				<div class="row radioRow">
+					<div class="cell w150 linkTypeCell">
+						<div class="radioItem">
+							<div class="radio selected" info="0" onclick="setGroupLinkType('animalLinkPanel', 0)"></div>
+							<div class="label">复试</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio" info="1" onclick="setGroupLinkType('animalLinkPanel', 1)"></div>
+							<div class="label">拖胆</div>
+						</div>
+					</div>
+					<div class="cell w530 linkHeadCell">
+					</div>
+				</div>
+				<div class="row infoRow">
+					<div class="cell w90"><div class="label">生肖数：<span class="itemCount">10</span></div></div>
+					<div class="cell w90"><div class="label">注数：<span class="groupCount">10</span></div></div>
+					<div class="cell w500"><div class="label">内容：<span class="info">524154545ds</span></div></div>
+				</div>
+				<div class="row betRow">
+					<div class="cell w680 animalMissTypeCell">
+						<div class="radioItem">
+							<div class="radio selected falseMissRadio" info="false" onclick="setAnimalLinkIsMiss(false)"></div>
+							<div class="label">中</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio trueMissRadio" info="true" onclick="setAnimalLinkIsMiss(true)"></div>
+							<div class="label">不中</div>
+						</div>
+						<div class="label">单注金额：</div><input class="betMoneyValue" type="number" />
+						<div class="btn" onclick="clearBet()">重填</div>
+						<div class="btn" onclick="betAnimalLinkPanel()">下注</div></div>
+				</div>
+			</div>
+		</div>
+		<div class="systemTable" id="unitLinkPanel">
+			<div class="head numRow">
+				<div class="cell w340">
+					<div class="unitNumCell">尾数</div>
+					<div class="oddsCell">赔率</div>
+					<div class="checkCell">选择</div>
+				</div>
+				<div class="cell w340">
+					<div class="unitNumCell">尾数</div>
+					<div class="oddsCell">赔率</div>
+					<div class="checkCell">选择</div>
+				</div>
+			</div>
+			<div class="systemCont">
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="unitNumCell">0尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="0" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="unitNumCell">1尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="1" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="unitNumCell">2尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="2" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="unitNumCell">3尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="3" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="unitNumCell">4尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="4" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="unitNumCell">5尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="5" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="unitNumCell">6尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="6" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="unitNumCell">7尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="7" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+				</div>
+				<div class="row numRow">
+					<div class="cell w340">
+						<div class="unitNumCell">8尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="8" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+					<div class="cell w340">
+						<div class="unitNumCell">9尾</div>
+						<div class="oddsCell">赔率</div>
+						<div class="checkCell"><div class="check" info="9" onclick="clickGroupLinkCheck('unitLinkPanel', this)"></div></div>
+					</div>
+				</div>
+			</div>
+			<div class="systemCont ctrlSystemCont">
+				<div class="row radioRow">
+					<div class="cell w680 unitLinkCell">
+						<div class="radioItem">
+							<div class="radio unitRadio2 selected" info="2" onclick="setUnitLinkCount(2);"></div>
+							<div class="label">二尾连</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio unitRadio3" info="3" onclick="setUnitLinkCount(3);"></div>
+							<div class="label">三尾连</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio unitRadio4" info="4" onclick="setUnitLinkCount(4);"></div>
+							<div class="label">四尾连</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio unitRadio5" info="5" onclick="setUnitLinkCount(5);"></div>
+							<div class="label">五尾连</div>
+						</div>
+					</div>
+				</div>
+				<div class="row radioRow">
+					<div class="cell w150 linkTypeCell">
+						<div class="radioItem">
+							<div class="radio selected" info="0" onclick="setGroupLinkType('unitLinkPanel', 0)"></div>
+							<div class="label">复试</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio" info="1" onclick="setGroupLinkType('unitLinkPanel', 1)"></div>
+							<div class="label">拖胆</div>
+						</div>
+					</div>
+					<div class="cell w530 linkHeadCell">
+					</div>
+				</div>
+				<div class="row infoRow">
+					<div class="cell w90"><div class="label">个数：<span class="itemCount">10</span></div></div>
+					<div class="cell w90"><div class="label">注数：<span class="groupCount">10</span></div></div>
+					<div class="cell w500"><div class="label">内容：<span class="info">524154545ds</span></div></div>
+				</div>
+				<div class="row betRow">
+					<div class="cell w680 unitMissTypeCell">
+						<div class="radioItem">
+							<div class="radio falseMissRadio selected" info="false" onclick="setUnitLinkIsMiss(false);"></div>
+							<div class="label">中</div>
+						</div>
+						<div class="radioItem">
+							<div class="radio trueMissRadio" info="true" onclick="setUnitLinkIsMiss(true);"></div>
+							<div class="label">不中</div>
+						</div>
+						<div class="label">单注金额：</div><input class="betMoneyValue" type="number" />
+						<div class="btn" onclick="clearBet()">重填</div>
+						<div class="btn" onclick="betUnitLinkPanel()">下注</div></div>
+				</div>
+			</div>
+		</div>
+		<div id="linkBetPanel">
+			<div class="linkBetContent">
+				<div>三中二23,24,25,26,27</div>
+				<div>组合注数：10注</div>
+				<div>23,24,25 此组赔率：中三121.9中二19.93</div>
+				<div>单组金额：1总金额：10</div>
+			</div>
+			<div><div class="btn" onclick="sendBetLink();">确定下注</div><div class="btn" onclick="betLinkCancel();">取消</div></div>
+		</div>
+		<div class="ready">未开盘</div>
+	</body>
+</html>
