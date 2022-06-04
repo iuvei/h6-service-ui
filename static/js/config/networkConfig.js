@@ -1,6 +1,6 @@
 var httpUrlData = {                            
 	login: {name: "登录", url: "/login", server: "MarkSixGame"},
-	getVerifyCode: {name: "获取验证码", url: "/captcha/captcha.jpg?uuid=", server: "MarkSixGame"},
+	getVerifyCode: {name: "获取验证码", url: "http://43.252.208.199:8086/captcha/captcha.jpg?uuid=", server: "MarkSixGame"},
 	verifyCheckCode: {name: "检查验证码", url: "/index/checkCode", type: 'get', server: "MarkSixGame"},
 	getGameData: {name: "获取游戏数据", url: "/MarkSixGame/Game/getGameData", server: "MarkSixGame"},
 	generalBet : {name: "普通下注", url: "/MarkSixBet/Bet/generalBet", server: "MarkSixBet"},
