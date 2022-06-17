@@ -31,6 +31,7 @@ $(function() {
 				gameArr.push(lotteryArr[j]);
 		}
 	}
+	getUserInfo()
 	initLotteryMenu();
 	var animalIndex = parseInt(localStorage.getItem("animalIndex"));
 	for(var i = 0; i < 49; i++){
@@ -41,8 +42,19 @@ $(function() {
 	InitNotice();
 	setInterval(update, TIME_FREQUENCY);
 	// getGameData(gameArr[curIndex].id, true, 0);
+		getLastRecord();
 	window.open("ss_six.html?v=" + version, 'lotteryFrame');
 });
+function getUserInfo() {
+  Send(httpUrlData.getUserInfo, {}, function (obj) {
+    lotteryData = {
+      ...obj.data,
+      ...lotteryData
+    }
+    updateInfoPanel(obj.data)
+    showUseInfoPanel()
+  })
+}
 
 var timeDif = 0;
 var getDataBetType = "";
@@ -138,6 +150,7 @@ function update(){
 	if(heartTime <= 0){
 		heartTime += HEART_TIME;
 		getGameData(gameArr[curIndex].id, false, lotteryData.rateVersion);
+		getLastRecord();
 	}
 	if(lotteryFrame.update != null)
 		lotteryFrame.update(TIME_FREQUENCY, dt);
@@ -617,28 +630,31 @@ function showBetResultPanel(){
 }
 
 function getLastRecord(){
-	var data={
-		token: token,
-		gameID: gameArr[curIndex].id,
-		page: 0,
-		pageSize: 10
-	}
-	Send(httpUrlData.listBetDetail, data, function(obj){
-		var html = '';
-		var money = 0;
-		for(var i = 0; i < obj.orderList.length; i++){
-			var dtArr = obj.orderList[i].betTime.split(" ");
-			var className = obj.orderList[i].status == 3 || obj.orderList[i].status == -1 ? ' class="cancelInfo"' : '';
-			html += '<tr>'
-					+ '<td class="moneyCell" title="' + obj.orderList[i].betMoney+ '"><div' + className + '>' + obj.orderList[i].betMoney + '</div></td>'
-					+ '<td class="contentCell" title="' + obj.orderList[i].betContent + '"><div' + className + '>' + obj.orderList[i].betContent + '</div></td>'
-				+ '</tr>';
-			money += parseInt(obj.orderList[i].betMoney);
-		}
-		$("#lastRecordCont").html(html);
-		$("#lastRecordSum").text("共" + obj.orderList.length + "注，合计" + money);
-		showUseInfoPanel();
-	})
+  $.ajax({
+		url : serverMap[httpUrlData.newListBet.server] + httpUrlData.newListBet.url,
+    type: 'get',
+		dataType : "json",
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+    success(obj) {
+        var html = '';
+        for (var i = 0; i < 10; i++) {
+          var data = obj[i]
+					html += '<tr>'
+							+ '<td class="moneyCell" title="' + data.transactionsBalance+ '"><div>' + data.transactionsBalance + '</div></td>'
+							+ '<td class="contentCell" title="' + data.content + '"><div>' + data.content + '</div></td>'
+						+ '</tr>';
+					money += parseInt(data.transactionsBalance);
+        }
+				$("#lastRecordCont").html(html);
+				$("#lastRecordSum").text("共" + obj.length + "注，合计" + money);
+				showUseInfoPanel();
+    }
+  })
 }
 var betData = {};
 var curBetInfo = {};

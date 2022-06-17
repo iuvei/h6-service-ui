@@ -17,7 +17,7 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 			async : true,
 			timeout : 30000,
 			headers: {
-				authorization: localStorage.getItem('token')
+				Authorization: localStorage.getItem('token')
 			},
 			success : function(obj){
 				if(obj == null)  return;

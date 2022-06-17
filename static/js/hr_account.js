@@ -1,20 +1,21 @@
 var historyData = {};
 var dateArr = [];
 $(function(){
+	console.log()
 	var date = new Date();
-	date.setTime(window.top.lotteryData.systemTime);
-	date.setDate(date.getDate() - window.top.lotteryData.billDays)
+	date.setTime(new Date().getTime());
+	date.setDate(date.getDate() - 32)
 	var dateStr = "";
 	var status = "";
 	var beginHtml = '';
 	var endHtml = '';
-	for(var i = 0; i < window.top.lotteryData.billDays; i++){
+	for(var i = 0; i < 32; i++){
 		date.setDate(date.getDate() + 1)
 		dateStr = DateFormat(date, "yyyy-MM-dd");
 		dateArr.push(dateStr);
 		status = i == 0 ? ' selected="selected"' : ''
 		beginHtml += '<option value="' + i + '"' + status + '>' + dateStr + '</option>';
-		status = i == window.top.lotteryData.billDays - 1 ? ' selected="selected"' : ''
+		status = i == 32 - 1 ? ' selected="selected"' : ''
 		endHtml += '<option value="' + i + '"' + status + '>' + dateStr + '</option>';
 	}
 	$("#beginDate").empty().append(beginHtml);
@@ -49,72 +50,106 @@ function findLastWeekAccountData(){
 
 function listDailyLedger(beginDate, endDate){
 	var data = {
-		token: window.top.token,
-		gameID: window.top.gameArr[window.top.curIndex].id,
-		beginDate: beginDate,
-		endDate: endDate
+    "startTime": beginDate,
+    "endTime": endDate,
+    "userId": window.top.lotteryData.userId,
+    "gameId":"1"
 	}
-	Send(httpUrlData.listDailyLedger, data, function(obj){
-		var html = '';
-		var className = "";
-		for(var i = 0; i < obj.dailyLedgerList.length - 1; i++){
-			var dateStrArr = obj.dailyLedgerList[i].date.split("星期")
-			className = obj.dailyLedgerList[i].winMoney > 0 ? " redFont" : "";
-			html += '<div class="row">'
-					+ '<div class="cell dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + data.gameID + ', \'' + dateStrArr[0] + '\')">' + obj.dailyLedgerList[i].date + '</a></div>'
-					+ '<div class="cell issueCell">' + obj.dailyLedgerList[i].issue + '</div>'
-					+ '<div class="cell allCountCell">' + obj.dailyLedgerList[i].betCount + '</div>'
-					+ '<div class="cell allMoneyCell">' + obj.dailyLedgerList[i].betMoney + '</div>'
-					+ '<div class="cell allFeedbackCell">' + obj.dailyLedgerList[i].recedeMoney + '</div>'
-					+ '<div class="cell allwinCell ' + className + '">' + obj.dailyLedgerList[i].winMoney + '</div>'
-				+ '</div>'
+	$.ajax({
+		type : 'post',
+		url : serverMap[httpUrlData.listDailyLedger.server] + httpUrlData.listDailyLedger.url,
+		data : JSON.stringify(data),
+		dataType : "json",
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(obj) {
+			var html = '';
+			var className = "";
+			if (obj.length > 0) {
+				obj.forEach(function(item) {
+					console.log(item)
+					className = item.ctTotal > 0 ? " redFont" : "";
+					html += '<div class="row">'
+						+ '<div class="cell dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ',' + item.createTime + ')">' + item.createTime + '</a></div>'
+						+ '<div class="cell issueCell">' + item.gamePeriod + '</div>'
+						+ '<div class="cell allCountCell">' + (item.ctPeriod || 0) + '</div>'
+						+ '<div class="cell allMoneyCell">' + item.ctBalance + '</div>'
+						+ '<div class="cell allFeedbackCell">' + item.ctAmt + '</div>'
+						+ '<div class="cell allwinCell' + className + '">' + item.ctTotal + '</div>'
+					+ '</div>'
+				})
+				html += '<div class="row">'
+						+ '<div class="cell dateCell"></div>'
+						+ '<div class="cell issueCell"></div>'
+						+ '<div class="cell allCountCell"></div>'
+						+ '<div class="cell allMoneyCell"></div>'
+						+ '<div class="cell allFeedbackCell"></div>'
+						+ '<div class="cell allwinCell"></div>'
+					+ '</div>'
+				className = obj[obj.length - 1].ctTotal > 0 ? " redFont" : "";
+				html += '<div class="row">'
+						+ '<div class="cell dateCell"></div>'
+						+ '<div class="cell issueCell">总计</div>'
+						+ '<div class="cell allCountCell">' + arr2Sum('ctPeriod', obj) + '</div>'
+						+ '<div class="cell allMoneyCell">' + arr2Sum('ctBalance', obj) + '</div>'
+						+ '<div class="cell allFeedbackCell">' + arr2Sum('ctAmt', obj) + '</div>'
+						+ '<div class="cell allwinCell">' + arr2Sum('ctTotal', obj) + '</div>'
+					+ '</div>'
+			}
+			$("#betTable").hide();
+			$("#issueTable .systemCont").html(html);
+			$("#issueTable").show();
+
 		}
-		html += '<div class="row">'
-				+ '<div class="cell dateCell"></div>'
-				+ '<div class="cell issueCell"></div>'
-				+ '<div class="cell allCountCell"></div>'
-				+ '<div class="cell allMoneyCell"></div>'
-				+ '<div class="cell allFeedbackCell"></div>'
-				+ '<div class="cell allwinCell"></div>'
-			+ '</div>'
-		className = obj.dailyLedgerList[obj.dailyLedgerList.length - 1].winMoney > 0 ? " redFont" : "";
-		html += '<div class="row">'
-				+ '<div class="cell dateCell"></div>'
-				+ '<div class="cell issueCell">总计</div>'
-				+ '<div class="cell allCountCell">' + obj.dailyLedgerList[obj.dailyLedgerList.length - 1].betCount + '</div>'
-				+ '<div class="cell allMoneyCell">' + obj.dailyLedgerList[obj.dailyLedgerList.length - 1].betMoney + '</div>'
-				+ '<div class="cell allFeedbackCell">' + obj.dailyLedgerList[obj.dailyLedgerList.length - 1].recedeMoney + '</div>'
-				+ '<div class="cell allwinCell">' + obj.dailyLedgerList[obj.dailyLedgerList.length - 1].winMoney + '</div>'
-			+ '</div>'
-		$("#betTable").hide();
-		$("#issueTable .systemCont").html(html);
-		$("#issueTable").show();
 	})
 }
 
-function listClearedOrder(id, date){
-	var data = {
-		token: window.top.token,
-		gameID: id,
-		date: date
+function arr2Sum(key, arr) {
+	var sum = 0
+	let data = arr.map(function(item) { return Number(item[key]) })
+	for (let k of data) {
+		sum += k
 	}
-	Send(httpUrlData.listClearedOrder, data, function(obj){
-		var html = '';
-		for(var i = 0; i < obj.orderList.length; i++){
-			var className = obj.orderList[i].status == 3 || obj.orderList[i].status == -1 ? " cancelInfo" : "";
-			var winClassName = obj.orderList[i].winMoney > 0 ? " redFont" : "";
-			html += '<div class="row">'
-					+ '<div class="cell issueCell' + className + '">' + obj.orderList[i].issue + '</div>'
-					+ '<div class="cell timeCell' + className + '">' + obj.orderList[i].betTime + '</div>'
-					+ '<div class="cell betInfoCell' + className + '" title="' + obj.orderList[i].betContent + '">' + obj.orderList[i].betContent + '</div>'
-					+ '<div class="cell betMoneyCell' + className + '">' + obj.orderList[i].betMoney + '</div>'
-					+ '<div class="cell oddCell' + className + '" title="' + obj.orderList[i].rate + '">' + obj.orderList[i].rate + '</div>'
-					+ '<div class="cell feedbackCell' + className + '">' + obj.orderList[i].recedeMoney + '</div>'
-					+ '<div class="cell winCell' + className + winClassName + '">' + obj.orderList[i].winMoney + '</div>'
+	return sum
+}
+function listClearedOrder(gamePeriod, date){
+	var data = {
+    "gameId":"1",
+    "userId": window.top.lotteryData.userId,
+    "gamePeriod": gamePeriod
+	}
+	$.ajax({
+		type : 'post',
+		url : serverMap[httpUrlData.listBetDetail.server] + httpUrlData.listBetDetail.url,
+		data : JSON.stringify(data),
+		dataType : "json",
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(obj) {
+			var html = '';
+			obj.forEach(function(item) {
+				var winClassName = item.yk > 0 ? " redFont" : "";
+				html += '<div class="row">'
+					+ '<div class="cell issueCell">' + item.gamePeriod + '</div>'
+					+ '<div class="cell timeCell">' + item.createTime + '</div>'
+					+ '<div class="cell betInfoCell" title="' + item.content + '">' + item.content + '</div>'
+					+ '<div class="cell betMoneyCell">' + item.transactionsBalance + '</div>'
+					+ '<div class="cell oddCell" title="' + item.oddsDetails + '">' + item.oddsDetails + '</div>'
+					+ '<div class="cell feedbackCell">' + item.ty + '</div>'
+					+ '<div class="cell winCell' + winClassName + '">' + item.yk + '</div>'
 				+ '</div>'
+			})
+			$("#issueTable").hide();
+			$("#betTable .systemCont").html(html);
+			$("#betTable").show();
 		}
-		$("#issueTable").hide();
-		$("#betTable .systemCont").html(html);
-		$("#betTable").show();
 	})
 }

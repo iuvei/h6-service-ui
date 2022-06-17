@@ -6,15 +6,30 @@ $(function(){
 
 function getBetDetailData(page){
 	var data = {
-		token: window.top.token,
-		gameID: window.top.gameArr[window.top.curIndex].id,
-		page: page,
-		pageSize: 50
+		"gameId":1,
+		"userId":118,
+		"gamePeriod":64,
 	}
-	Send(httpUrlData.listBetDetail, data, function(obj){
-		betData = obj;
-		setPage(obj.totalCount, page);
+	$.ajax({
+		type: 'post',
+		url: serverMap[httpUrlData.listBetDetail.server] + httpUrlData.listBetDetail.url,
+		data: JSON.stringify(data),
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(res) {
+			console.log(res)
+			betData = res;
+			setPage(res.length, page);
+		}
 	})
+	// Send(httpUrlData.listBetDetail, data, function(obj){
+	// 	betData = obj;
+	// 	setPage(obj.totalCount, page);
+	// })
 }
 
 function updateBetDetailData(){
@@ -22,8 +37,8 @@ function updateBetDetailData(){
 	var recedeMoneySum = 0;
 	var betMoneySum = 0;
 		var infoHtml = '';
-	for(var i = 0; i < betData.orderList.length; i++){
-		var className = betData.orderList[i].status == 3 || betData.orderList[i].status == -1 ? " cancelInfo" : "";
+	for(var i = 0; i < betData.length; i++){
+		var className = betData[i].status == 3 || betData.orderList[i].status == -1 ? " cancelInfo" : "";
 		if(betData.orderList[i].orderDetailList.length > 0)
 			infoHtml = '<div class="cell infoCell clickCell' + className + '" title="' + betData.orderList[i].betContent + '" onclick="showLinkBetInfo(' + i + ')">' + betData.orderList[i].betContent + '</div>';
 		else

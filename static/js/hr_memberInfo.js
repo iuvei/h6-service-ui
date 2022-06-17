@@ -9,15 +9,16 @@ function getMemberMaterial(){
 		gameID: window.top.gameArr[window.top.curIndex].id
 	}
 	Send(httpUrlData.getMemberMaterial, data, function(obj){
+		console.log(obj)
 		var html = '';
-		for(var i = 0; i < obj.memberMaterialList.length; i++){
+		for(var i = 0; i < obj.data.length; i++){
 			html += '<div class="row">'
-					+ '<div class="cell typeCell">' + obj.memberMaterialList[i].type + '</div>'
-					+ '<div class="cell betMinCell">' + obj.memberMaterialList[i].orderMin + '</div>'
-					+ '<div class="cell betMaxCell">' + obj.memberMaterialList[i].orderMax + '</div>'
-					+ '<div class="cell itemMaxCell">' + obj.memberMaterialList[i].issueMax + '</div>'
-					+ '<div class="cell aCell">' + obj.memberMaterialList[i].recedeA + '</div>'
-					+ '<div class="cell bCell">' + obj.memberMaterialList[i].recedeB + '</div>'
+					+ '<div class="cell typeCell">' + obj.data[i].playType + '</div>'
+					+ '<div class="cell betMinCell">' + obj.data[i].playMin + '</div>'
+					+ '<div class="cell betMaxCell">' + obj.data[i].playMax + '</div>'
+					+ '<div class="cell itemMaxCell">' + obj.data[i].max + '</div>'
+					+ '<div class="cell aCell">' + obj.data[i].returnAA + '</div>'
+					+ '<div class="cell bCell">' + obj.data[i].returnAB + '</div>'
 				+ '</div>';
 		}
 		$(".systemCont").html(html);

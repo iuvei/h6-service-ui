@@ -234,6 +234,7 @@
 }
 
 .left .betInfoPanel .betInfoTable .head{
+	display: flex;
 	height: 24px;
 	line-height: 24px;
 	text-align: center;

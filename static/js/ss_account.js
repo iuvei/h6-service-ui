@@ -2,19 +2,19 @@ var historyData = {};
 var dateArr = [];
 $(function(){
 	var date = new Date();
-	date.setTime(window.top.lotteryData.systemTime);
-	date.setDate(date.getDate() - window.top.lotteryData.billDays)
+	date.setTime(new Date().getTime());
+	date.setDate(date.getDate() - 32)
 	var dateStr = "";
 	var status = "";
 	var beginHtml = '';
 	var endHtml = '';
-	for(var i = 0; i < window.top.lotteryData.billDays; i++){
+	for(var i = 0; i < 32; i++){
 		date.setDate(date.getDate() + 1)
 		dateStr = DateFormat(date, "yyyy-MM-dd");
 		dateArr.push(dateStr);
 		status = i == 0 ? ' selected="selected"' : ''
 		beginHtml += '<option value="' + i + '"' + status + '>' + dateStr + '</option>';
-		status = i == window.top.lotteryData.billDays - 1 ? ' selected="selected"' : ''
+		status = i == 32 - 1 ? ' selected="selected"' : ''
 		endHtml += '<option value="' + i + '"' + status + '>' + dateStr + '</option>';
 	}
 	$("#beginDate").empty().append(beginHtml);
@@ -47,74 +47,107 @@ function findLastWeekAccountData(){
 	listDailyLedger(DateFormat(beginDate, "yyyy-MM-dd"), DateFormat(endDate, "yyyy-MM-dd"))
 }
 
-function listDailyLedger(beginDate, endDate){
+function listDailyLedger(beginDate, endDate) {
+	console.log(window.top.lotteryData)
 	var data = {
-		token: window.top.token,
-		gameID: window.top.gameArr[window.top.curIndex].id,
-		beginDate: beginDate,
-		endDate: endDate
+    "startTime": beginDate,
+    "endTime": endDate,
+    "userId": window.top.lotteryData.userId,
+    "gameId":"1"
 	}
-	Send(httpUrlData.listDailyLedger, data, function(obj){
-		var html = '';
-		var className = '';
-		for(var i = 0; i < obj.dailyLedgerList.length - 1; i++){
-			var dateStrArr = obj.dailyLedgerList[i].date.split("星期")
-			className = obj.dailyLedgerList[i].winMoney > 0 ? ' red' : '';
-			html += '<tr>'
-					+ '<td class="dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + data.gameID + ', \'' + dateStrArr[0] + '\')">' + obj.dailyLedgerList[i].date + '</a></td>'
-					+ '<td class="issueCell">' + obj.dailyLedgerList[i].issue + '</td>'
-					+ '<td class="allCountCell">' + obj.dailyLedgerList[i].betCount + '</td>'
-					+ '<td class="allMoneyCell">' + obj.dailyLedgerList[i].betMoney + '</td>'
-					+ '<td class="allFeedbackCell">' + obj.dailyLedgerList[i].recedeMoney + '</td>'
-					+ '<td class="allwinCell' + className + '">' + obj.dailyLedgerList[i].winMoney + '</td>'
-				+ '</tr>'
+	$.ajax({
+		type : 'post',
+		url : serverMap[httpUrlData.listDailyLedger.server] + httpUrlData.listDailyLedger.url,
+		data : JSON.stringify(data),
+		dataType : "json",
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(obj) {
+			var html = '';
+			var className = '';
+			if (obj.length > 0) {
+				obj.forEach(function(item) {
+					className = item.ctTotal > 0 ? " redFont" : "";
+					html += '<tr>'
+							+ '<td class="dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ',' + item.createTime + ')">' + item.createTime + '</a></td>'
+							+ '<td class="issueCell">' + item.gamePeriod + '</td>'
+							+ '<td class="allCountCell">' + (item.ctPeriod || 0) + '</td>'
+							+ '<td class="allMoneyCell">' + item.ctBalance + '</td>'
+							+ '<td class="allFeedbackCell">' + item.ctAmt + '</td>'
+							+ '<td class="allwinCell">' + item.ctTotal + '</td>'
+						+ '</tr>'
+				})
+				html += '<tr>'
+						+ '<td class="dateCell"></td>'
+						+ '<td class="issueCell"></td>'
+						+ '<td class="allCountCell"></td>'
+						+ '<td class="allMoneyCell"></td>'
+						+ '<td class="allFeedbackCell"></td>'
+						+ '<td class="allwinCell"></td>'
+					+ '</tr>'
+				className = obj[obj.length - 1].ctTotal > 0 ? " redFont" : "";
+				html += '<tr>'
+						+ '<td class="dateCell"></td>'
+						+ '<td class="issueCell">总计</td>'
+						+ '<td class="allCountCell">' + arr2Sum('ctPeriod', obj) + '</td>'
+						+ '<td class="allMoneyCell">' + arr2Sum('ctBalance', obj) + '</td>'
+						+ '<td class="allFeedbackCell">' + arr2Sum('ctAmt', obj) + '</td>'
+						+ '<td class="allwinCell">' + arr2Sum('ctTotal', obj) + '</td>'
+					+ '</tr>'
+			}
+			$("#betTable").hide();
+			$("#issueTable .systemCont").html(html);
+			$("#issueTable").show();
 		}
-		html += '<tr>'
-				+ '<td class="dateCell"></td>'
-				+ '<td class="issueCell"></td>'
-				+ '<td class="allCountCell"></td>'
-				+ '<td class="allMoneyCell"></td>'
-				+ '<td class="allFeedbackCell"></td>'
-				+ '<td class="allwinCell"></td>'
-			+ '</tr>'
-		className = obj.dailyLedgerList[obj.dailyLedgerList.length - 1].winMoney > 0 ? ' red' : '';
-		html += '<tr>'
-				+ '<td class="dateCell"></td>'
-				+ '<td class="issueCell">总计</td>'
-				+ '<td class="allCountCell">' + obj.dailyLedgerList[obj.dailyLedgerList.length - 1].betCount + '</td>'
-				+ '<td class="allMoneyCell">' + obj.dailyLedgerList[obj.dailyLedgerList.length - 1].betMoney + '</td>'
-				+ '<td class="allFeedbackCell">' + obj.dailyLedgerList[obj.dailyLedgerList.length - 1].recedeMoney + '</td>'
-				+ '<td class="allwinCell' + className + '">' + obj.dailyLedgerList[obj.dailyLedgerList.length - 1].winMoney + '</td>'
-			+ '</tr>'
-		$("#betTable").hide();
-		$("#issueTable .systemCont").html(html);
-		$("#issueTable").show();
 	})
 }
 
-function listClearedOrder(id, date){
-	var data = {
-		token: window.top.token,
-		gameID: id,
-		date: date
+function arr2Sum(key, arr) {
+	var sum = 0
+	let data = arr.map(function(item) { return Number(item[key]) })
+	for (let k of data) {
+		sum += k
 	}
-	Send(httpUrlData.listClearedOrder, data, function(obj){
-		var html = '';
-		for(var i = 0; i < obj.orderList.length; i++){
-			var className = obj.orderList[i].status == 3 || obj.orderList[i].status == -1 ? " cancelInfo" : "";
-			var winClassName = obj.orderList[i].winMoney > 0 ? " red" : "";
-			html += '<tr>'
-					+ '<td class="issueCell' + className + '">' + obj.orderList[i].issue + '</td>'
-					+ '<td class="timeCell' + className + '">' + obj.orderList[i].betTime + '</td>'
-					+ '<td class="betInfoCell"><div class="betInfoCell' + className + '" title="' + obj.orderList[i].betContent + '">' + obj.orderList[i].betContent + '</div></td>'
-					+ '<td class="betMoneyCell' + className + '">' + obj.orderList[i].betMoney + '</td>'
-					+ '<td class="oddCell"><div class="oddCell' + className + '" title="' + obj.orderList[i].rate + '">' + obj.orderList[i].rate + '</div></td>'
-					+ '<td class="feedbackCell' + className + '">' + obj.orderList[i].recedeMoney + '</td>'
-					+ '<td class="winCell' + className + winClassName + '">' + obj.orderList[i].winMoney + '</td>'
-				+ '</tr>'
+	return sum
+}
+function listClearedOrder(gamePeriod, date){
+	var data = {
+    "gameId":"1",
+    "userId": window.top.lotteryData.userId,
+    "gamePeriod": gamePeriod
+	}
+	$.ajax({
+		type : 'post',
+		url : serverMap[httpUrlData.listBetDetail.server] + httpUrlData.listBetDetail.url,
+		data : JSON.stringify(data),
+		dataType : "json",
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(obj) {
+			var html = '';
+			obj.forEach(function(item) {
+				var winClassName = item.yk > 0 ? " redFont" : "";
+				html += '<tr>'
+						+ '<td class="issueCell">' + item.gamePeriod + '</td>'
+						+ '<td class="timeCell">' + item.createTime + '</td>'
+						+ '<td class="betInfoCell"><div class="betInfoCell" title="' + item.content + '">' + item.content + '</div></td>'
+						+ '<td class="betMoneyCell">' + item.transactionsBalance + '</td>'
+						+ '<td class="oddCell"><div class="oddCell" title="' + item.oddsDetails + '">' + item.oddsDetails + '</div></td>'
+						+ '<td class="feedbackCell">' + item.ty + '</td>'
+						+ '<td class="winCell' + winClassName + '">' + item.yk + '</td>'
+					+ '</tr>'
+			})
+			$("#issueTable").hide();
+			$("#betTable .systemCont").html(html);
+			$("#betTable").show();
 		}
-		$("#issueTable").hide();
-		$("#betTable .systemCont").html(html);
-		$("#betTable").show();
 	})
 }

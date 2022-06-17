@@ -2,16 +2,23 @@ var httpUrlData = {
 	login: {name: "登录", url: "/login", server: "MarkSixGame"},
 	getVerifyCode: {name: "获取验证码", url: "http://43.252.208.199:8086/captcha/captcha.jpg?uuid=", server: "MarkSixGame"},
 	verifyCheckCode: {name: "检查验证码", url: "/index/checkCode", type: 'get', server: "MarkSixGame"},
-	getGameData: {name: "获取游戏数据", url: "/MarkSixGame/Game/getGameData", server: "MarkSixGame"},
-	generalBet : {name: "普通下注", url: "/MarkSixBet/Bet/generalBet", server: "MarkSixBet"},
+	getUserPlay: {name: "检查验证码", url: "/p/user/userPlay", type: 'get', server: "MarkSixGame"},
+	getUserInfo: {name: "检查验证码", url: "/p/user/userInfo", type: 'get', server: "MarkSixGame"},
+	listDailyLedger: {name: "账户历史查询每日总账", url: "/p/commandLog/findAccountinglog", server: "MarkSixGame"},
+	listBetDetail: {name: "查询下注明细", url: "/p/commandLog/findAccountinglogDetail", type: 'post', server: "MarkSixGame"},
+	getGameData: {name: "获取游戏数据", url: "/p/creditPlayType/findCreditPlayTypeInfo", type: 'post', server: "MarkSixGame"},
+	newListBet: {name: "最新10笔注单", url: "/p/commandLog/top10ByUser", type: 'get', server: "MarkSixGame"},
+	currentPeriod: {name: "当前期数查询列表", url: "/p/gameperiod/queryEarlyMorningSetPeriod", type: 'get', server: "MarkSixGame"},
+	
+
+	generalBet : {name: "普通下注", url: "/p/commandLog/createCommandLog", server: "MarkSixBet"},
 	multiNumBet: {name: "连码下注", url: "/MarkSixBet/Bet/multiNumBet", server: "MarkSixBet"},
 	getInstantResultNum: {name: "获取即时开奖号码", url: "/MarkSixGame/Game/getInstantResultNum", server: "MarkSixGame"},
 	listLotteryResult: {name: "分页查询开奖结果", url: "/MarkSixGame/LotteryResult/listLotteryResult", server: "MarkSixGame"},
-	listDailyLedger: {name: "账户历史查询每日总账", url: "/MarkSixGame/GameRecord/listDailyLedger", server: "MarkSixGame"},
 	listClearedOrder: {name: "账户历史查询已结注单", url: "/MarkSixGame/GameRecord/listClearedOrder", server: "MarkSixGame"},
-	listBetDetail: {name: "查询下注明细", url: "/MarkSixGame/GameRecord/listBetDetail", server: "MarkSixGame"},
 	updatePassword: {name: "修改密码", url: "/MarkSixGame/User/updatePassword", server: "MarkSixGame"},
 	listNotice: {name: "查询公告", url: "/MarkSixGame/Notice/listNotice", server: "MarkSixGame"},
-	getMemberMaterial: {name: "查询会员资料", url: "/MarkSixGame/User/getMemberMaterial", server: "MarkSixGame"},
+	getMemberMaterial: {name: "查询会员资料", url: "/p/user/userPlay", type: 'get', server: "MarkSixGame"},
 	getCurrentResultNum: {name: "查询当前期开奖号码", url: "/MarkSixGame/Game/getCurrentResultNum", server: "MarkSixGame"},
 }
+// http://43.252.208.199:8086/p/creditPlayType/findCreditPlayTypeInfo

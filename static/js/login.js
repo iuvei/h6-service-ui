@@ -43,6 +43,15 @@ function init(){
 				localStorage.setItem("token", res.data.accessToken);
 				localStorage.setItem("refreshToken", res.data.refreshToken);
 				localStorage.setItem("expiresIn", res.data.expiresIn);
+				localStorage.setItem("animalIndex", 2);
+				localStorage.setItem("changePwd", 0);
+				var gameArrStr = "";
+				for(var i = 0; i < [2].length; i++){
+					if(gameArrStr != "")
+						gameArrStr += ",";
+					gameArrStr += [2][i];
+				}
+				localStorage.setItem("gameArrStr", gameArrStr);
 				window.open("agreement.html?v=" + version, "_self");
 			}, null, function() {
 				$("#txt_validate").val("");

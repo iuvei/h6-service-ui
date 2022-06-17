@@ -5,7 +5,7 @@ var curRate = 0;
 var sClose = false;
 var nClose = false;
 $(function(){
-	window.top.getGameData(window.top.gameArr[window.top.curIndex].id, true, 0);
+	window.top.getGameData();
 	initLinkAnimalPanel("linkAnimalPanel");
 	initLinkMixtureAnimalPanel();
 	initAnimalLinkPanel();
@@ -86,16 +86,17 @@ function update(timeFrquency, dt){
 	}
 }
 
+// 右上角即时赛果
 function setResult(){
-	var ballHtml = '';
-	if(window.top.resultNum.length > 0){
-		for(var i = 0; i < window.top.resultNum.length; i++){
-			if(i == 6)
-				ballHtml += '<div class="add">+</div>';
-			ballHtml += '<div class="' + ballInfoObj[window.top.resultNum[i]].color + 'Ball">' + window.top.resultNum[i] + '</div>';
-		}
-	}
-	$("#curResult").html(ballHtml);
+	// var ballHtml = '';
+	// if(window.top.resultNum.length > 0){
+	// 	for(var i = 0; i < window.top.resultNum.length; i++){
+	// 		if(i == 6)
+	// 			ballHtml += '<div class="add">+</div>';
+	// 		ballHtml += '<div class="' + ballInfoObj[window.top.resultNum[i]].color + 'Ball">' + window.top.resultNum[i] + '</div>';
+	// 	}
+	// }
+	// $("#curResult").html(ballHtml);
 }
 
 function setLotteryTime(dt){
@@ -159,6 +160,80 @@ function setLotteryTab(){
 	}
 }
 
+// 设置赔率
+function SetRateData(type) {
+	switch(Number(window.top.curTab)) {
+		case 0:
+			if (item.creditPlayId == 1) {
+				const playArr = item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList
+				const playMap = {}
+				playArr.forEach(function(item) {
+					var key = item.creditPlayTypeName.length === 1 ? '0' + item.creditPlayTypeName : item.creditPlayTypeName
+					playMap[key] = item
+				})
+				$('#numPanel .systemCont').find('.cell').each(function() {
+					var key = $(this).find('.numCell div').text() || $(this).find('.twoCell').text()
+					var data = playMap[key]
+					var value = 0
+					if (data) {
+						// 玩法ID： creditPlayId 玩法子类：creditPlayInfoId  号码：creditPlayTypeId
+					} else {}
+				})
+			}
+		break
+		case 1:
+			if (item.creditPlayId == 2) {
+				const playArr = item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList
+				const playMap = {}
+				playArr.forEach(function(item) {
+					var key = item.creditPlayTypeName.length === 1 ? '0' + item.creditPlayTypeName : item.creditPlayTypeName
+					playMap[key] = item
+				})
+				console.log($(''))
+				$('#numPanel .systemCont').find('.cell').each(function() {
+					var key = $(this).find('.numCell div').text() || $(this).find('.twoCell').text()
+					var data = playMap[key]
+					var value = 0
+					if (data) {
+						value = data.odds
+						$(this).find('.oddsCell').text(value)
+						$(this).find('.betMoneyValue').removeAttr("disabled");
+						$(this).find('.betMoneyValue').attr('max', 100)
+						$(this).find('.betMoneyValue').attr('min',  1)
+					} else {}
+				})
+			}
+		break
+		case 2:
+			if (item.creditPlayId == 3) {
+				var playArr = []
+				for (var child of item.creditPlayTypeDtoList) {
+					if (child.creditPlayInfoId === (type + 2)) {
+						console.log(child)
+						playArr = child.creditPlayTypeInfoDtoList
+					}
+				}
+				var playMap = {}
+				playArr.forEach(function(play) {
+					var key = play.creditPlayTypeName.length === 1 ? '0' + play.creditPlayTypeName : play.creditPlayTypeName
+					playMap[key] = play
+				})
+				$('#numPanel .systemCont').find('.cell').each(function() {
+					var key = $(this).find('.numCell div').text() || $(this).find('.twoCell').text()
+					var data = playMap[key]
+					var value = 0
+					if (data) {
+						value = data.odds
+						$(this).find('.oddsCell').text(value)
+						$(this).find('.betMoneyValue').removeAttr("disabled");
+						$(this).find('.betMoneyValue').attr('max', 100)
+						$(this).find('.betMoneyValue').attr('min',  1)
+					} else {}
+				})
+			}
+
+	}
+}
 function updateOdds(){
 	$("#cueIssue").text(window.top.lotteryData.issue);
 	if(window.top.lotteryData.status != READY_STATUS && $(".ready").is(':visible')){
@@ -201,7 +276,7 @@ function updateOdds(){
 		case 12 : setUnitLinkOdds(); break;
 	}
 }
-
+// 更新赔率
 function updateItemOdds(obj, odds){
 	odds = parseFloat(odds)
 	var oddsStr = odds < 0 || window.top.lotteryData.status != OPEN_STATUS ? "封单" : odds.toString();
@@ -278,6 +353,7 @@ function clickOpNumBtn(index, obj){
 	$(obj).addClass("curBtn")
 	clearBet();
 	setNormalSpecialNumTab(index)
+	localStorage.setItem('creditPlayName', '正' + index)
 	window.top.heartTime = 0;
 }
 
@@ -347,31 +423,55 @@ function setNormalNumTab(){
 
 function initNumPanelOdds(betType){
 	var numStartIndex = betType * 10000 + 1
-	var disable = window.top.lotteryData.status != OPEN_STATUS;
+	console.log(window.top.lotteryData.status)
+	window.top.lotteryData.status = 1
+	otherNumCloseTime = 100
+	especialNumCloseTime = 100
 	for(var i = 0; i < 49; i++){
 		var itemId = numStartIndex + 1000 + i;
-		if(window.top.lotteryData.status == OPEN_STATUS && ((betType == 101 && especialNumCloseTime > 0) || (betType > 101 && otherNumCloseTime > 0)))
+		if(window.top.lotteryData.status == OPEN_STATUS && ((betType == 101 && especialNumCloseTime > 0) || (betType > 101 && otherNumCloseTime > 0))) {
+			$("#numPanel .numRow .item" + (1001 + i)).attr('data-creditplaytypeid', window.top.rateData[itemId][2]);
 			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), window.top.rateData[itemId][curRate]);
+		}
 		else
 			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), -1);
-	}			
+	}	
 	switch(betType){
 		case 101 : 
 			$("#cueRate").text("特码" + (curRate == 0 ? "A" : "B") + "盘");
 			if(window.top.lotteryData.status == OPEN_STATUS && especialNumCloseTime > 0){
+				// 特单特双
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), window.top.rateData[1012001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), window.top.rateData[1012002][curRate]);
+				// 特大特小
 				updateItemOdds($("#numPanel .towBox .twoRow .two3001 .oddsCell"), window.top.rateData[1013001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two3002 .oddsCell"), window.top.rateData[1013002][curRate]);
+				// 合单合双
 				updateItemOdds($("#numPanel .towBox .twoRow .two4001 .oddsCell"), window.top.rateData[1014001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two4002 .oddsCell"), window.top.rateData[1014002][curRate]);
+				// 红蓝绿波
 				updateItemOdds($("#numPanel .towBox .twoRow .two5001 .oddsCell"), window.top.rateData[1015001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two5002 .oddsCell"), window.top.rateData[1015002][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[1015003][curRate]);
+				// 特尾大小
 				updateItemOdds($("#numPanel .towBox .twoRow .two6001 .oddsCell"), window.top.rateData[1016001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two6002 .oddsCell"), window.top.rateData[1016002][curRate]);
+				// 野兽家禽
 				updateItemOdds($("#numPanel .towBox .twoRow .two7001 .oddsCell"), window.top.rateData[1017001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two7002 .oddsCell"), window.top.rateData[1017002][curRate]);
+				$("#numPanel .towBox .twoRow .two2001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1012001][2]);
+				$("#numPanel .towBox .twoRow .two2002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1012002][2]);
+				$("#numPanel .towBox .twoRow .two3001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1013001][2]);
+				$("#numPanel .towBox .twoRow .two3002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1013002][2]);
+				$("#numPanel .towBox .twoRow .two4001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1014001][2]);
+				$("#numPanel .towBox .twoRow .two4002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1014002][2]);
+				$("#numPanel .towBox .twoRow .two5001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1015001][2]);
+				$("#numPanel .towBox .twoRow .two5002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1015002][2]);
+				$("#numPanel .towBox .twoRow .two5003 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1015003][2]);
+				$("#numPanel .towBox .twoRow .two6001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1016001][2]);
+				$("#numPanel .towBox .twoRow .two6002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1016002][2]);
+				$("#numPanel .towBox .twoRow .two7001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1017001][2]);
+				$("#numPanel .towBox .twoRow .two7002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1017002][2]);
 			}
 			else{
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);
@@ -407,7 +507,16 @@ function initNumPanelOdds(betType){
 				updateItemOdds($("#numPanel .towBox .twoRow .two4002 .oddsCell"), window.top.rateData[addIndex + 4002][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two5001 .oddsCell"), window.top.rateData[addIndex + 5001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two5002 .oddsCell"), window.top.rateData[addIndex + 5002][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[addIndex + 5003][curRate]);			
+				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[addIndex + 5003][curRate]);
+				$("#numPanel .towBox .twoRow .two2001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);
+				$("#numPanel .towBox .twoRow .two2002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);
+				$("#numPanel .towBox .twoRow .two3001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);
+				$("#numPanel .towBox .twoRow .two3002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);
+				$("#numPanel .towBox .twoRow .two4001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);
+				$("#numPanel .towBox .twoRow .two4002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);
+				$("#numPanel .towBox .twoRow .two5001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);
+				$("#numPanel .towBox .twoRow .two5002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);
+				$("#numPanel .towBox .twoRow .two5003 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);			
 			}else{
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);
 				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), -1);
@@ -427,6 +536,10 @@ function initNumPanelOdds(betType){
 				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), window.top.rateData[1082002][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two3001 .oddsCell"), window.top.rateData[1083001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two3002 .oddsCell"), window.top.rateData[1083002][curRate]);
+				$("#numPanel .towBox .twoRow .two2001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1082001][2]);
+				$("#numPanel .towBox .twoRow .two2002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1082002][2]);
+				$("#numPanel .towBox .twoRow .two3001 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1083001][2]);
+				$("#numPanel .towBox .twoRow .two3002 .oddsCell").attr('data-creditplaytypeid', window.top.rateData[1083002][2]);	
 			} else{
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);
 				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), -1);
@@ -447,9 +560,11 @@ function setSAnimalPanel(){
 }
 
 function updateSAnimalOdds(){
+	otherNumCloseTime = 100
 	for(var i = 0; i < 12; i++){
-		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0)
+		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0) {
 			updateItemOdds($("#sAnimalPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), window.top.rateData[1091001 + i][0]);
+		}
 		else
 			updateItemOdds($("#sAnimalPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), -1);
 	}
@@ -464,6 +579,7 @@ function setColorTwoPanel(){
 }
 
 function updateColorTwoOdds(){
+	otherNumCloseTime = 100
 	for(var i = 0; i < 12; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0)
 			updateItemOdds($("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), window.top.rateData[1111001 + i][0]);
@@ -484,6 +600,7 @@ function setAnimal6Panel(){
 }
 
 function updateAnimal6Odds(){
+	otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		updateItemOdds($(".ctrlPanel .ctrlCont .animal6Ctrl .odds:eq(0)"), window.top.rateData[1141001][0]);
 		updateItemOdds($(".ctrlPanel .ctrlCont .animal6Ctrl .odds:eq(1)"), window.top.rateData[1141002][0]);
@@ -533,6 +650,7 @@ function setAnimal1Panel(betType){
 }
 
 function updateAnimal1Odds(betType){
+	otherNumCloseTime = 100
 	var startId = betType * 10000 + 1001
 	for(var i = 0; i < 12; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0)
@@ -551,6 +669,7 @@ function setUnitNumPanel(){
 }
 
 function updateUnitNumOdds(){
+	otherNumCloseTime = 100
 	for(var i = 0; i < 10; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0)
 			updateItemOdds($("#unitNumPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), window.top.rateData[1101000 + i][0]);
@@ -585,6 +704,7 @@ function setMissPanel(index, isInit){
 }
 
 function updateMissOdds(){
+	otherNumCloseTime = 100
 	var startId = linkBetType * 1000 + 1; 
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		$("#missPanel .betRow .betMoneyValue").removeAttr("disabled");
@@ -653,6 +773,7 @@ function setAnimalLinkIsMiss(isMiss, updateOdds){
 }
 
 function setAnimalLinkOdds(){
+	otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		linkCount = groupCount;
 		linkBetType = 1221 + (groupCount - 2) * 20 + (groupMiss ? 10 : 0)
@@ -717,6 +838,7 @@ function setUnitLinkIsMiss(isMiss, updateOdds){
 }
 
 function setUnitLinkOdds(){
+	otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		linkCount = groupCount;
 		linkBetType = 1301 + (groupCount - 2) * 20 + (groupMiss ? 10 : 0)
@@ -740,6 +862,7 @@ function clickLinkNumBtn(index, obj){
 	$(".linkNumBtnBox .curBtn").removeClass("curBtn");
 	obj.addClass("curBtn");
 	linkCombType = -1;
+	localStorage.setItem('lmType', index)
 	setLinkTab(index);
 	clearBet();
 }
@@ -781,6 +904,7 @@ function setLinkTab(linkType){
 	$(".ctrlPanel .ctrlCont .linkNumBtnBox").show();
 	$(".systemTable").hide();
 	var panelId = "";
+	console.log(linkType)
 	switch(linkType){
 		case 0 : 
 			maxSelectedCount = 10;
@@ -826,6 +950,7 @@ function setLinkPanelOdds(panel){
 	$("#" + panel + " .systemCont .numRow .oddsCell .odds").hide();
 	var startId1 = linkBetType * 1000 + 1;
 	var startId2 = (linkBetType + 1) * 1000 + 1;
+	otherNumCloseTime = 100
 	if(linkCombType < 0)
 		return;
 	if(window.top.lotteryData.status != OPEN_STATUS || window.top.rateData[startId1][0] < 0){
@@ -834,15 +959,19 @@ function setLinkPanelOdds(panel){
 	}
 	else
 		$("#" + panel + " .systemCont .betRow .betMoneyValue").removeAttr("disabled");
+		console.log(linkBetType)
 	switch(linkBetType){
 		case 1151 : 
 		case 1181 :
 		case 1191 : 
 			for(var i = 0; i < 49; i++){
-				if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){	
+				if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
+					$("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId1 + i][2]);
 					updateItemOdds($("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1) + " .odds1").show(), window.top.rateData[startId1 + i][0]);
-					if(linkMode == 2 || linkMode == 5 || linkMode == 6)
+					if(linkMode == 2 || linkMode == 5 || linkMode == 6) {
 						updateItemOdds($("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1) + " .odds1").show(), window.top.rateData[startId1 + i][0]);
+						$("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId1 + i][2]);	
+					}
 				}
 				else{
 					updateItemOdds($("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1) + " .odds1").show(), -1);
@@ -858,9 +987,13 @@ function setLinkPanelOdds(panel){
 				if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){	
 					updateItemOdds($("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1) + " .odds2").show(), window.top.rateData[startId1 + i][0]);
 					updateItemOdds($("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1) + " .odds3").show(), window.top.rateData[startId2 + i][1]);
+					$("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId1 + i][2]);
+					$("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId2 + i][2]);
 					if(linkMode == 2 || linkMode == 5 || linkMode == 6){
 						updateItemOdds($("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1) + " .odds2").show(), window.top.rateData[startId1 + i][0]);
 						updateItemOdds($("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1) + " .odds3").show(), window.top.rateData[startId2 + i][1]);
+						$("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId1 + i][2]);
+						$("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId2 + i][2]);
 					}
 				}
 				else{	
@@ -1097,6 +1230,7 @@ function bet(panelId){
 	var money = 0;
 	var betMap = {};
 	var infoArr = [];
+	var data = []
 	for(var i = 0; i < betMoneyValueArr.length; i++){
 		bmvObj = $(betMoneyValueArr[i]);
 		var curMoney = parseInt(bmvObj.val())
@@ -1110,6 +1244,18 @@ function bet(panelId){
 		betMap["info" + bmvObj.attr("info")] = betType + bmvObj.attr("info") + "-" + odds + "-" + curMoney;
 		infoArr.push(bmvObj.attr("info"))
 		money += parseInt(curMoney);
+		console.log($(betMoneyValueArr[i]))
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": $(betMoneyValueArr[i]).parent().parent().attr('data-creditplaytypeid'),
+			"content": null,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"ballNum": $(betMoneyValueArr[i]).parent().parent().find('.redBall').text(),
+			"rate": $(betMoneyValueArr[i]).parent().parent().find('.oddsCell').text(),
+			"commandLogAmount": parseInt(curMoney)
+		})
 	}
 	infoArr.sort();
 	for(var i = 0; i < infoArr.length; i++){
@@ -1123,7 +1269,7 @@ function bet(panelId){
 	}
 	if(money <= 0)
 		return;
-	sendBet(curRate + 1, betContent)
+	sendBet(curRate + 1, betContent, data)
 }
 
 function betAnimal6(){
@@ -1156,25 +1302,23 @@ function betAnimal6(){
 	sendBet(1, betContent)
 }
 
-function sendBet(rateType, betContent){
+function sendBet(rateType, betContent, data){
 	var isSend = confirm("是否下注？");
 	if(!isSend)
 		return;
 	clearBet();
-	var data = {
-		token: window.top.token,
-		gameID: window.top.gameArr[window.top.curIndex].id,
-		rateType: rateType,
-		betContent: betContent
-	}
-	Send(httpUrlData.generalBet, data, function(obj){
+	Send(httpUrlData.generalBet, JSON.stringify(data), function(obj){
+		var result = []
+		data.forEach(function(item) {
+			result.push(localStorage.getItem('creditPlayName') + ' ' + item.panKou + '盘 ' + item.ballNum + '@' + item.rate + '=' + item.commandLogAmount + ' OK')
+		})
 		if(obj.status == 1){
 			alert("赔率下降");
 			window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, 0);
 			return;
 		}
 		alert("下注成功");
-		window.top.showBetResultPanel(obj.betResult);
+		window.top.showBetResultPanel(result);
 		window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, window.top.lotteryData.rateVersion);
 	}, betErr)
 }
@@ -1360,15 +1504,30 @@ function clearBall(boxId){
 }
 var combArr = [];
 function betLinkNormalPanel(){
+	var data = []
 	var selectedBallArr = $("#linkNormalPanel .numCell .selected");
 	linkBetMoney = parseInt($("#linkNormalPanel .betRow .betMoneyValue").val());
 	if(selectedBallArr.length < linkCount || isNaN(linkBetMoney))
 		return;
 	var numArr = [];
 	linkBetContent = "";
+	var type = localStorage.getItem('lmType')
 	for(var i = 0; i < selectedBallArr.length; i++){
 		numArr.push(selectedBallArr.eq(i).text());
+		var content = type == 1 ? $('#linkNormalPanel').find('.w330 .linkNum').text() : null
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": $(selectedBallArr[i]).parent().parent().attr('data-creditplaytypeid'),
+			"content": content,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"ballNum": selectedBallArr.eq(i).text(),
+			"rate": $(selectedBallArr[i]).parent().parent().find('.odds1').text(),
+			"commandLogAmount": parseInt(linkBetMoney)
+		})
 	}
+	betData = data
 	numArr.sort();
 	linkBetContent = numArr.join(",");
 	var combArr = getCombinationResult(numArr, linkCount);
@@ -1378,11 +1537,40 @@ function betLinkNormalPanel(){
 function betLinkHeadPanel(){
 	var headSelectedBallArr = $("#linkHeadPanel .systemCont:eq(0) .numCell .selected");
 	var badySelectedBallArr = $("#linkHeadPanel .systemCont:eq(1) .numCell .selected");
+	var data = []
 	linkBetMoney = parseInt($("#linkHeadPanel .betRow .betMoneyValue").val());
 	if(headSelectedBallArr.length == 0 || badySelectedBallArr.length == 0 || isNaN(linkBetMoney))
 		return;
 	if(linkMode == 2 && headSelectedBallArr.length < linkCount - 1)
 		return;
+		var content = $('#linkHeadPanel').find('.w880 .linkNum').text()
+		headSelectedBallArr.each(function() {
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": $(this).parent().parent().attr('data-creditplaytypeid'),
+				"content": content,
+				"panKou": localStorage.getItem('pankou') || 'A',
+				"ballNum": $(this).text(),
+				"rate": $(this).parent().parent().find('.odds1').text(),
+				"commandLogAmount": parseInt(linkBetMoney)
+			})
+		})
+		badySelectedBallArr.each(function() {
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": $(this).parent().parent().attr('data-creditplaytypeid'),
+				"content": content,
+				"panKou": localStorage.getItem('pankou') || 'A',
+				"ballNum": $(this).text(),
+				"rate": $(this).parent().parent().find('.odds1').text(),
+				"commandLogAmount": parseInt(linkBetMoney)
+			})
+		})
+		betData = data
 	switch(linkMode){
 		case 2 : showLinkBetPanelHead(headSelectedBallArr, badySelectedBallArr); break;
 		case 6 : showLinkBetPanelPair(headSelectedBallArr, badySelectedBallArr); break;
@@ -1455,14 +1643,54 @@ function showLinkBetPanelPair(headSelectedBallArr, badySelectedBallArr){
 
 var linkAnimalNumArr = [];
 function betLinkAnimalPanel(){
+	var data = []
 	var selectedCheckArr = $("#linkAnimalPanel .numRow .selected");
 	linkBetMoney = parseInt($("#linkAnimalPanel .betRow .betMoneyValue").val());
 	if(selectedCheckArr.length < 2 || isNaN(linkBetMoney))
 		return;
-	linkAnimalNumArr = [];
-	linkAnimalNumArr.push(selectedCheckArr.eq(0).attr("info"));
-	linkAnimalNumArr.push(selectedCheckArr.eq(1).attr("info"));
-	linkAnimalNumArr.sort();
+		linkAnimalNumArr = [];
+		linkAnimalNumArr.push(selectedCheckArr.eq(0).attr("info"));
+		linkAnimalNumArr.push(selectedCheckArr.eq(1).attr("info"));
+		linkAnimalNumArr.sort();
+		var content = $('#linkAnimalPanel .linkNum').text()
+		console.log($('#linkAnimalPanel .linkNum'))
+		selectedCheckArr.eq(0).parents('.row').find('.cell').each(function() {
+			if ($(this).attr('data-creditplaytypeid')) {
+				var num = $(this).find('.numCell').text() < 10 ? $(this).find('.numCell').text()[1] : $(this).find('.numCell').text()
+				if (window.top.animalNumArr[linkAnimalNumArr[0]].numArr.includes(Number(num))) {
+					data.push({
+						"gameId": localStorage.getItem('gameId') || 1,
+						"gamePeriodId": 20,
+						"creditPlayId": localStorage.getItem('creditPlayId'),
+						"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
+						"content": content,
+						"panKou": localStorage.getItem('pankou') || 'A',
+						"ballNum": $(this).find('.numCell').text(),
+						"rate": $(this).find('.odds1').text(),
+						"commandLogAmount": parseInt(linkBetMoney)
+					})
+				}
+			}
+		})
+		selectedCheckArr.eq(1).parents('.row').find('.cell').each(function() {
+			if ($(this).attr('data-creditplaytypeid')) {
+				var num = $(this).find('.numCell').text() < 10 ? $(this).find('.numCell').text()[1] : $(this).find('.numCell').text()
+				if (window.top.animalNumArr[linkAnimalNumArr[1]].numArr.includes(Number(num))) {
+					data.push({
+						"gameId": localStorage.getItem('gameId') || 1,
+						"gamePeriodId": 20,
+						"creditPlayId": localStorage.getItem('creditPlayId'),
+						"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
+						"content": content,
+						"panKou": localStorage.getItem('pankou') || 'A',
+						"ballNum": $(this).find('.numCell').text(),
+						"rate": $(this).find('.odds1').text(),
+						"commandLogAmount": parseInt(linkBetMoney)
+					})
+				}
+			}
+		})
+		betData = data
 	linkBetContent = window.top.animalNumArr[linkAnimalNumArr[0]].animal  + ";" + window.top.animalNumArr[linkAnimalNumArr[1]].animal;
 	var combArr = twoArrPairing(window.top.animalNumArr[linkAnimalNumArr[0]].numArr, window.top.animalNumArr[linkAnimalNumArr[1]].numArr);
 	showLinkBetPanel(combArr);
@@ -1480,11 +1708,51 @@ function betLinkUnitNumPanel(){
 	linkBetContent = linkUnitNumArr.join(";");
 	var numArr1 = [];
 	var numArr2 = [];
+	var data = []
 	for(var i = 0; i < 5; i++){
 		if(i > 0 || linkUnitNumArr[0] != 0)
 			numArr1.push(i * 10 + linkUnitNumArr[0]);
 		numArr2.push(i * 10 + linkUnitNumArr[1]);
 	}
+	var content = $('#linkUnitNumPanel .linkNum').text()
+	selectedCheckArr.eq(0).parents('.row').find('.cell').each(function() {
+		if ($(this).attr('data-creditplaytypeid')) {
+			var num = $(this).find('.numCell').text() < 10 ? $(this).find('.numCell').text()[1] : $(this).find('.numCell').text()
+			if (numArr1.includes(Number(num))) {
+				data.push({
+					"gameId": localStorage.getItem('gameId') || 1,
+					"gamePeriodId": 20,
+					"creditPlayId": localStorage.getItem('creditPlayId'),
+					"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
+					"content": content,
+					"panKou": localStorage.getItem('pankou') || 'A',
+					"ballNum": $(this).find('.numCell').text(),
+					"rate": $(this).find('.odds1').text(),
+					"commandLogAmount": parseInt(linkBetMoney)
+				})
+			}
+		}
+	})
+	selectedCheckArr.eq(1).parents('.row').find('.cell').each(function() {
+		if ($(this).attr('data-creditplaytypeid')) {
+			var num = $(this).find('.numCell').text() < 10 ? $(this).find('.numCell').text()[1] : $(this).find('.numCell').text()
+			if (numArr2.includes(Number(num))) {
+				data.push({
+					"gameId": localStorage.getItem('gameId') || 1,
+					"gamePeriodId": 20,
+					"creditPlayId": localStorage.getItem('creditPlayId'),
+					"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
+					"content": content,
+					"panKou": localStorage.getItem('pankou') || 'A',
+					"ballNum": $(this).find('.numCell').text(),
+					"rate": $(this).find('.odds1').text(),
+					"commandLogAmount": parseInt(linkBetMoney)
+				})
+			}
+		}
+	})
+	console.log(data)
+	betData = data
 	var combArr = twoArrPairing(numArr1, numArr2);
 	showLinkBetPanel(combArr);
 }
@@ -1496,6 +1764,55 @@ function betLinkMixturePanel(){
 	linkBetMoney = parseInt($("#linkMixturePanel .betRow .betMoneyValue").val());
 	if(animalSelectedCheck.length == 0 || unitNumSelectedCheck.length == 0 || isNaN(linkBetMoney))
 		return;
+		linkMixNumArr = [];
+		linkMixNumArr.push(animalSelectedCheck.attr("info"));
+		linkMixNumArr.push(unitNumSelectedCheck.attr("info"));
+		console.log(unitNumSelectedCheck.attr("info"))
+		var data = []
+	var numArr1 = [];
+	for(var i = 0; i < 5; i++){
+		numArr1.push(i * 10 + Number(linkMixNumArr[1]));
+	}
+	console.log(window.top.animalNumArr[linkMixNumArr[0]].numArr, numArr1)
+	var content = $('#linkAnimalPanel .linkNum').text()
+	animalSelectedCheck.parents('.row').find('.cell').each(function() {
+		if ($(this).attr('data-creditplaytypeid')) {
+			var num = $(this).find('.numCell').text() < 10 ? $(this).find('.numCell').text()[1] : $(this).find('.numCell').text()
+			if (window.top.animalNumArr[linkMixNumArr[0]].numArr.includes(Number(num))) {
+				data.push({
+					"gameId": localStorage.getItem('gameId') || 1,
+					"gamePeriodId": 20,
+					"creditPlayId": localStorage.getItem('creditPlayId'),
+					"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
+					"content": content,
+					"panKou": localStorage.getItem('pankou') || 'A',
+					"ballNum": $(this).find('.numCell').text(),
+					"rate": $(this).find('.odds1').text(),
+					"commandLogAmount": parseInt(linkBetMoney)
+				})
+			}
+		}
+	})
+	unitNumSelectedCheck.parents('.row').find('.cell').each(function() {
+		if ($(this).attr('data-creditplaytypeid')) {
+			var num = $(this).find('.numCell').text() < 10 ? $(this).find('.numCell').text()[1] : $(this).find('.numCell').text()
+			if (numArr1.includes(Number(num))) {
+				data.push({
+					"gameId": localStorage.getItem('gameId') || 1,
+					"gamePeriodId": 20,
+					"creditPlayId": localStorage.getItem('creditPlayId'),
+					"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
+					"content": content,
+					"panKou": localStorage.getItem('pankou') || 'A',
+					"ballNum": $(this).find('.numCell').text(),
+					"rate": $(this).find('.odds1').text(),
+					"commandLogAmount": parseInt(linkBetMoney)
+				})
+			}
+		}
+	})
+	betData = data
+	console.log(data)
 	showLinkBetPanel(linkMixCombArr);
 }
 
@@ -1895,22 +2212,15 @@ var linkMode = 1;
 var linkBetMoney = 0;
 var linkBetContent = "";
 var linkNumGroup = "";
+var betData = []
 function sendBetLink(){
 	var isSend = confirm("是否下注？");
 	if(!isSend)
 		return;
 	clearBet();
 	$("#linkBetPanel").hide();
-	var data = {
-		token: window.top.token,
-		gameID: window.top.gameArr[window.top.curIndex].id,
-		betType: linkBetType,
-		mode: linkMode,
-		betMoney: linkBetMoney,
-		betContent: linkBetContent,
-		numGroup: linkNumGroup
-	}
-	Send(httpUrlData.multiNumBet, data, function(obj){
+	var data = betData
+	Send(httpUrlData.generalBet, JSON.stringify(data), function(obj){
 		if(obj.status == 1){
 			alert("赔率下降");
 			var info = [];
@@ -1938,7 +2248,29 @@ function sendBetLink(){
 			return;
 		}
 		alert("下注成功");
-		window.top.showBetResultPanel(obj.betResult);
+		var result = []
+		var balls = []
+		var rates = []
+		var money = ''
+		var content = ''
+		var lmType = localStorage.getItem('lmType')
+		var resultStr = ''
+		data.forEach(function(item) {
+			balls.push(item.ballNum)
+			rates.push(item.rate)
+			money = item.commandLogAmount
+			content = item.content || ''
+		})
+		switch(lmType) {
+			case '1':
+				resultStr = localStorage.getItem('gameType') + $('.linkCombType .radio.selected').next().text() + content + '@' + rates.toString() + '=' + money + ' OK'
+				break
+			default:
+				resultStr = localStorage.getItem('gameType') + $('.linkCombType .radio.selected').next().text() + content + balls.toString() + '@' + rates.toString() + '=' + money + ' OK'
+				break
+		}
+		result = [resultStr]
+		window.top.showBetResultPanel(result);
 		window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, window.top.lotteryData.rateVersion);
 	},betErr)
 }
