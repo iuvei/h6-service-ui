@@ -607,6 +607,8 @@ function updateAnimal6Odds(){
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		updateItemOdds($(".ctrlPanel .ctrlCont .animal6Ctrl .odds:eq(0)"), window.top.rateData[1141001][0]);
 		updateItemOdds($(".ctrlPanel .ctrlCont .animal6Ctrl .odds:eq(1)"), window.top.rateData[1141002][0]);
+		$(".ctrlPanel .ctrlCont .animal6Ctrl .odds:eq(0)").attr('data-creditplaytypeid', window.top.rateData[1141001][2]);
+		$(".ctrlPanel .ctrlCont .animal6Ctrl .odds:eq(0)").attr('data-creditplaytypeid', window.top.rateData[1141002][2]);
 		var checkedArr = $("#animal6Panel .systemCont .cell .checkCell .check.selected");
 		if(checkedArr.length == 5){
 			var num = parseInt(checkedArr.eq(0).attr("info")) % 2;
@@ -1310,6 +1312,7 @@ function betAnimal6(){
 	var curRadio = $(".ctrlPanel .ctrlCont .animal6Ctrl .radio.selected");
 	var info = curRadio.attr("info"); 
 	var odds = curRadio.siblings(".odds").text();
+	console.log(curRadio)
 	if(odds == 0){
 		alert("赔率为0不可下注！")
 		return;
@@ -1324,13 +1327,29 @@ function betAnimal6(){
 		alert("余额不足！")
 		return;
 	}
-	var betContent = info + "-" + odds + "-" + betMoney + "-";
+	var betContent = ''
+	var rateEle = curRadio.next().next()
+	var data = []
 	for(var i = 0; i < checkedArr.length; i++){
 		if(i > 0)
 			betContent += ",";
 		betContent += window.top.animalNumArr[$(checkedArr[i]).attr("info")].animal;
 	}
-	sendBet(1, betContent)
+	for(var i = 0; i < checkedArr.length; i++){
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": rateEle.attr('data-creditplaytypeid'),
+			"content": betContent,
+			"panKou": null,
+			"ballNum": $(checkedArr[i]).parents('.cell').find('.animalCell').text(),
+			"rate": odds,
+			"commandLogAmount": parseInt(betMoney),
+			"type":  curRadio.next().text()
+		})
+	}
+	sendBet(1, betContent, data)
 }
 
 function sendBet(rateType, betContent, data){
@@ -1344,10 +1363,14 @@ function sendBet(rateType, betContent, data){
 		data.forEach(function(item) {
 			if (['特肖', '半波'].includes(gameType)) {
 				result.push(gameType + ' ' + item.ballNum + '@' + item.rate + '=' + item.commandLogAmount + ' OK')
+			} else if (gameType === '六肖') {
 			} else {
 				result.push(localStorage.getItem('creditPlayName') + ' ' + item.panKou + '盘 ' + item.ballNum + '@' + item.rate + '=' + item.commandLogAmount + ' OK')
 			}
 		})
+		if (gameType === '六肖') {
+			result = [(data.map(item => item.ballNum)).toString() + '@' + data[0].rate + '=' + data[0].commandLogAmount + ' OK']
+		}
 		if(obj.status == 1){
 			alert("赔率下降");
 			window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, 0);
