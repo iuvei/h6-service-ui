@@ -790,6 +790,7 @@ function setAnimalLinkOdds(){
 		var startId = linkBetType * 1000 + 1; 
 		for(var i = 0; i < 12; i++){
 			updateItemOdds($("#animalLinkPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), window.top.rateData[startId + i][0]);
+			$("#animalLinkPanel .systemCont .numRow .oddsCell:eq(" + i + ")").attr('data-creditplaytypeid', window.top.rateData[startId + i][2]);
 		}
 	}
 	else{
@@ -855,6 +856,7 @@ function setUnitLinkOdds(){
 		var startId = linkBetType * 1000; 
 		for(var i = 0; i < 10; i++){
 			updateItemOdds($("#unitLinkPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), window.top.rateData[startId + i][0]);
+			$("#unitLinkPanel .systemCont .numRow .oddsCell:eq(" + i + ")").attr('data-creditplaytypeid', window.top.rateData[startId + i][2]);
 		}
 	}
 	else{
@@ -1955,8 +1957,18 @@ function betAnimalLinkPanel(){
 	var headSelectedArr = $("#animalLinkPanel .systemCont .cell .checkCell .selected.disable");
 	var bodySelectedArr = $("#animalLinkPanel .systemCont .cell .checkCell .selected:not(.disable)");
 	linkBetMoney = parseInt($("#animalLinkPanel .betRow .betMoneyValue").val());
+	var data = []
 	if(isNaN(linkBetMoney))
 		return;
+	var type = "";
+	switch(linkCount){
+		case 2 : type = "二肖连"; break;
+		case 3 : type = "三肖连"; break;
+		case 4 : type = "四肖连"; break;
+		case 5 : type = "五肖连"; break;
+	}
+	if(isMiss == "true")
+		type += "不中";
 	if(animalLinkType == "0"){
 		if(bodySelectedArr.length < linkCount)
 			return;
@@ -1968,6 +1980,21 @@ function betAnimalLinkPanel(){
 			if(i > 0)
 				linkBetContent += ",";
 			linkBetContent += window.top.animalNumArr[num].animal;
+		}
+		for(var i = 0; i < bodySelectedArr.length; i++){
+			var selectedParent = bodySelectedArr.eq(i).parents('.cell')
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
+				"content": linkBetContent,
+				"panKou": null,
+				"ballNum": selectedParent.find('.animalCell').text(),
+				"rate": selectedParent.find('.oddsCell').text(),
+				"commandLogAmount": parseInt(linkBetMoney),
+				"type": type
+			})
 		}
 		var combArr = getCombinationResult(numArr, linkCount);
 		linkMode = 1;
@@ -1998,18 +2025,40 @@ function betAnimalLinkPanel(){
 			combArr[i].sort();
 			combArr[i] = combArr[i].join(",");
 		}
+		for(var i = 0; i < bodySelectedArr.length; i++){
+			var selectedParent = bodySelectedArr.eq(i).parents('.cell')
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
+				"content": linkBetContentHead + "拖" + linkBetContentBody,
+				"panKou": null,
+				"ballNum": selectedParent.find('.animalCell').text(),
+				"rate": selectedParent.find('.oddsCell').text(),
+				"commandLogAmount": parseInt(linkBetMoney),
+				"type": type
+			})
+		}
+		for(var i = 0; i < headSelectedArr.length; i++){
+			var selectedParent = headSelectedArr.eq(i).parents('.cell')
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
+				"content": linkBetContentHead + "拖" + linkBetContentBody,
+				"panKou": null,
+				"ballNum": selectedParent.find('.animalCell').text(),
+				"rate": selectedParent.find('.oddsCell').text(),
+				"commandLogAmount": parseInt(linkBetMoney),
+				"type": type
+			})
+		}
 		linkBetContent = linkBetContentHead + ";" + linkBetContentBody;
 		linkMode = 2;
 	}
-	var type = "";
-	switch(linkCount){
-		case 2 : type = "二肖连"; break;
-		case 3 : type = "三肖连"; break;
-		case 4 : type = "四肖连"; break;
-		case 5 : type = "五肖连"; break;
-	}
-	if(isMiss == "true")
-		type += "不中";
+	betData = data
 	showLinkBetPanel(combArr, type);
 }
 function betUnitLinkPanel(){
@@ -2017,9 +2066,19 @@ function betUnitLinkPanel(){
 	var isMiss = $("#unitLinkPanel .ctrlSystemCont .betRow .selected").attr("info");
 	var headSelectedArr = $("#unitLinkPanel .systemCont:eq(0) .cell .checkCell .selected.disable");
 	var bodySelectedArr = $("#unitLinkPanel .systemCont:eq(0) .cell .checkCell .selected:not(.disable)");
+	var data = []
 	linkBetMoney = parseInt($("#unitLinkPanel .betRow .betMoneyValue").val());
 	if(isNaN(linkBetMoney))
 		return;
+	var type = "";
+	switch(linkCount){
+		case 2 : type = "二尾连"; break;
+		case 3 : type = "三尾连"; break;
+		case 4 : type = "四尾连"; break;
+		case 5 : type = "五尾连"; break;
+	}
+	if(isMiss == "true")
+		type += "不中";
 	if(unitLinkType == "0"){
 		if(bodySelectedArr.length < linkCount)
 			return;
@@ -2031,6 +2090,21 @@ function betUnitLinkPanel(){
 			if(i > 0)
 				linkBetContent += ",";
 			linkBetContent += num + "尾";
+		}
+		for(var i = 0; i < bodySelectedArr.length; i++){
+			var selectedParent = bodySelectedArr.eq(i).parents('.cell')
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
+				"content": linkBetContent,
+				"panKou": null,
+				"ballNum": selectedParent.find('.animalCell').text(),
+				"rate": selectedParent.find('.oddsCell').text(),
+				"commandLogAmount": parseInt(linkBetMoney),
+				"type": type
+			})
 		}
 		var combArr = getCombinationResult(numArr, linkCount);
 		linkMode = 1;
@@ -2061,18 +2135,40 @@ function betUnitLinkPanel(){
 			combArr[i].sort();
 			combArr[i] = combArr[i].join(",");
 		}
+		for(var i = 0; i < bodySelectedArr.length; i++){
+			var selectedParent = bodySelectedArr.eq(i).parents('.cell')
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
+				"content": linkBetContentHead + "拖" + linkBetContentBody,
+				"panKou": null,
+				"ballNum": selectedParent.find('.animalCell').text(),
+				"rate": selectedParent.find('.oddsCell').text(),
+				"commandLogAmount": parseInt(linkBetMoney),
+				"type": type
+			})
+		}
+		for(var i = 0; i < headSelectedArr.length; i++){
+			var selectedParent = headSelectedArr.eq(i).parents('.cell')
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
+				"content": linkBetContentHead + "拖" + linkBetContentBody,
+				"panKou": null,
+				"ballNum": selectedParent.find('.animalCell').text(),
+				"rate": selectedParent.find('.oddsCell').text(),
+				"commandLogAmount": parseInt(linkBetMoney),
+				"type": type
+			})
+		}
 		linkBetContent = linkBetContentHead + ";" + linkBetContentBody;
 		linkMode = 2;
 	}
-	var type = "";
-	switch(linkCount){
-		case 2 : type = "二尾连"; break;
-		case 3 : type = "三尾连"; break;
-		case 4 : type = "四尾连"; break;
-		case 5 : type = "五尾连"; break;
-	}
-	if(isMiss == "true")
-		type += "不中";
+	betData = data
 	showLinkBetPanel(combArr, type);
 }
 
@@ -2380,6 +2476,10 @@ function sendBetLink(){
 		switch(gameType) {
 			case '五不中':
 				resultStr = localStorage.getItem('creditPlayName') + $('.linkCombType .radio.selected').next().text() + content + '@' + rates.toString() + '=' + money + ' OK'
+				break
+			case '生肖连':
+			case '尾数连':
+				resultStr = data[0].type + content + '@' + rates.toString() + '=' + money + ' OK'
 				break
 
 		}
