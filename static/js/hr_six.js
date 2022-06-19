@@ -691,12 +691,12 @@ function setMissPanel(index, isInit){
 	missIndex = index;
 	clearBet();
 	switch(index){
-		case 0 : missCheckMaxCount = 8; linkCount = 5; break;
-		case 1 : missCheckMaxCount = 9; linkCount = 6; break;
-		case 2 : missCheckMaxCount = 10; linkCount = 7; break;
-		case 3 : missCheckMaxCount = 10; linkCount = 8; break;
-		case 4 : missCheckMaxCount = 11; linkCount = 9; break;
-		case 5 : missCheckMaxCount = 12; linkCount = 10; break;
+		case 0 : missCheckMaxCount = 8; linkCount = 5; localStorage.setItem('creditPlayName', '五不中'); break;
+		case 1 : missCheckMaxCount = 9; linkCount = 6; localStorage.setItem('creditPlayName', '六不中'); break;
+		case 2 : missCheckMaxCount = 10; linkCount = 7; localStorage.setItem('creditPlayName', '七不中'); break;
+		case 3 : missCheckMaxCount = 10; linkCount = 8; localStorage.setItem('creditPlayName', '八不中'); break;
+		case 4 : missCheckMaxCount = 11; linkCount = 9; localStorage.setItem('creditPlayName', '九不中'); break;
+		case 5 : missCheckMaxCount = 12; linkCount = 10; localStorage.setItem('creditPlayName', '十不中'); break;
 	}
 	linkBetType = 1381 + index * 10;
 	window.top.getDataBetType = linkBetType.toString();
@@ -720,6 +720,7 @@ function updateMissOdds(){
 		$("#missPanel .numRow .checkCell .check").removeClass("disable");
 		for(var i = 0; i < 49; i++){
 			updateItemOdds($("#missPanel .systemCont .numRow .num" + (i + 1) + " .oddsCell"), window.top.rateData[startId + i][0]);
+			$("#missPanel .systemCont .numRow .num" + (i + 1) + " .oddsCell").attr('data-creditplaytypeid', window.top.rateData[startId + i][2]);
 		}
 	}
 	else{
@@ -1841,7 +1842,6 @@ function betLinkUnitNumPanel(){
 			}
 		}
 	})
-	console.log(data)
 	betData = data
 	var combArr = twoArrPairing(numArr1, numArr2);
 	showLinkBetPanel(combArr);
@@ -1912,11 +1912,28 @@ function betMissPanel(){
 	if(selectedArr.length < linkCount || isNaN(linkBetMoney))
 		return;
 	var numArr = [];
+	var data = []
 	linkBetContent = "";
 	for(var i = 0; i < selectedArr.length; i++){
 		numArr.push(selectedArr.eq(i).attr("info"));
 	}
 	numArr.sort();
+	
+	for(var i = 0; i < selectedArr.length; i++){
+		var selectedParent = selectedArr.eq(i).parents('.cell')
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
+			"content": numArr.toString(),
+			"panKou": null,
+			"ballNum": selectedParent.find('.numCell').text(),
+			"rate": selectedParent.find('.oddsCell').text(),
+			"commandLogAmount": parseInt(linkBetMoney)
+		})
+	}
+	betData = data
 	linkBetContent = numArr.join(",");
 	var combArr = getCombinationResult(numArr, linkCount);
 	linkMode = 1;
@@ -2304,6 +2321,7 @@ var linkBetContent = "";
 var linkNumGroup = "";
 var betData = []
 function sendBetLink(){
+	var gameType = localStorage.getItem('gameType')
 	var isSend = confirm("是否下注？");
 	if(!isSend)
 		return;
@@ -2352,12 +2370,18 @@ function sendBetLink(){
 			content = item.content || ''
 		})
 		switch(lmType) {
-			case '1':
+			case '1':	
 				resultStr = localStorage.getItem('gameType') + $('.linkCombType .radio.selected').next().text() + content + '@' + rates.toString() + '=' + money + ' OK'
 				break
 			default:
 				resultStr = localStorage.getItem('gameType') + $('.linkCombType .radio.selected').next().text() + content + balls.toString() + '@' + rates.toString() + '=' + money + ' OK'
 				break
+		}
+		switch(gameType) {
+			case '五不中':
+				resultStr = localStorage.getItem('creditPlayName') + $('.linkCombType .radio.selected').next().text() + content + '@' + rates.toString() + '=' + money + ' OK'
+				break
+
 		}
 		result = [resultStr]
 		window.top.showBetResultPanel(result);

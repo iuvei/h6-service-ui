@@ -610,9 +610,16 @@ function toLotteryTab(tabIndex, isInit) {
       lotteryFrame.setLotteryTab();
     }
   }
-  localStorage.setItem('creditPlayName', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
+  // localStorage.setItem('creditPlayName', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
   if (originCreditPlayId !== creditPlayId) {
-    localStorage.setItem('creditPlayName', '正1')
+    switch($(".secMenuCont .secItem:eq(" + tabIndex + ")").text()) {
+      case '正码特':
+        localStorage.setItem('creditPlayName', '正1')
+        break
+      case '五不中':
+        localStorage.setItem('creditPlayName', '五不中')
+        break
+    }
   }
   if (!isInit)
     window.top.heartTime = 0;
