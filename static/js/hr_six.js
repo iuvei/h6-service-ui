@@ -658,8 +658,10 @@ function updateAnimal1Odds(betType){
 	otherNumCloseTime = 100
 	var startId = betType * 10000 + 1001
 	for(var i = 0; i < 12; i++){
-		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0)
+		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0) {
 			updateItemOdds($("#animal1Panel .systemCont .numRow .oddsCell:eq(" + i + ")"), window.top.rateData[startId + i][0]);
+			$("#animal1Panel .systemCont .numRow .oddsCell:eq(" + i + ")").attr('data-creditplaytypeid', window.top.rateData[startId + i][2]);
+		}
 		else
 			updateItemOdds($("#animal1Panel .systemCont .numRow .oddsCell:eq(" + i + ")"), -1);
 	}
@@ -676,8 +678,10 @@ function setUnitNumPanel(){
 function updateUnitNumOdds(){
 	otherNumCloseTime = 100
 	for(var i = 0; i < 10; i++){
-		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0)
+		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0) { 
 			updateItemOdds($("#unitNumPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), window.top.rateData[1101000 + i][0]);
+			$("#unitNumPanel .systemCont .numRow .oddsCell:eq(" + i + ")").attr('data-creditplaytypeid', window.top.rateData[1101000 + i][2]);
+		}
 		else
 			updateItemOdds($("#unitNumPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), -1);
 	}
@@ -1276,6 +1280,30 @@ function bet(panelId){
 				"rate": $(betMoneyValueArr[i]).parent().prev().text(),
 				"commandLogAmount": parseInt(curMoney)
 			})
+		} else if (panelId === 'animal1Panel') {
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
+				"content": null,
+				"panKou": null,
+				"ballNum": $(betMoneyValueArr[i]).parents('.cell').find('.animalCell').text(),
+				"rate": $(betMoneyValueArr[i]).parent().prev().text(),
+				"commandLogAmount": parseInt(curMoney)
+			})
+		} else if (panelId === 'unitNumPanel') {
+			data.push({
+				"gameId": localStorage.getItem('gameId') || 1,
+				"gamePeriodId": 20,
+				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
+				"content": null,
+				"panKou": null,
+				"ballNum": $(betMoneyValueArr[i]).parents('.cell').find('.unitNumCell').text(),
+				"rate": $(betMoneyValueArr[i]).parent().prev().text(),
+				"commandLogAmount": parseInt(curMoney)
+			})
 		} else {
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
@@ -1363,13 +1391,16 @@ function sendBet(rateType, betContent, data){
 		data.forEach(function(item) {
 			if (['特肖', '半波'].includes(gameType)) {
 				result.push(gameType + ' ' + item.ballNum + '@' + item.rate + '=' + item.commandLogAmount + ' OK')
-			} else if (gameType === '六肖') {
+			} else if (['六肖', '一肖', '一肖不中'].includes(gameType)) {
+			} else if (['尾数'].includes(gameType)) {
+				result.push(gameType + ' ' + item.ballNum + '@' + item.rate + '=' + item.commandLogAmount + ' OK')
 			} else {
 				result.push(localStorage.getItem('creditPlayName') + ' ' + item.panKou + '盘 ' + item.ballNum + '@' + item.rate + '=' + item.commandLogAmount + ' OK')
 			}
 		})
-		if (gameType === '六肖') {
-			result = [(data.map(item => item.ballNum)).toString() + '@' + data[0].rate + '=' + data[0].commandLogAmount + ' OK']
+		if (['六肖', '一肖', '一肖不中'].includes(gameType)) {
+			var type = gameType + (data[0].type || '')
+			result = [type + (data.map(item => item.ballNum)).toString() + '@' + data[0].rate + '=' + data[0].commandLogAmount + ' OK']
 		}
 		if(obj.status == 1){
 			alert("赔率下降");
