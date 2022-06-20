@@ -37,6 +37,8 @@ var animalNumArr = [
 $(function() {
   resize();
   localStorage.setItem('creditPlayId', '')
+  localStorage.setItem('gameType', '特码')
+  localStorage.setItem('creditPlayName', '')
   $("#logo").attr("src", localStorage.getItem("logoUrl"));
   var arr = localStorage.getItem("gameArrStr").split(",");
   for(var i = 0; i < arr.length; i++){
@@ -729,11 +731,13 @@ function showQuickBetPanel(rate, index) {
   quickRate = rate;
   var titleStr = "";
   var betType = 1011;
+  var rateData = []
   switch (curTab) {
-    case 0: titleStr = "特码"; betType = 1011; quickAddId = 1011000; break;
-    case 1: titleStr = "正码"; betType = 1081; quickAddId = 1081000; break;
-    case 2: titleStr = "正" + index; betType = 1011 + 10 * index; quickAddId = 1011000 + 10000 * index; break;
+    case 0: titleStr = "特码"; betType = 1011; quickAddId = 1011000; rateData = lotteryData.rate.find(item => item.creditPlayId == 1).creditPlayTypeDtoList[0]; break;
+    case 1: titleStr = "正码"; betType = 1081; quickAddId = 1081000; rateData = lotteryData.rate.find(item => item.creditPlayId == 2).creditPlayTypeDtoList[0]; break;
+    case 2: titleStr = "正" + index; betType = 1011 + 10 * index; quickAddId = 1011000 + 10000 * index; rateData = lotteryData.rate.find(item => item.creditPlayId == 3).creditPlayTypeDtoList[index - 1]; break;
   }
+  setQuickBet(rateData, rate)
   titleStr += rate == 0 ? "A盘" : "B盘";
   quickBetClear();
   // for (var i = 0; i < quotaArr.length; i++) {
@@ -744,12 +748,24 @@ function showQuickBetPanel(rate, index) {
   // }
   $(".quickBetPanel .quickBetInfo").html("");
   $(".left .quickBetPanel .quickBetTitle").text(titleStr);
-  $(".left .quickBetPanel .creditAmount").text(lotteryData.creditMoney);
+  $(".left .quickBetPanel .creditAmount").text(lotteryData.creditBalance);
   $(".left .quickBetPanel .orderMinQuota").text(1000);
   $(".left .quickBetPanel .orderMaxQuota").text(1000);
   $(".left .quickBetPanel .issueMaxQuota").text(1000);
   $(".left .leftPanel").hide();
   $(".left .quickBetPanel").show();
+}
+function setQuickBet(obj, rate) {
+   $('.quickBetPanel .quickBetNum').each(function() {
+    var key = $(this).text()[0] == '0' ? $(this).text()[1] : $(this).text()
+    var rateMap = {}
+    obj.creditPlayTypeInfoDtoList.forEach(function(item) {
+      rateMap[item.creditPlayTypeName] = item
+    })
+    var d = rateMap[key] || {}
+    $(this).attr('data-creditplaytypeid', d.creditPlayTypeId)
+    $(this).attr('data-rate', rate == 0 ? d.odds : d.odds2)
+   })
 }
 
 function clickQuickBetNum(obj) {
@@ -845,6 +861,17 @@ function createQuickBetInfo() {
       info: '<div>' + titleStr + numArr.eq(i).text() + '@' + odds + '=' + betMoney + '</div>'
     }
     tmpNumArr.push(numStr);
+		quickBetData.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": numArr.eq(i).attr('data-creditplaytypeid'),
+			"content": null,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"ballNum": numArr.eq(i).text(),
+			"rate": numArr.eq(i).attr('data-rate'),
+			"commandLogAmount": parseInt(betMoney)
+		})
   }
   tmpNumArr.sort();
   for (var i = 0; i < tmpNumArr.length; i++) {
@@ -859,11 +886,11 @@ function createQuickBetInfo() {
 function clearQuickSelected() {
   $(".quickBetPanel .quickBetCtrlTable .row .selected").removeClass("selected");
 }
-
+var quickBetData = []
 function quickBet() {
   if ($(".quickBetInfo").html() == "")
     return;
-  lotteryFrame.sendBet(quickRate + 1, quickBetContent)
+  lotteryFrame.sendBet(quickRate + 1, quickBetContent, quickBetData)
 }
 
 function quickBetClear() {
