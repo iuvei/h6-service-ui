@@ -6,13 +6,12 @@ $(function(){
 
 function getBetDetailData(page){
 	var data = {
-		"gameId":1,
-		"userId":118,
-		"gamePeriod":64,
+		"gameId": 1,
+		"amount":0
 	}
 	$.ajax({
 		type: 'post',
-		url: serverMap[httpUrlData.listBetDetail.server] + httpUrlData.listBetDetail.url,
+		url: serverMap[httpUrlData.listBetDetailList.server] + httpUrlData.listBetDetail.url,
 		data: JSON.stringify(data),
 		contentType: 'application/json;charset=UTF-8',
 		async : true,

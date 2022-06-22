@@ -11,11 +11,14 @@
 .systemTable .row .cell{
 	height: 32px;
 	line-height: 32px;
-	/* display: inline-block; */
+	display: inline-block;
 }
 
 .systemTable .dateCell{
 	width: 90px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .systemTable .issueCell{
