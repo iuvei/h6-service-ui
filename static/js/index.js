@@ -110,7 +110,7 @@ function getGameData(isInit) {
 			var dt = new Date();
 			lotteryData = mergeObj({rate: obj}, lotteryData)
 			lotteryData.quota = []
-			timeDif = dt.getTime() - lotteryData.systemTime;
+			timeDif = dt.getTime();
 			lotteryData.openResultTime = obj.openResultTime + timeDif;
 			lotteryData.especialNumCloseTime = obj.especialNumCloseTime + timeDif;
 			lotteryData.otherNumCloseTime = obj.otherNumCloseTime + timeDif;
@@ -509,14 +509,22 @@ function getCurrentPeriod() {
 		contentType: 'application/json;charset=UTF-8',
 		async : true,
 		timeout : 30000,
+    data: {
+      gameId: 1
+    },
 		headers: {
 			Authorization: localStorage.getItem('token')
 		},
     success(obj) {
+      obj.startTime
       console.log(obj)
+			lotteryData.openResultTime = obj.realOpen + timeDif; // 开奖结果时间
+			lotteryData.especialNumCloseTime = obj.especialNumCloseTime + timeDif;
+			lotteryData.otherNumCloseTime = obj.otherNumCloseTime + timeDif;
+			lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
+			lotteryData.openTime = obj.openTime + timeDif;
     }
   })
-  
 }
 
 function update() {

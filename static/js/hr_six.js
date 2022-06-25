@@ -1238,7 +1238,6 @@ function bet(panelId){
 	var betMap = {};
 	var infoArr = [];
 	var data = []
-	var gameType = localStorage.getItem('gameType')
 	for(var i = 0; i < betMoneyValueArr.length; i++){
 		bmvObj = $(betMoneyValueArr[i]);
 		var curMoney = parseInt(bmvObj.val())

@@ -22,4 +22,3 @@ var httpUrlData = {
 	getMemberMaterial: {name: "查询会员资料", url: "/p/user/userPlay", type: 'get', server: "MarkSixGame"},
 	getCurrentResultNum: {name: "查询当前期开奖号码", url: "/MarkSixGame/Game/getCurrentResultNum", server: "MarkSixGame"},
 }
-// http://43.252.208.199:8086/p/creditPlayType/findCreditPlayTypeInfo

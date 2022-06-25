@@ -284,11 +284,15 @@ function setNormalNumTab(){
 
 function initNumPanelOdds(betType){
 	var numStartIndex = betType * 10000 + 1
-	var disable = window.top.lotteryData.status != OPEN_STATUS;
+	window.top.lotteryData.status = 1
+	window.top.otherNumCloseTime = 100
+	window.top.especialNumCloseTime = 100
 	for(var i = 0; i < 49; i++){
 		var itemId = numStartIndex + 1000 + i;
-		if(window.top.lotteryData.status == OPEN_STATUS && ((betType == 101 && window.top.especialNumCloseTime > 0) || (betType > 101 && window.top.otherNumCloseTime > 0)))
+		if(window.top.lotteryData.status == OPEN_STATUS && ((betType == 101 && window.top.especialNumCloseTime > 0) || (betType > 101 && window.top.otherNumCloseTime > 0))) {
+			$("#numPanel .numRow .item" + (1001 + i)).attr('data-creditplaytypeid', window.top.rateData[itemId][2]);
 			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), window.top.rateData[itemId][curRate]);
+		}
 		else
 			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), -1);
 	}			
@@ -309,6 +313,19 @@ function initNumPanelOdds(betType){
 				updateItemOdds($("#numPanel .towBox .twoRow .two6002 .oddsCell"), window.top.rateData[1016002][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two7001 .oddsCell"), window.top.rateData[1017001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two7002 .oddsCell"), window.top.rateData[1017002][curRate]);
+				$("#numPanel .towBox .twoRow .two2001").attr('data-creditplaytypeid', window.top.rateData[1012001][2]);
+				$("#numPanel .towBox .twoRow .two2002").attr('data-creditplaytypeid', window.top.rateData[1012002][2]);
+				$("#numPanel .towBox .twoRow .two3001").attr('data-creditplaytypeid', window.top.rateData[1013001][2]);
+				$("#numPanel .towBox .twoRow .two3002").attr('data-creditplaytypeid', window.top.rateData[1013002][2]);
+				$("#numPanel .towBox .twoRow .two4001").attr('data-creditplaytypeid', window.top.rateData[1014001][2]);
+				$("#numPanel .towBox .twoRow .two4002").attr('data-creditplaytypeid', window.top.rateData[1014002][2]);
+				$("#numPanel .towBox .twoRow .two5001").attr('data-creditplaytypeid', window.top.rateData[1015001][2]);
+				$("#numPanel .towBox .twoRow .two5002").attr('data-creditplaytypeid', window.top.rateData[1015002][2]);
+				$("#numPanel .towBox .twoRow .two5003").attr('data-creditplaytypeid', window.top.rateData[1015003][2]);
+				$("#numPanel .towBox .twoRow .two6001").attr('data-creditplaytypeid', window.top.rateData[1016001][2]);
+				$("#numPanel .towBox .twoRow .two6002").attr('data-creditplaytypeid', window.top.rateData[1016002][2]);
+				$("#numPanel .towBox .twoRow .two7001").attr('data-creditplaytypeid', window.top.rateData[1017001][2]);
+				$("#numPanel .towBox .twoRow .two7002").attr('data-creditplaytypeid', window.top.rateData[1017002][2]);
 			}
 			else{
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);
@@ -344,7 +361,16 @@ function initNumPanelOdds(betType){
 				updateItemOdds($("#numPanel .towBox .twoRow .two4002 .oddsCell"), window.top.rateData[addIndex + 4002][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two5001 .oddsCell"), window.top.rateData[addIndex + 5001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two5002 .oddsCell"), window.top.rateData[addIndex + 5002][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[addIndex + 5003][curRate]);			
+				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[addIndex + 5003][curRate]);	
+				$("#numPanel .towBox .twoRow .two2001").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2001][2]);		
+				$("#numPanel .towBox .twoRow .two2002").attr('data-creditplaytypeid', window.top.rateData[addIndex + 2002][2]);		
+				$("#numPanel .towBox .twoRow .two3001").attr('data-creditplaytypeid', window.top.rateData[addIndex + 3001][2]);		
+				$("#numPanel .towBox .twoRow .two3002").attr('data-creditplaytypeid', window.top.rateData[addIndex + 3002][2]);		
+				$("#numPanel .towBox .twoRow .two4001").attr('data-creditplaytypeid', window.top.rateData[addIndex + 4001][2]);		
+				$("#numPanel .towBox .twoRow .two4002").attr('data-creditplaytypeid', window.top.rateData[addIndex + 4002][2]);		
+				$("#numPanel .towBox .twoRow .two5001").attr('data-creditplaytypeid', window.top.rateData[addIndex + 5001][2]);		
+				$("#numPanel .towBox .twoRow .two5002").attr('data-creditplaytypeid', window.top.rateData[addIndex + 5002][2]);		
+				$("#numPanel .towBox .twoRow .two5003").attr('data-creditplaytypeid', window.top.rateData[addIndex + 5003][2]);		
 			}else{
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);
 				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), -1);
@@ -364,6 +390,10 @@ function initNumPanelOdds(betType){
 				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), window.top.rateData[1082002][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two3001 .oddsCell"), window.top.rateData[1083001][curRate]);
 				updateItemOdds($("#numPanel .towBox .twoRow .two3002 .oddsCell"), window.top.rateData[1083002][curRate]);
+				$("#numPanel .towBox .twoRow .two2001").attr('data-creditplaytypeid', window.top.rateData[1082001][2]);		
+				$("#numPanel .towBox .twoRow .two2002").attr('data-creditplaytypeid', window.top.rateData[1082002][2]);		
+				$("#numPanel .towBox .twoRow .two3001").attr('data-creditplaytypeid', window.top.rateData[1083001][2]);		
+				$("#numPanel .towBox .twoRow .two3002").attr('data-creditplaytypeid', window.top.rateData[1083002][2]);		
 			} else{
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);
 				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), -1);
@@ -384,9 +414,12 @@ function setSAnimalPanel(){
 }
 
 function updateSAnimalOdds(){
+	window.top.otherNumCloseTime = 100
 	for(var i = 0; i < 12; i++){
-		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0)
+		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
 			updateItemOdds($("#sAnimalPanel .animalRow:not(.title) .oddsCell:eq(" + i + ")"), window.top.rateData[1091001 + i][0]);
+			$("#sAnimalPanel .animalRow:not(.title) .oddsCell:eq(" + i + ")").attr('data-creditplaytypeid', window.top.rateData[1091001 + i][2]);
+		}
 		else
 			updateItemOdds($("#sAnimalPanel .animalRow:not(.title) .oddsCell:eq(" + i + ")"), -1);
 	}
@@ -401,9 +434,12 @@ function setColorTwoPanel(){
 }
 
 function updateColorTwoOdds(){
+	window.top.otherNumCloseTime = 100
 	for(var i = 0; i < 12; i++){
-		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0)
+		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
 			updateItemOdds($("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + (i + 1) + ")"), window.top.rateData[1111001 + i][0]);
+			$("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + (i + 1) + ")").attr('data-creditplaytypeid', window.top.rateData[1091001 + i][2]);
+		}
 		else
 			updateItemOdds($("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + (i + 1) + ")"), -1);
 	}
@@ -421,7 +457,9 @@ function setAnimal6Panel(){
 }
 
 function updateAnimal6Odds(){
+	window.top.otherNumCloseTime = 100
 	var oddId = $("#animal6Panel .animalCtrl .curBtn:eq(0)").attr("info");
+	$("#animal6Panel .animalCtrl .curBtn:eq(0)").attr('data-creditplaytypeid', window.top.rateData[oddId][2]);
 	var oddsCellArr = $("#animal6Panel .animalRow:not(.title) .oddsCell");
 	if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){
 		for(var i = 0; i < oddsCellArr.length; i++)
@@ -472,10 +510,13 @@ function setAnimal1Panel(betType){
 }
 
 function updateAnimal1Odds(betType){
+	window.top.otherNumCloseTime = 100
 	var startId = betType * 10000 + 1001
 	for(var i = 0; i < 12; i++){
-		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0)
+		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
 			updateItemOdds($("#animal1Panel .animalRow:not(.title) .oddsCell:eq(" + i + ")"), window.top.rateData[startId + i][0]);
+			$("#animal1Panel .animalRow:not(.title) .oddsCell:eq(" + i + ")").parents('.cell').attr('data-creditplaytypeid', window.top.rateData[startId + i][2]);
+		}
 		else
 			updateItemOdds($("#animal1Panel .animalRow:not(.title) .oddsCell:eq(" + i + ")"), -1);
 	}
@@ -490,9 +531,12 @@ function setUnitNumPanel(){
 }
 
 function updateUnitNumOdds(){
+	window.top.otherNumCloseTime = 100
 	for(var i = 0; i < 10; i++){
-		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0)
+		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
 			updateItemOdds($("#unitNumPanel .unitRow:not(.title) .oddsCell:eq(" + i + ")"), window.top.rateData[1101000 + i][0]);
+			$("#unitNumPanel .unitRow:not(.title) .oddsCell:eq(" + i + ")").parents('.cell').attr('data-creditplaytypeid', window.top.rateData[1101000 + i][2]);
+		}
 		else
 			updateItemOdds($("#unitNumPanel .unitRow:not(.title) .oddsCell:eq(" + i + ")"), -1);
 	}
@@ -525,11 +569,13 @@ function setMissPanel(index, isInit){
 
 function updateMissOdds(){
 	var startId = linkBetType * 1000 + 1; 
+	window.top.otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){
 		$("#missPanel .betRow .betMoneyValue").removeAttr("disabled");
 		$("#missPanel .numRow .checkCell .check").removeClass("disable");
 		for(var i = 0; i < 49; i++){
 			updateItemOdds($("#missPanel .systemCont .numRow .num" + (i + 1) + " .oddsCell"), window.top.rateData[startId + i][0]);
+			$("#missPanel .systemCont .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId + i][2]);
 		}
 	}
 	else{
@@ -574,12 +620,14 @@ function clickAnimalLinkTypeBtn(count, obj){
 
 function setAnimalLinkOdds(){
 	var info = parseInt($(".ctrlPanel .ctrlCont .animalLinkType .curBtn").attr("info"));
+	window.top.otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){
 		linkCount = groupCount;
 		linkBetType = info
 		var startId = linkBetType * 1000 + 1; 
 		for(var i = 0; i < 12; i++){
 			updateItemOdds($("#animalLinkPanel .animalRow:not(.title) .oddsCell:eq(" + i + ")"), window.top.rateData[startId + i][0]);
+			$("#animalLinkPanel .animalRow:not(.title) .oddsCell:eq(" + i + ")").parents('.cell').attr('data-creditplaytypeid', window.top.rateData[startId + i][2]);
 		}
 	}
 	else{
@@ -620,12 +668,14 @@ function clickUnitLinkTypeBtn(count, obj){
 
 function setUnitLinkOdds(){
 	var info = parseInt($(".ctrlPanel .ctrlCont .unitLinkType .curBtn").attr("info"));
+	window.top.otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){
 		linkCount = groupCount;
 		linkBetType = info
 		var startId = linkBetType * 1000; 
 		for(var i = 0; i < 10; i++){
 			updateItemOdds($("#unitLinkPanel .unitRow:not(.title) .oddsCell:eq(" + i + ")"), window.top.rateData[startId + i][0]);
+			$("#unitLinkPanel .unitRow:not(.title) .oddsCell:eq(" + i + ")").parents('.cell').attr('data-creditplaytypeid', window.top.rateData[startId + i][2]);
 		}
 	}
 	else{
@@ -719,6 +769,7 @@ function setLinkPanelOdds(panel){
 	$("#" + panel + " .systemCont .numRow .oddsCell .odds").hide();
 	var startId1 = linkBetType * 1000 + 1;
 	var startId2 = (linkBetType + 1) * 1000 + 1;
+	window.top.otherNumCloseTime = 100
 	if(linkCombType < 0)
 		return;
 	if(window.top.lotteryData.status != OPEN_STATUS || window.top.rateData[startId1][0] < 0){
@@ -734,8 +785,11 @@ function setLinkPanelOdds(panel){
 			for(var i = 0; i < 49; i++){
 				if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){	
 					updateItemOdds($("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1) + " .odds1").show(), window.top.rateData[startId1 + i][0]);
-					if(linkMode == 2 || linkMode == 5 || linkMode == 6)
+					$("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId1 + i][2]);
+					if(linkMode == 2 || linkMode == 5 || linkMode == 6) {
 						updateItemOdds($("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1) + " .odds1").show(), window.top.rateData[startId1 + i][0]);
+						$("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId1 + i][2]);
+					}
 				}
 				else{
 					updateItemOdds($("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1) + " .odds1").show(), -1);
@@ -751,9 +805,13 @@ function setLinkPanelOdds(panel){
 				if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){	
 					updateItemOdds($("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1) + " .odds2").show(), window.top.rateData[startId1 + i][0]);
 					updateItemOdds($("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1) + " .odds3").show(), window.top.rateData[startId2 + i][1]);
+					$("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId1 + i][2]);
+					$("#" + panel + " .systemCont:eq(0) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId2 + i][2]);
 					if(linkMode == 2 || linkMode == 5 || linkMode == 6){
 						updateItemOdds($("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1) + " .odds2").show(), window.top.rateData[startId1 + i][0]);
 						updateItemOdds($("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1) + " .odds3").show(), window.top.rateData[startId2 + i][1]);
+						$("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId1 + i][2]);
+						$("#" + panel + " .systemCont:eq(1) .numRow .num" + (i + 1)).attr('data-creditplaytypeid', window.top.rateData[startId2 + i][2]);
 					}
 				}
 				else{	
@@ -982,6 +1040,7 @@ function bet(panelId){
 	var cellClass = "";
 	var betMap = {};
 	var infoArr = [];
+	var data = []
 	for(var i = 0; i < betMoneyValueArr.length; i++){
 		bmvObj = $(betMoneyValueArr[i]);
 		var curMoney = parseInt(bmvObj.val())
@@ -1022,6 +1081,25 @@ function bet(panelId){
 			betInfo : obj
 		}
 		infoArr.push(itemInfo);
+		var pEle = bmvObj.parents('.cell')
+		var creditPlayTypeId = ''
+		if (betType == 109) {
+			creditPlayTypeId = pEle.find('.oddsCell').attr('data-creditplaytypeid')
+		} else if (betType == 111) {
+			pEle = bmvObj.parents('.numRow')
+			creditPlayTypeId = pEle.find('.oddsCell').attr('data-creditplaytypeid')
+		} else {
+			creditPlayTypeId = pEle.attr('data-creditplaytypeid')
+		}
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": creditPlayTypeId,
+			"content": null,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"commandLogAmount": parseInt(curMoney)
+		})
 	}
 	infoArr.sort();
 	for(var i = 0; i < infoArr.length; i++){
@@ -1034,12 +1112,9 @@ function bet(panelId){
 		alert("余额不足！")
 		return;
 	}
+	console.log(data)
 	if(money <= 0)
 		return;
-	var data = {
-		rateType: curRate + 1,
-		betContent: betContent,
-	};
 	clearBet();
 	window.top.initConfirmPanel(data, betInfoArr, money, "normal");
 }
@@ -1072,6 +1147,8 @@ function betAnimal6(){
 		infoTitle: "六肖",
 		betId: info
 	};
+	var animalArr = []
+	var data = []
 	for(var i = 0; i < checkedArr.length; i++){
 		if(i > 0){
 			betContent += ",";
@@ -1082,14 +1159,22 @@ function betAnimal6(){
 		betContent += window.top.animalNumArr[info].animal;
 		obj.info += window.top.animalNumArr[info].animal;
 		obj.infoTitle += window.top.animalNumArr[info].animal;
+		animalArr.push(window.top.animalNumArr[info].animal)
+		data = [{
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": curType.attr('data-creditplaytypeid'),
+			"content": null,
+			"panKou": null,
+			"commandLogAmount": parseInt(betMoney)
+		}]
 	}
+	data[0].content = animalArr.toString()
 	obj.info += '@<span style="color: red">' + odds + '</span>';
 	obj.infoTitle += '@' + odds + '';
 	var betInfoArr = [obj];
-	var data = {
-		rateType: 1,
-		betContent: betContent,
-	};
+	console.log(data)
 	clearBet();
 	window.top.initConfirmPanel(data, betInfoArr, betMoney, "normal");
 }
@@ -1447,6 +1532,7 @@ function getBetCombCount(ballCount){
 
 var combArr = [];
 function betLinkPanel(){
+	console.log('linkMode', linkMode)
 	switch(linkMode){
 		case 1: betLinkNormal(); break;
 		case 2: betLinkHead(); break;
@@ -1463,14 +1549,25 @@ function betLinkNormal(){
 	if(checkedArr.length < linkCount || isNaN(linkBetMoney))
 		return;
 	var numArr = [];
+	var data = []
 	linkBetContent = ""
 	for(var i = 0; i < checkedArr.length; i++){
 		numArr.push(checkedArr.eq(i).attr("info"));
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": checkedArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
+			"content": null,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"commandLogAmount": parseInt(linkBetMoney)
+		})
 	}
+	console.log(data)
 	numArr.sort();
 	linkBetContent = numArr.join(",");
 	var combArr = getCombinationResult(numArr, linkCount);
-	initConfirmPanel(combArr);
+	initConfirmPanel(combArr, data);
 }
 
 function betLinkHead(){
@@ -1483,8 +1580,18 @@ function betLinkHead(){
 	var combArr = [];
 	var num = "";
 	var numArr = [];
+	var data = []
 	for(var i = 0; i < bodyCheckArr.length; i++){
 		numArr.push(bodyCheckArr.eq(i).attr("info"));
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": bodyCheckArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
+			"content": null,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"commandLogAmount": parseInt(linkBetMoney)
+		})
 	}
 	numArr.sort();
 	for(var i = 0; i < numArr.length; i++){
@@ -1499,6 +1606,15 @@ function betLinkHead(){
 	numArr = [];
 	for(var i = headCheckArr.length - 1; i >= 0; i--){
 		numArr.push(headCheckArr.eq(i).attr("info"));
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": headCheckArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
+			"content": null,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"commandLogAmount": parseInt(linkBetMoney)
+		})
 	}
 	numArr.sort();
 	for(var i = numArr.length - 1; i >= 0; i--){
@@ -1513,8 +1629,11 @@ function betLinkHead(){
 		combArr[i].sort();
 		combArr[i] = combArr[i].join(",");
 	}
+	data.forEach(function(item) {
+		item.content = headLinkBetContent + '拖' + linkBetContent
+	})
 	linkBetContent = headLinkBetContent + ";" + linkBetContent;
-	initConfirmPanel(combArr);
+	initConfirmPanel(combArr, data);
 }
 
 function betLinkAnimalPanel(){
@@ -1523,12 +1642,43 @@ function betLinkAnimalPanel(){
 	if(animalCheckArr.length < 2 || isNaN(linkBetMoney))
 		return;
 	var linkAnimalNumArr = [];
+	var data = []
 	linkAnimalNumArr.push(animalCheckArr.eq(0).attr("info"));
 	linkAnimalNumArr.push(animalCheckArr.eq(1).attr("info"));
 	linkAnimalNumArr.sort();
+	animalCheckArr.each(function() {
+		var pEle = $(this).parents('td')
+		var aArr = pEle.find('.animalNumCell').text().split(',')
+		aArr.forEach(function(item) {
+			var num = item.trim() < 10 ? item[1].trim() : item.trim()
+			var gData = window.top.lotteryData.rate.find(item => item.creditPlayName === '连码').creditPlayTypeDtoList
+			var rData = []
+			if (linkCombType == 2) {
+				rData = gData.find(e => e.creditPlayInfoName === '二全中').creditPlayTypeInfoDtoList
+			} else if (linkCombType == 3) {
+				rData = gData.find(e => e.creditPlayInfoName === '二中特').creditPlayTypeInfoDtoList
+			} else if (linkCombType == 4) {
+				rData = gData.find(e => e.creditPlayInfoName === '特串').creditPlayTypeInfoDtoList
+			}
+			console.log(num)
+			rData.forEach(function(rate) {
+				if (rate.creditPlayTypeName == num) {
+					data.push({
+						"gameId": localStorage.getItem('gameId') || 1,
+						"gamePeriodId": 20,
+						"creditPlayId": localStorage.getItem('creditPlayId'),
+						"creditPlayTypeId": rate.creditPlayTypeId,
+						"content": window.top.animalNumArr[linkAnimalNumArr[0]].animal + '碰' + window.top.animalNumArr[linkAnimalNumArr[1]].animal,
+						"panKou": localStorage.getItem('pankou') || 'A',
+						"commandLogAmount": parseInt(linkBetMoney)
+					})
+				}
+			})
+		})
+	})
 	linkBetContent = window.top.animalNumArr[linkAnimalNumArr[0]].animal  + ";" + window.top.animalNumArr[linkAnimalNumArr[1]].animal;
 	var combArr = twoArrPairing(window.top.animalNumArr[linkAnimalNumArr[0]].numArr, window.top.animalNumArr[linkAnimalNumArr[1]].numArr);
-	initConfirmPanel(combArr);
+	initConfirmPanel(combArr, data);
 }
 
 function betLinkUnitNumPanel(){
@@ -1549,17 +1699,103 @@ function betLinkUnitNumPanel(){
 		numArr2.push(i * 10 + linkUnitNumArr[1]);
 	}
 	var combArr = twoArrPairing(numArr1, numArr2);
-	initConfirmPanel(combArr);
+	var data = []
+	unitCheckArr.each(function() {
+		var pEle = $(this).parents('td')
+		var aArr = pEle.find('.unitNumCell').text().split(',')
+		aArr.forEach(function(item) {
+			var num = item.trim() < 10 ? item[1].trim() : item.trim()
+			var gData = window.top.lotteryData.rate.find(item => item.creditPlayName === '连码').creditPlayTypeDtoList
+			var rData = []
+			if (linkCombType == 2) {
+				rData = gData.find(e => e.creditPlayInfoName === '二全中').creditPlayTypeInfoDtoList
+			} else if (linkCombType == 3) {
+				rData = gData.find(e => e.creditPlayInfoName === '二中特').creditPlayTypeInfoDtoList
+			} else if (linkCombType == 4) {
+				rData = gData.find(e => e.creditPlayInfoName === '特串').creditPlayTypeInfoDtoList
+			}
+			rData.forEach(function(rate) {
+				if (rate.creditPlayTypeName == num) {
+					data.push({
+						"gameId": localStorage.getItem('gameId') || 1,
+						"gamePeriodId": 20,
+						"creditPlayId": localStorage.getItem('creditPlayId'),
+						"creditPlayTypeId": rate.creditPlayTypeId,
+						"content": linkUnitNumArr[0] + '尾碰' + linkUnitNumArr[1] + '尾',
+						"panKou": localStorage.getItem('pankou') || 'A',
+						"commandLogAmount": parseInt(linkBetMoney)
+					})
+				}
+			})
+		})
+	})
+	initConfirmPanel(combArr, data);
 }
 
 var linkMixCombArr = [];
 function betLinkMixturePanel(){
 	var animalRadio = $("#linkMixturePanel .animalRow input:checked");
 	var unitRadio = $("#linkMixturePanel .unitRow input:checked");
+	console.log(animalRadio, unitRadio)
 	linkBetMoney = parseInt($("#linkPanel .betRow .betMoneyValue").val());
 	if(animalRadio.length == 0 || unitRadio.length == 0 || isNaN(linkBetMoney))
 		return;
-	initConfirmPanel(linkMixCombArr);
+	var data = []
+	var animalCheckEle = animalRadio.parents('td')
+	var unitCheckEle = unitRadio.parents('td')
+	var animalCheckArr = animalCheckEle.find('.animalNumCell').text().split(',')
+	var unitCheckArr = unitCheckEle.find('.unitNumCell').text().split(',')
+	animalCheckArr.forEach(function(item) {
+		var num = item.trim() < 10 ? item[1].trim() : item.trim()
+		var gData = window.top.lotteryData.rate.find(e => e.creditPlayName === '连码').creditPlayTypeDtoList
+		var rData = []
+		if (linkCombType == 2) {
+			rData = gData.find(e => e.creditPlayInfoName === '二全中').creditPlayTypeInfoDtoList
+		} else if (linkCombType == 3) {
+			rData = gData.find(e => e.creditPlayInfoName === '二中特').creditPlayTypeInfoDtoList
+		} else if (linkCombType == 4) {
+			rData = gData.find(e => e.creditPlayInfoName === '特串').creditPlayTypeInfoDtoList
+		}
+		rData.forEach(function(rate) {
+			if (rate.creditPlayTypeName == num) {
+				data.push({
+					"gameId": localStorage.getItem('gameId') || 1,
+					"gamePeriodId": 20,
+					"creditPlayId": localStorage.getItem('creditPlayId'),
+					"creditPlayTypeId": rate.creditPlayTypeId,
+					"content": animalCheckEle.find('.animalCell').text() + '碰' + unitCheckEle.find('.unitCell').text(),
+					"panKou": localStorage.getItem('pankou') || 'A',
+					"commandLogAmount": parseInt(linkBetMoney)
+				})
+			}
+		})
+	})
+	unitCheckArr.forEach(function(item) {
+		var num = item.trim() < 10 ? item[1].trim() : item.trim()
+		var gData = window.top.lotteryData.rate.find(e => e.creditPlayName === '连码').creditPlayTypeDtoList
+		var rData = []
+		if (linkCombType == 2) {
+			rData = gData.find(e => e.creditPlayInfoName === '二全中').creditPlayTypeInfoDtoList
+		} else if (linkCombType == 3) {
+			rData = gData.find(e => e.creditPlayInfoName === '二中特').creditPlayTypeInfoDtoList
+		} else if (linkCombType == 4) {
+			rData = gData.find(e => e.creditPlayInfoName === '特串').creditPlayTypeInfoDtoList
+		}
+		rData.forEach(function(rate) {
+			if (rate.creditPlayTypeName == num) {
+				data.push({
+					"gameId": localStorage.getItem('gameId') || 1,
+					"gamePeriodId": 20,
+					"creditPlayId": localStorage.getItem('creditPlayId'),
+					"creditPlayTypeId": rate.creditPlayTypeId,
+					"content": animalCheckEle.find('.animalCell').text() + '碰' + unitCheckEle.find('.unitCell').text(),
+					"panKou": localStorage.getItem('pankou') || 'A',
+					"commandLogAmount": parseInt(linkBetMoney)
+				})
+			}
+		})
+	})
+	initConfirmPanel(linkMixCombArr, data);
 }
 
 function betLinkNumPair(){
@@ -1572,6 +1808,7 @@ function betLinkNumPair(){
 	var combArr = [];
 	var num = "";
 	var headNumArr = [];
+	var data = []
 	for(var i = 0; i < checkArrA.length; i++){
 		headNumArr.push(checkArrA.eq(i).parent().text());
 	}
@@ -1588,8 +1825,57 @@ function betLinkNumPair(){
 	for(var i = 0; i < bodyNumArr.length; i++){
 		bodyNumArr[i] = parseInt(bodyNumArr[i]);
 	}
+	
+	headNumArr.forEach(function(item) {
+		var gData = window.top.lotteryData.rate.find(e => e.creditPlayName === '连码').creditPlayTypeDtoList
+		var rData = []
+		if (linkCombType == 2) {
+			rData = gData.find(e => e.creditPlayInfoName === '二全中').creditPlayTypeInfoDtoList
+		} else if (linkCombType == 3) {
+			rData = gData.find(e => e.creditPlayInfoName === '二中特').creditPlayTypeInfoDtoList
+		} else if (linkCombType == 4) {
+			rData = gData.find(e => e.creditPlayInfoName === '特串').creditPlayTypeInfoDtoList
+		}
+		rData.forEach(function(rate) {
+			if (rate.creditPlayTypeName == item) {
+				data.push({
+					"gameId": localStorage.getItem('gameId') || 1,
+					"gamePeriodId": 20,
+					"creditPlayId": localStorage.getItem('creditPlayId'),
+					"creditPlayTypeId": rate.creditPlayTypeId,
+					"content": headNumArr.toString() + '碰' + bodyNumArr.toString(),
+					"panKou": localStorage.getItem('pankou') || 'A',
+					"commandLogAmount": parseInt(linkBetMoney)
+				})
+			}
+		})
+	})
+	bodyNumArr.forEach(function(item) {
+		var gData = window.top.lotteryData.rate.find(e => e.creditPlayName === '连码').creditPlayTypeDtoList
+		var rData = []
+		if (linkCombType == 2) {
+			rData = gData.find(e => e.creditPlayInfoName === '二全中').creditPlayTypeInfoDtoList
+		} else if (linkCombType == 3) {
+			rData = gData.find(e => e.creditPlayInfoName === '二中特').creditPlayTypeInfoDtoList
+		} else if (linkCombType == 4) {
+			rData = gData.find(e => e.creditPlayInfoName === '特串').creditPlayTypeInfoDtoList
+		}
+		rData.forEach(function(rate) {
+			if (rate.creditPlayTypeName == item) {
+				data.push({
+					"gameId": localStorage.getItem('gameId') || 1,
+					"gamePeriodId": 20,
+					"creditPlayId": localStorage.getItem('creditPlayId'),
+					"creditPlayTypeId": rate.creditPlayTypeId,
+					"content": headNumArr.toString() + '碰' + bodyNumArr.toString(),
+					"panKou": localStorage.getItem('pankou') || 'A',
+					"commandLogAmount": parseInt(linkBetMoney)
+				})
+			}
+		})
+	})
 	var combArr = twoArrPairing(headNumArr, bodyNumArr);
-	initConfirmPanel(combArr);
+	initConfirmPanel(combArr, data);
 }
 
 function betMiss(){
@@ -1605,14 +1891,27 @@ function betMissNormal(){
 	if(checkArr.length < linkCount || isNaN(linkBetMoney))
 		return;
 	var numArr = [];
+	var data = []
 	linkBetContent = "";
 	for(var i = 0; i < checkArr.length; i++){
 		numArr.push(checkArr.eq(i).attr("info"));
 	}
+	console.log(numArr)
 	numArr.sort();
+	for(var i = 0; i < checkArr.length; i++){
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": checkArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
+			"content": numArr.toString(),
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"commandLogAmount": parseInt(linkBetMoney)
+		})	
+	}
 	linkBetContent = numArr.join(",");
 	var combArr = getCombinationResult(numArr, linkCount);
-	initConfirmPanel(combArr);
+	initConfirmPanel(combArr, data);
 }
 
 function betMissHead(){
@@ -1673,9 +1972,23 @@ function betGroupLinkNormal(type){
 	if(checkArr.length < linkCount || isNaN(linkBetMoney))
 		return;
 	var numArr = [];
+	var data = []
+	var animalArr = []
 	linkBetContent = "";
 	for(var i = 0; i < checkArr.length; i++){
+		animalArr.push(checkArr.eq(i).parents('.cell').find('div').eq(0).text())
 		numArr.push(checkArr.eq(i).attr("info"));
+	}
+	for(var i = 0; i < checkArr.length; i++){
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": checkArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
+			"content": animalArr.toString(),
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"commandLogAmount": parseInt(linkBetMoney)
+		})
 	}
 	numArr.sort();
 	if(type == "animal"){
@@ -1688,7 +2001,7 @@ function betGroupLinkNormal(type){
 	else
 		linkBetContent = numArr.join(",");
 	var combArr = getCombinationResult(numArr, linkCount);
-	initConfirmPanel(combArr);
+	initConfirmPanel(combArr, data);
 }
 
 function betGroupLinkHead(type){
@@ -1702,8 +2015,23 @@ function betGroupLinkHead(type){
 	var combArr = [];
 	var num = "";
 	var numArr = [];
+	var data = []
+	var unitArr1 = []
+	var unitArr2 = []
 	for(var i = 0; i < checkBodyArr.length; i++){
 		numArr.push(checkBodyArr.eq(i).attr("info"));
+		if (type === 'unit') {
+			unitArr2.push(checkBodyArr.eq(i).parents('.cell').find('.unitCell').text())
+		}
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": checkBodyArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
+			"content": null,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"commandLogAmount": parseInt(linkBetMoney)
+		})
 	}
 	numArr.sort();
 	for(var i = 0; i < numArr.length; i++){
@@ -1720,7 +2048,19 @@ function betGroupLinkHead(type){
 	var headLinkBetContent = "";
 	numArr = [];
 	for(var i = checkHeadArr.length - 1; i >= 0; i--){
+		if (type === 'unit') {
+			unitArr1.push(checkHeadArr.eq(i).parents('.cell').find('.unitCell').text())
+		}
 		numArr.push(checkHeadArr.eq(i).attr("info"));
+		data.push({
+			"gameId": localStorage.getItem('gameId') || 1,
+			"gamePeriodId": 20,
+			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayTypeId": checkHeadArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
+			"content": null,
+			"panKou": localStorage.getItem('pankou') || 'A',
+			"commandLogAmount": parseInt(linkBetMoney)
+		})
 	}
 	numArr.sort();
 	for(var i = numArr.length - 1; i >= 0; i--){
@@ -1738,8 +2078,18 @@ function betGroupLinkHead(type){
 		combArr[i].sort();
 		combArr[i] = combArr[i].join(",");
 	}
+	console.log(combArr)
+	unitArr1.sort()
+	unitArr2.sort()
+	for(var i = 0; i < data.length; i++){
+		if (type == 'unit') {
+			data[i].content = unitArr1.toString() + "拖" + unitArr2.toString()
+		} else {
+			data[i].content = headLinkBetContent + "拖" + linkBetContent
+		}
+	}
 	linkBetContent = headLinkBetContent + ";" + linkBetContent;
-	initConfirmPanel(combArr);
+	initConfirmPanel(combArr, data);
 }
 
 var linkBetType = 0;
@@ -1747,7 +2097,7 @@ var linkMode = 1;
 var linkBetMoney = 0;
 var linkBetContent = "";
 var linkNumGroup = "";
-function initConfirmPanel(combArr){
+function initConfirmPanel(combArr, data){
 	var oddsArr = [];
 	var numArr = [];
 	linkNumGroup = "";
@@ -1964,13 +2314,13 @@ function initConfirmPanel(combArr){
 		obj.betId = combArr[i].replace(/,/g, "");
 		betInfoArr.push(obj);
 	}	
-	var data = {
-		betType: linkBetType,
-		mode: linkMode,
-		betMoney: linkBetMoney,
-		betContent: linkBetContent,
-		numGroup: linkNumGroup
-	};
+	// var data = {
+	// 	betType: linkBetType,
+	// 	mode: linkMode,
+	// 	betMoney: linkBetMoney,
+	// 	betContent: linkBetContent,
+	// 	numGroup: linkNumGroup
+	// };
 	var moneySum = linkBetMoney * combArr.length;
 	clearBet();
 	window.top.initConfirmPanel(data, betInfoArr, moneySum , "link");
