@@ -5,7 +5,6 @@ var curRate = 0;
 var sClose = false;
 var nClose = false;
 $(function(){
-	window.top.getGameData();
 	initLinkAnimalPanel("linkAnimalPanel");
 	initLinkMixtureAnimalPanel();
 	initAnimalLinkPanel();
@@ -34,7 +33,8 @@ function resetData(){
 }
 
 function setLotteryInfo(){
-	$("#cueIssue").text(window.top.lotteryData.issue);
+	console.log($('#cueIssue'))
+	$('#cueIssue').text(window.top.lotteryData.issue);
 	$(".lotteryBg").removeClass("lotteryBg1").removeClass("lotteryBg2").addClass("lotteryBg" + window.top.gameArr[window.top.curIndex].id);
 	setResult();
 	if(window.top.lotteryData.status == READY_STATUS){
@@ -88,15 +88,15 @@ function update(timeFrquency, dt){
 
 // 右上角即时赛果
 function setResult(){
-	// var ballHtml = '';
-	// if(window.top.resultNum.length > 0){
-	// 	for(var i = 0; i < window.top.resultNum.length; i++){
-	// 		if(i == 6)
-	// 			ballHtml += '<div class="add">+</div>';
-	// 		ballHtml += '<div class="' + ballInfoObj[window.top.resultNum[i]].color + 'Ball">' + window.top.resultNum[i] + '</div>';
-	// 	}
-	// }
-	// $("#curResult").html(ballHtml);
+	var ballHtml = '';
+	if(window.top.resultNum.length > 0){
+		for(var i = 0; i < window.top.resultNum.length; i++){
+			if(i == 6)
+				ballHtml += '<div class="add">+</div>';
+			ballHtml += '<div class="' + ballInfoObj[window.top.resultNum[i]].color + 'Ball">' + window.top.resultNum[i] + '</div>';
+		}
+	}
+	$("#curResult").html(ballHtml);
 }
 
 function setLotteryTime(dt){
@@ -422,13 +422,11 @@ function setNormalNumTab(){
 function initNumPanelOdds(betType){
 	var numStartIndex = betType * 10000 + 1
 	window.top.lotteryData.status = 1
-	otherNumCloseTime = 100
-	especialNumCloseTime = 100
 	for(var i = 0; i < 49; i++){
 		var itemId = numStartIndex + 1000 + i;
 		if(window.top.lotteryData.status == OPEN_STATUS && ((betType == 101 && especialNumCloseTime > 0) || (betType > 101 && otherNumCloseTime > 0))) {
-			$("#numPanel .numRow .item" + (1001 + i)).attr('data-creditplaytypeid', window.top.rateData[itemId][2]);
-			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), window.top.rateData[itemId][curRate]);
+			$("#numPanel .numRow .item" + (1001 + i)).attr('data-creditplaytypeid', window.top.rateData[itemId] && window.top.rateData[itemId][2]);
+			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), window.top.rateData[itemId] && window.top.rateData[itemId][curRate]);
 		}
 		else
 			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), -1);
@@ -438,37 +436,37 @@ function initNumPanelOdds(betType){
 			$("#cueRate").text("特码" + (curRate == 0 ? "A" : "B") + "盘");
 			if(window.top.lotteryData.status == OPEN_STATUS && especialNumCloseTime > 0){
 				// 特单特双
-				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), window.top.rateData[1012001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), window.top.rateData[1012002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), window.top.rateData[1012001] && window.top.rateData[1012001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), window.top.rateData[1012002] && window.top.rateData[1012002][curRate]);
 				// 特大特小
-				updateItemOdds($("#numPanel .towBox .twoRow .two3001 .oddsCell"), window.top.rateData[1013001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two3002 .oddsCell"), window.top.rateData[1013002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two3001 .oddsCell"), window.top.rateData[1013001] && window.top.rateData[1013001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two3002 .oddsCell"), window.top.rateData[1013002] && window.top.rateData[1013002][curRate]);
 				// 合单合双
-				updateItemOdds($("#numPanel .towBox .twoRow .two4001 .oddsCell"), window.top.rateData[1014001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two4002 .oddsCell"), window.top.rateData[1014002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two4001 .oddsCell"), window.top.rateData[1014001] && window.top.rateData[1014001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two4002 .oddsCell"), window.top.rateData[1014002] && window.top.rateData[1014002][curRate]);
 				// 红蓝绿波
-				updateItemOdds($("#numPanel .towBox .twoRow .two5001 .oddsCell"), window.top.rateData[1015001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two5002 .oddsCell"), window.top.rateData[1015002][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[1015003][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two5001 .oddsCell"), window.top.rateData[1015001] && window.top.rateData[1015001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two5002 .oddsCell"), window.top.rateData[1015002] && window.top.rateData[1015002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[1015003] && window.top.rateData[1015003][curRate]);
 				// 特尾大小
-				updateItemOdds($("#numPanel .towBox .twoRow .two6001 .oddsCell"), window.top.rateData[1016001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two6002 .oddsCell"), window.top.rateData[1016002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two6001 .oddsCell"), window.top.rateData[1016001] && window.top.rateData[1016001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two6002 .oddsCell"), window.top.rateData[1016002] && window.top.rateData[1016002][curRate]);
 				// 野兽家禽
-				updateItemOdds($("#numPanel .towBox .twoRow .two7001 .oddsCell"), window.top.rateData[1017001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two7002 .oddsCell"), window.top.rateData[1017002][curRate]);
-				$("#numPanel .towBox .twoRow .two2001").attr('data-creditplaytypeid', window.top.rateData[1012001][2]);
-				$("#numPanel .towBox .twoRow .two2002").attr('data-creditplaytypeid', window.top.rateData[1012002][2]);
-				$("#numPanel .towBox .twoRow .two3001").attr('data-creditplaytypeid', window.top.rateData[1013001][2]);
-				$("#numPanel .towBox .twoRow .two3002").attr('data-creditplaytypeid', window.top.rateData[1013002][2]);
-				$("#numPanel .towBox .twoRow .two4001").attr('data-creditplaytypeid', window.top.rateData[1014001][2]);
-				$("#numPanel .towBox .twoRow .two4002").attr('data-creditplaytypeid', window.top.rateData[1014002][2]);
-				$("#numPanel .towBox .twoRow .two5001").attr('data-creditplaytypeid', window.top.rateData[1015001][2]);
-				$("#numPanel .towBox .twoRow .two5002").attr('data-creditplaytypeid', window.top.rateData[1015002][2]);
-				$("#numPanel .towBox .twoRow .two5003").attr('data-creditplaytypeid', window.top.rateData[1015003][2]);
-				$("#numPanel .towBox .twoRow .two6001").attr('data-creditplaytypeid', window.top.rateData[1016001][2]);
-				$("#numPanel .towBox .twoRow .two6002").attr('data-creditplaytypeid', window.top.rateData[1016002][2]);
-				$("#numPanel .towBox .twoRow .two7001").attr('data-creditplaytypeid', window.top.rateData[1017001][2]);
-				$("#numPanel .towBox .twoRow .two7002").attr('data-creditplaytypeid', window.top.rateData[1017002][2]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two7001 .oddsCell"), window.top.rateData[1017001] && window.top.rateData[1017001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two7002 .oddsCell"), window.top.rateData[1017002] && window.top.rateData[1017002][curRate]);
+				$("#numPanel .towBox .twoRow .two2001").attr('data-creditplaytypeid', window.top.rateData[1012001] && window.top.rateData[1012001][2]);
+				$("#numPanel .towBox .twoRow .two2002").attr('data-creditplaytypeid', window.top.rateData[1012002] && window.top.rateData[1012002][2]);
+				$("#numPanel .towBox .twoRow .two3001").attr('data-creditplaytypeid', window.top.rateData[1013001] && window.top.rateData[1013001][2]);
+				$("#numPanel .towBox .twoRow .two3002").attr('data-creditplaytypeid', window.top.rateData[1013002] && window.top.rateData[1013002][2]);
+				$("#numPanel .towBox .twoRow .two4001").attr('data-creditplaytypeid', window.top.rateData[1014001] && window.top.rateData[1014001][2]);
+				$("#numPanel .towBox .twoRow .two4002").attr('data-creditplaytypeid', window.top.rateData[1014002] && window.top.rateData[1014002][2]);
+				$("#numPanel .towBox .twoRow .two5001").attr('data-creditplaytypeid', window.top.rateData[1015001] && window.top.rateData[1015001][2]);
+				$("#numPanel .towBox .twoRow .two5002").attr('data-creditplaytypeid', window.top.rateData[1015002] && window.top.rateData[1015002][2]);
+				$("#numPanel .towBox .twoRow .two5003").attr('data-creditplaytypeid', window.top.rateData[1015003] && window.top.rateData[1015003][2]);
+				$("#numPanel .towBox .twoRow .two6001").attr('data-creditplaytypeid', window.top.rateData[1016001] && window.top.rateData[1016001][2]);
+				$("#numPanel .towBox .twoRow .two6002").attr('data-creditplaytypeid', window.top.rateData[1016002] && window.top.rateData[1016002][2]);
+				$("#numPanel .towBox .twoRow .two7001").attr('data-creditplaytypeid', window.top.rateData[1017001] && window.top.rateData[1017001][2]);
+				$("#numPanel .towBox .twoRow .two7002").attr('data-creditplaytypeid', window.top.rateData[1017002] && window.top.rateData[1017002][2]);
 			}
 			else{
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);
@@ -557,7 +555,6 @@ function setSAnimalPanel(){
 }
 
 function updateSAnimalOdds(){
-	otherNumCloseTime = 100
 	for(var i = 0; i < 12; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0) {
 			$("#sAnimalPanel .systemCont .numRow .oddsCell:eq(" + i + ")").attr('data-creditplaytypeid', window.top.rateData[1091001 + i][2]);
@@ -577,7 +574,6 @@ function setColorTwoPanel(){
 }
 
 function updateColorTwoOdds(){
-	otherNumCloseTime = 100
 	for(var i = 0; i < 12; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0) {
 			$("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + i + ")").attr('data-creditplaytypeid', window.top.rateData[1111001 + i][2]);
@@ -600,7 +596,6 @@ function setAnimal6Panel(){
 }
 
 function updateAnimal6Odds(){
-	otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		updateItemOdds($(".ctrlPanel .ctrlCont .animal6Ctrl .odds:eq(0)"), window.top.rateData[1141001][0]);
 		updateItemOdds($(".ctrlPanel .ctrlCont .animal6Ctrl .odds:eq(1)"), window.top.rateData[1141002][0]);
@@ -652,7 +647,6 @@ function setAnimal1Panel(betType){
 }
 
 function updateAnimal1Odds(betType){
-	otherNumCloseTime = 100
 	var startId = betType * 10000 + 1001
 	for(var i = 0; i < 12; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0) {
@@ -673,7 +667,6 @@ function setUnitNumPanel(){
 }
 
 function updateUnitNumOdds(){
-	otherNumCloseTime = 100
 	for(var i = 0; i < 10; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0) { 
 			updateItemOdds($("#unitNumPanel .systemCont .numRow .oddsCell:eq(" + i + ")"), window.top.rateData[1101000 + i][0]);
@@ -710,7 +703,6 @@ function setMissPanel(index, isInit){
 }
 
 function updateMissOdds(){
-	otherNumCloseTime = 100
 	var startId = linkBetType * 1000 + 1; 
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		$("#missPanel .betRow .betMoneyValue").removeAttr("disabled");
@@ -780,7 +772,6 @@ function setAnimalLinkIsMiss(isMiss, updateOdds){
 }
 
 function setAnimalLinkOdds(){
-	otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		linkCount = groupCount;
 		linkBetType = 1221 + (groupCount - 2) * 20 + (groupMiss ? 10 : 0)
@@ -846,7 +837,6 @@ function setUnitLinkIsMiss(isMiss, updateOdds){
 }
 
 function setUnitLinkOdds(){
-	otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && otherNumCloseTime > 0){
 		linkCount = groupCount;
 		linkBetType = 1301 + (groupCount - 2) * 20 + (groupMiss ? 10 : 0)
@@ -958,7 +948,6 @@ function setLinkPanelOdds(panel){
 	$("#" + panel + " .systemCont .numRow .oddsCell .odds").hide();
 	var startId1 = linkBetType * 1000 + 1;
 	var startId2 = (linkBetType + 1) * 1000 + 1;
-	otherNumCloseTime = 100
 	if(linkCombType < 0)
 		return;
 	if(window.top.lotteryData.status != OPEN_STATUS || window.top.rateData[startId1][0] < 0){

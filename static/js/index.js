@@ -55,6 +55,7 @@ $(function() {
       index = index < 0 ? index + 12 : index;
       animalNumArr[index].numArr.push(i + 1);
   }
+  getCurrentPeriod()
   InitNotice();
   getGameData('init')
   getUserInfo('init')
@@ -107,15 +108,8 @@ function getGameData(isInit) {
       if (isInit === 'init') {
         localStorage.setItem('creditPlayId', $(".secMenuCont .secItem:eq(0)").attr('data-creditplayid'))
       }
-			var dt = new Date();
 			lotteryData = mergeObj({rate: obj}, lotteryData)
 			lotteryData.quota = []
-			timeDif = dt.getTime();
-			lotteryData.openResultTime = obj.openResultTime + timeDif;
-			lotteryData.especialNumCloseTime = obj.especialNumCloseTime + timeDif;
-			lotteryData.otherNumCloseTime = obj.otherNumCloseTime + timeDif;
-			lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
-			lotteryData.openTime = obj.openTime + timeDif;
 			UpdateRateData(lotteryData.rate);
 			if (lotteryData.quota.length > 0)
 				quotaArr = lotteryData.quota;
@@ -484,16 +478,16 @@ function UpdateRateData(data) {
 var resultNum = [];
 var resultIssue = 0;
 function getCurrentResultNum(gameID, call) {
-  var data = {
-    token: token,
-    gameID: gameID
-  };
+  // var data = {
+  //   token: token,
+  //   gameID: gameID
+  // };
   // Send(httpUrlData.getCurrentResultNum, data, function (obj) {
     // resultNum = [];
     // if (obj.resultNum != "") {
-      resultNum = ''.split(",");
-      resultIssue = '27'
-      getResultTime = 0;
+      // resultNum = ''.split(",");
+      // resultIssue = '27'
+      // getResultTime = 0;
     // }
     updateInfoPanel(lotteryData);
     if (call != null)
@@ -507,7 +501,6 @@ function getCurrentPeriod() {
     type: 'get',
 		dataType : "json",
 		contentType: 'application/json;charset=UTF-8',
-		async : true,
 		timeout : 30000,
     data: {
       gameId: 1
@@ -515,14 +508,25 @@ function getCurrentPeriod() {
 		headers: {
 			Authorization: localStorage.getItem('token')
 		},
-    success(obj) {
-      obj.startTime
+    success(res) {
+      var obj = res.data
       console.log(obj)
-			lotteryData.openResultTime = obj.realOpen + timeDif; // 开奖结果时间
-			lotteryData.especialNumCloseTime = obj.especialNumCloseTime + timeDif;
-			lotteryData.otherNumCloseTime = obj.otherNumCloseTime + timeDif;
-			lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
-			lotteryData.openTime = obj.openTime + timeDif;
+			var dt = new Date();
+			timeDif = dt.getTime();
+			lotteryData.openResultTime = (obj.realOpen && obj.realOpen.getTime() || 0) + timeDif; // 开奖结果时间
+			lotteryData.especialNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0) + timeDif;
+			lotteryData.otherNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0) + timeDif;
+			// lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
+			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || 0) + timeDif;
+      lotteryData.issue = obj.gamePeriod
+      resultIssue = obj.gamePeriod
+      var openNumArr = [obj.openNum, obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6]
+      openNumArr.forEach(function(item) {
+        if (item) {
+          resultNum.push(item)
+        }
+      })
+      $('#cueIssue').text(lotteryData.issue);
     }
   })
 }
@@ -615,12 +619,12 @@ function toLotteryTab(tabIndex, isInit) {
     var creditPlayId = $(".secMenuCont .secItem:eq(" + tabIndex + ")").attr('data-creditplayid')
     localStorage.setItem('creditPlayId', creditPlayId)
     localStorage.setItem('gameType', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
-    if (lotteryData.status != READY_STATUS) {
+    // if (lotteryData.status != READY_STATUS) {
       lotteryFrame.resetData();
       lotteryFrame.setLotteryTab();
-    }
+      lotteryFrame.setLotteryInfo();
+    // }
   }
-  // localStorage.setItem('creditPlayName', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
   if (originCreditPlayId !== creditPlayId) {
     switch($(".secMenuCont .secItem:eq(" + tabIndex + ")").text()) {
       case '正码特':
@@ -930,7 +934,7 @@ function getLastRecord(type) {
 		},
     success(obj) {
         var html = '';
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; obj.length; i++) {
           var data = obj[i]
           html += '<div class="row">'
             + '<div class="cell betTime">' + data.createTime + '</div>'

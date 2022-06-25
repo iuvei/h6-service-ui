@@ -20,7 +20,6 @@ function getBetDetailData(page){
 			Authorization: localStorage.getItem('token')
 		},
 		success(res) {
-			console.log(res)
 			betData = res;
 			setPage(res.length, page);
 		}
