@@ -694,7 +694,6 @@ function toLottery(index){
 	$(".lotteryMenuCont .lotteryItem.current").removeClass("current");
 	$(".lotteryMenuCont .lotteryItem:eq(" + index + ")").addClass("current");
 	$("#systemFrame").hide();
-  $("#lotteryName").attr("src", "../img/lottery2.png");
 	lotteryFrame.setLotteryInfo();
 	toLotteryTab(curTab, true);
 	getLastRecord();
