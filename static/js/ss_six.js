@@ -1093,7 +1093,7 @@ function bet(panelId){
 		}
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": creditPlayTypeId,
 			"content": null,
@@ -1162,7 +1162,7 @@ function betAnimal6(){
 		animalArr.push(window.top.animalNumArr[info].animal)
 		data = [{
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": curType.attr('data-creditplaytypeid'),
 			"content": null,
@@ -1555,7 +1555,7 @@ function betLinkNormal(){
 		numArr.push(checkedArr.eq(i).attr("info"));
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": checkedArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
 			"content": null,
@@ -1585,7 +1585,7 @@ function betLinkHead(){
 		numArr.push(bodyCheckArr.eq(i).attr("info"));
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": bodyCheckArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
 			"content": null,
@@ -1608,7 +1608,7 @@ function betLinkHead(){
 		numArr.push(headCheckArr.eq(i).attr("info"));
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": headCheckArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
 			"content": null,
@@ -1665,7 +1665,7 @@ function betLinkAnimalPanel(){
 				if (rate.creditPlayTypeName == num) {
 					data.push({
 						"gameId": localStorage.getItem('gameId') || 1,
-						"gamePeriodId": 20,
+						"gamePeriodId": window.top.lotteryData.issue,
 						"creditPlayId": localStorage.getItem('creditPlayId'),
 						"creditPlayTypeId": rate.creditPlayTypeId,
 						"content": window.top.animalNumArr[linkAnimalNumArr[0]].animal + '碰' + window.top.animalNumArr[linkAnimalNumArr[1]].animal,
@@ -1718,7 +1718,7 @@ function betLinkUnitNumPanel(){
 				if (rate.creditPlayTypeName == num) {
 					data.push({
 						"gameId": localStorage.getItem('gameId') || 1,
-						"gamePeriodId": 20,
+						"gamePeriodId": window.top.lotteryData.issue,
 						"creditPlayId": localStorage.getItem('creditPlayId'),
 						"creditPlayTypeId": rate.creditPlayTypeId,
 						"content": linkUnitNumArr[0] + '尾碰' + linkUnitNumArr[1] + '尾',
@@ -1760,7 +1760,7 @@ function betLinkMixturePanel(){
 			if (rate.creditPlayTypeName == num) {
 				data.push({
 					"gameId": localStorage.getItem('gameId') || 1,
-					"gamePeriodId": 20,
+					"gamePeriodId": window.top.lotteryData.issue,
 					"creditPlayId": localStorage.getItem('creditPlayId'),
 					"creditPlayTypeId": rate.creditPlayTypeId,
 					"content": animalCheckEle.find('.animalCell').text() + '碰' + unitCheckEle.find('.unitCell').text(),
@@ -1785,7 +1785,7 @@ function betLinkMixturePanel(){
 			if (rate.creditPlayTypeName == num) {
 				data.push({
 					"gameId": localStorage.getItem('gameId') || 1,
-					"gamePeriodId": 20,
+					"gamePeriodId": window.top.lotteryData.issue,
 					"creditPlayId": localStorage.getItem('creditPlayId'),
 					"creditPlayTypeId": rate.creditPlayTypeId,
 					"content": animalCheckEle.find('.animalCell').text() + '碰' + unitCheckEle.find('.unitCell').text(),
@@ -1840,7 +1840,7 @@ function betLinkNumPair(){
 			if (rate.creditPlayTypeName == item) {
 				data.push({
 					"gameId": localStorage.getItem('gameId') || 1,
-					"gamePeriodId": 20,
+					"gamePeriodId": window.top.lotteryData.issue,
 					"creditPlayId": localStorage.getItem('creditPlayId'),
 					"creditPlayTypeId": rate.creditPlayTypeId,
 					"content": headNumArr.toString() + '碰' + bodyNumArr.toString(),
@@ -1864,7 +1864,7 @@ function betLinkNumPair(){
 			if (rate.creditPlayTypeName == item) {
 				data.push({
 					"gameId": localStorage.getItem('gameId') || 1,
-					"gamePeriodId": 20,
+					"gamePeriodId": window.top.lotteryData.issue,
 					"creditPlayId": localStorage.getItem('creditPlayId'),
 					"creditPlayTypeId": rate.creditPlayTypeId,
 					"content": headNumArr.toString() + '碰' + bodyNumArr.toString(),
@@ -1901,7 +1901,7 @@ function betMissNormal(){
 	for(var i = 0; i < checkArr.length; i++){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": checkArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
 			"content": numArr.toString(),
@@ -1982,7 +1982,7 @@ function betGroupLinkNormal(type){
 	for(var i = 0; i < checkArr.length; i++){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": checkArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
 			"content": animalArr.toString(),
@@ -2025,7 +2025,7 @@ function betGroupLinkHead(type){
 		}
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": checkBodyArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
 			"content": null,
@@ -2054,7 +2054,7 @@ function betGroupLinkHead(type){
 		numArr.push(checkHeadArr.eq(i).attr("info"));
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": checkHeadArr.eq(i).parents('.cell').attr('data-creditplaytypeid'),
 			"content": null,

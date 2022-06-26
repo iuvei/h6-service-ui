@@ -40,6 +40,7 @@ $(function() {
   localStorage.setItem('gameType', '特码')
   localStorage.setItem('creditPlayName', '')
   localStorage.setItem('pankou', 'A')
+  localStorage.setItem('gameId', '1')
   $("#logo").attr("src", localStorage.getItem("logoUrl"));
   var arr = localStorage.getItem("gameArrStr").split(",");
   for(var i = 0; i < arr.length; i++){
@@ -511,7 +512,7 @@ function getCurrentPeriod() {
 		contentType: 'application/json;charset=UTF-8',
 		timeout : 30000,
     data: {
-      gameId: 1
+      gameId: localStorage.getItem('gameId') || 1
     },
 		headers: {
 			Authorization: localStorage.getItem('token')
@@ -528,7 +529,7 @@ function getCurrentPeriod() {
 			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || 0) + timeDif;
       lotteryData.issue = obj.gamePeriod
       resultIssue = obj.gamePeriod
-      var openNumArr = [obj.openNum, obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6]
+      var openNumArr = [obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6, obj.openNum]
       openNumArr.forEach(function(item) {
         if (item) {
           resultNum.push(item)

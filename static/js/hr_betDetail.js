@@ -6,7 +6,7 @@ $(function(){
 
 function getBetDetailData(page){
 	var data = {
-		"gameId": 1,
+		"gameId": localStorage.getItem('gameId') || 1,
 		"amount":0
 	}
 	$.ajax({

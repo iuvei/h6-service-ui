@@ -4,11 +4,7 @@ $(function(){
 })
 
 function getMemberMaterial(){
-	var data = {
-		token: window.top.token,
-		gameID: window.top.gameArr[window.top.curIndex].id
-	}
-	Send(httpUrlData.getMemberMaterial, data, function(obj){
+	Send(httpUrlData.getMemberMaterial, {}, function(obj){
 		console.log(obj)
 		var html = '';
 		for(var i = 0; i < obj.data.length; i++){

@@ -25,6 +25,8 @@ $(function() {
   localStorage.setItem('creditPlayId', '')
   localStorage.setItem('gameType', '特码')
   localStorage.setItem('creditPlayName', '')
+  localStorage.setItem('pankou', 'A')
+  localStorage.setItem('gameId', '1')
 	$("#logo").attr("src", localStorage.getItem("logoUrl"));
 	var arr = localStorage.getItem("gameArrStr").split(",");
 	for(var i = 0; i < arr.length; i++){
@@ -34,6 +36,7 @@ $(function() {
 				gameArr.push(lotteryArr[j]);
 		}
 	}
+  getCurrentPeriod()
 	getUserInfo()
 	initLotteryMenu();
 	var animalIndex = parseInt(localStorage.getItem("animalIndex"));
@@ -68,12 +71,10 @@ function mergeObj(obj1, obj2) {
 
 var timeDif = 0;
 var getDataBetType = "";
-function getGameData(gameID, isInit, rateVersion){
+function getGameData(isInit){
 	var data = {
     gameId: localStorage.getItem('gameId') || 1
 	};
-	// if(Object.keys(rateData).length == 0)
-	// 	data.betTypes = "";
 	$.ajax({
 		type: 'post',
 		url: serverMap[httpUrlData.getGameData.server] + httpUrlData.getGameData.url,
@@ -93,42 +94,26 @@ function getGameData(gameID, isInit, rateVersion){
 					}
 				}
 			})
-			console.log(isInit)
 			if (isInit) {
 				localStorage.setItem('creditPlayId', $(".secMenuCont .secItem:eq(0)").attr('data-creditplayid'))
 			}
-			var dt = new Date();
 			lotteryData = mergeObj({rate: obj}, lotteryData)
 			lotteryData.quota = []
-			timeDif = dt.getTime() - lotteryData.systemTime;
-			lotteryData.openResultTime = obj.openResultTime + timeDif;
-			lotteryData.especialNumCloseTime = obj.especialNumCloseTime + timeDif;
-			lotteryData.otherNumCloseTime = obj.otherNumCloseTime + timeDif;
-			lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
-			lotteryData.openTime = obj.openTime + timeDif;
-			// source
-			// openTime = lotteryData.openTime - dt.getTime();
-			// especialNumCloseTime = lotteryData.especialNumCloseTime - dt.getTime();
-			// otherNumCloseTime = lotteryData.otherNumCloseTime - dt.getTime();
-			// openResultTime = lotteryData.openResultTime - dt.getTime();
 			UpdateRateData(lotteryData.rate);
 			if (lotteryData.quota.length > 0)
 				quotaArr = lotteryData.quota;
-			if (isInit === true) {
+			if (isInit) {
 				getCurrentResultNum(data.gameId, function () {
 					showUseInfoPanel();
 					getLastRecord();
 					toLottery(curIndex);
-					// source
-					// setResult();
+					setResult();
 				});
 			}
 			else {
 				updateInfoPanel(lotteryData);
-				// source
 				lotteryFrame.updateOdds();
 				lotteryFrame.updateOdds();
-
 				if (resultIssue != lotteryData.issue && resultNum.length > 0)
 					getCurrentResultNum(data.gameId, function () {
 						// showUseInfoPanel();
@@ -483,16 +468,16 @@ function UpdateRateData(data) {
 
 var resultNum = [];
 function getCurrentResultNum(gameID, call){
-	var data = {
-		token: token,
-		gameID: gameID
-	};
+	// var data = {
+	// 	token: token,
+	// 	gameID: gameID
+	// };
   // Send(httpUrlData.getCurrentResultNum, data, function (obj) {
     // resultNum = [];
     // if (obj.resultNum != "") {
-      resultNum = ''.split(",");
-      resultIssue = '27'
-      getResultTime = 0;
+      // resultNum = ''.split(",");
+      // resultIssue = '27'
+      // getResultTime = 0;
     // }
     updateInfoPanel(lotteryData);
     if (call != null)
@@ -506,13 +491,37 @@ function getCurrentPeriod() {
     type: 'get',
 		dataType : "json",
 		contentType: 'application/json;charset=UTF-8',
-		async : true,
 		timeout : 30000,
+    async: false,
 		headers: {
 			Authorization: localStorage.getItem('token')
 		},
-    success(obj) {
-      console.log(obj)
+    data: {
+      gameId: localStorage.getItem('gameId') || 1
+    },
+    success(res) {
+			console.log(res)
+      var obj = res.data
+			var dt = new Date();
+			timeDif = dt.getTime();
+			lotteryData.openResultTime = (obj.realOpen && obj.realOpen.getTime() || 0) // 开奖结果时间
+			lotteryData.especialNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0)
+			lotteryData.otherNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0)
+			// lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
+			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || 0)
+			openTime = lotteryData.openTime - dt.getTime();
+			especialNumCloseTime = lotteryData.especialNumCloseTime - dt.getTime();
+			otherNumCloseTime = lotteryData.otherNumCloseTime - dt.getTime();
+			openResultTime = lotteryData.openResultTime - dt.getTime();
+      lotteryData.issue = obj.gamePeriod
+      resultIssue = obj.gamePeriod
+      var openNumArr = [obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6, obj.openNum]
+      openNumArr.forEach(function(item) {
+        if (item) {
+          resultNum.push(item)
+        }
+      })
+      // $('#cueIssue').text(lotteryData.issue);
     }
   })
 }
@@ -673,6 +682,9 @@ function toPage(page, btn) {
 function clickLottery(index){
 	if(confirm("进入" + gameArr[index].name + "?")){
 		curIndex = index;
+    var gameId = localStorage.getItem('gameId')
+    var newGameId = gameId == 2 ? 1 : 2 
+    localStorage.setItem('gameId', newGameId)
     getGameData(true);
 	}
 }
@@ -701,6 +713,7 @@ function toLotteryTab(tabIndex, isInit) {
     var creditPlayId = $(".secMenuCont .secItem:eq(" + tabIndex + ")").attr('data-creditplayid')
     localStorage.setItem('creditPlayId', creditPlayId)
     localStorage.setItem('gameType', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
+    localStorage.setItem('pankou', 'A')
 		switch($(".secMenuCont .secItem:eq(" + tabIndex + ")").text()) {
 			case '正码特':
 				localStorage.setItem('creditPlayName', '正1')
@@ -811,14 +824,13 @@ function updateInfoPanel(data){
 	// $("#creditAmount").text(lotteryData.creditMoney);
 	// $("#usedAmount").text(lotteryData.usedMoney);
 	// $("#balance").text(lotteryData.usableMoney);
-	// $("#issue").text(lotteryData.issue);
-	// $(".issueInfo .issue").text(lotteryData.issue);
+	$("#issue").text(lotteryData.issue);
+	$(".issueInfo .issue").text(lotteryData.issue);
 }
 
 var quickRate = 0;
 var quickAddId = 0;
-// function showQuickBetPanel() { source
-	function showQuickBetPanel(rate, index) {
+function showQuickBetPanel() {
 	quickRate = lotteryFrame.curRate;
 	var titleStr = "";
 	var betType = 1011;
@@ -839,10 +851,10 @@ var quickAddId = 0;
 			titleStr = "正" + lotteryFrame.curNsIndex; 
 			betType = 1011 + 10 * lotteryFrame.curNsIndex; 
 			quickAddId = 1011000 + 10000 * lotteryFrame.curNsIndex; 
-			rateData = lotteryData.rate.find(item => item.creditPlayId == 3).creditPlayTypeDtoList[index - 1];
+			rateData = lotteryData.rate.find(item => item.creditPlayId == 3).creditPlayTypeDtoList.find(item => item.creditPlayInfoName == '正' + lotteryFrame.curNsIndex + '特');
 			break;
 	}
-  setQuickBet(rateData, rate)
+  setQuickBet(rateData)
 	titleStr += quickRate == 0 ? "A盘" : "B盘";
 	$(".left .quickBetPanel .betInfoBox .betNumBox").text("");
 	$(".left .quickBetPanel .quickBetTitle").text(titleStr);
@@ -850,7 +862,7 @@ var quickAddId = 0;
 	$(".left .leftPanel").hide();
 	$(".left .quickBetPanel").show();
 }
-function setQuickBet(obj, rate) {
+function setQuickBet(obj) {
    $('.numTable td').each(function() {
     var key = $(this).text()[0] == '0' ? $(this).text()[1] : $(this).text()
     var rateMap = {}
@@ -859,7 +871,7 @@ function setQuickBet(obj, rate) {
     })
     var d = rateMap[key] || {}
     $(this).attr('data-creditplaytypeid', d.creditPlayTypeId)
-    $(this).attr('data-rate', rate == 0 ? d.odds : d.odds2)
+    $(this).attr('data-rate', localStorage.getItem('pankou') == 'B' ? d.odds2 : d.odds)
    })
 }
 
@@ -988,7 +1000,6 @@ function clickQuickBetAnimalType(type, obj){
 }
 
 var quickBetContent = "";
-var quickBetData = []
 function quickBet(){
 	if(lotteryData.status != OPEN_STATUS)
 		return;
@@ -1005,6 +1016,7 @@ function quickBet(){
 	var titleStr = $(".left .quickBetPanel .quickBetTitle").text();
 	var betMap = {};
 	var arr = [];
+	var data = []
 	for(var i = 0; i < numArr.length; i++){
 		numStr = numArr.eq(i).text();
 		num = parseInt(numStr);
@@ -1022,15 +1034,13 @@ function quickBet(){
 			}
 		}
 		arr.push(numStr);
-		quickBetData.push({
+		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": numArr.eq(i).attr('data-creditplaytypeid'),
 			"content": null,
 			"panKou": localStorage.getItem('pankou') || 'A',
-			"ballNum": numArr.eq(i).text(),
-			"rate": numArr.eq(i).attr('data-rate'),
 			"commandLogAmount": parseInt(betMoney)
 		})
 	}
@@ -1041,10 +1051,6 @@ function quickBet(){
 		quickBetContent += betMap["info" + arr[i]].content;
 		betInfoArr.push(betMap["info" + arr[i]].obj)
 	}
-	var data = {
-		rateType: quickRate + 1,
-		betContent: quickBetContent,
-	};
 	clearQuickSelected();
 	$(".quickBetPanel .betInfoBox .betMoneyValue").val("")
 	initConfirmPanel(data, betInfoArr, betMoney * numArr.length, "normal");
@@ -1089,18 +1095,18 @@ function getLastRecord(){
 			Authorization: localStorage.getItem('token')
 		},
     success(obj) {
-        // var html = '';
-        // for (var i = 0; i < 10; i++) {
-        //   var data = obj[i]
-				// 	html += '<tr>'
-				// 			+ '<td class="moneyCell" title="' + data.transactionsBalance+ '"><div>' + data.transactionsBalance + '</div></td>'
-				// 			+ '<td class="contentCell" title="' + data.content + '"><div>' + data.content + '</div></td>'
-				// 		+ '</tr>';
-				// 	money += parseInt(data.transactionsBalance);
-        // }
-				// $("#lastRecordCont").html(html);
-				// $("#lastRecordSum").text("共" + obj.length + "注，合计" + money);
-				// showUseInfoPanel();
+        var html = '';
+				var money = 0
+        for (var i = 0; obj.length; i++) {
+          var data = obj[i]
+					html += '<tr>'
+							+ '<td class="moneyCell" title="' + data.transactionsBalance+ '"><div>' + data.transactionsBalance + '</div></td>'
+							+ '<td class="contentCell" title="' + data.content + '"><div>' + data.content + '</div></td>'
+						+ '</tr>';
+					money += parseInt(data.transactionsBalance);
+        }
+				$("#lastRecordCont").html(html);
+				$("#lastRecordSum").text("共" + obj.length + "注，合计" + money);
     }
   })
 }
@@ -1174,7 +1180,7 @@ function sendBet(){
 				betData.betContent = betData.betContent.replace(info[0]+ "-" + info[1], info[0]+ "-" + info[2])
 			}
 			$(".confirmPanel .betBtn").text("确定")
-			getGameData(gameArr[curIndex].id, false, 0)
+			getGameData(false)
 			return;
 		}
 		alert("下注成功");
@@ -1182,7 +1188,7 @@ function sendBet(){
 		$(".content .left .confirmPanel").hide();
 		$(".content .left .userInfoPanel").show();
 		showBetResultPanel(obj.betResult);
-		getGameData(gameArr[curIndex].id, false, lotteryData.rateVersion);
+		getGameData(false)
 		getLastRecord();
 	}, betTimeOut, betErr)
 }
@@ -1215,7 +1221,7 @@ function sendBetLink(){
 				betData.numGroup = betData.numGroup.replace(info[0]+ "-" + info[1], info[0]+ "-" + info[2])
 			}
 			$(".confirmPanel .betBtn").text("确定")
-			getGameData(gameArr[curIndex].id, false, 0)
+			getGameData(false)
 			return;
 		}
 		alert("下注成功");
@@ -1223,7 +1229,7 @@ function sendBetLink(){
 		$(".content .left .confirmPanel").hide();
 		$(".content .left .userInfoPanel").show();
 		showBetResultPanel(obj.betResult);
-		getGameData(gameArr[curIndex].id, false, lotteryData.rateVersion)
+		getGameData(false)
 		getLastRecord();
 	}, betTimeOut, betErr)
 }
@@ -1233,7 +1239,7 @@ function betErr(){
 	$(".content .left .confirmPanel").hide();
 	$(".content .left .userInfoPanel").show();
 	showBetResultPanel(obj.betResult);
-	getGameData(gameArr[curIndex].id, false, lotteryData.rateVersion)
+	getGameData(false)
 	getLastRecord();
 }
 
@@ -1243,7 +1249,7 @@ function betTimeOut(){
 	$(".content .left .confirmPanel").hide();
 	$(".content .left .userInfoPanel").show();
 	showBetResultPanel(obj.betResult);
-	getGameData(gameArr[curIndex].id, false, lotteryData.rateVersion)
+	getGameData(false)
 	getLastRecord();
 }
 
@@ -1260,6 +1266,5 @@ function changeSkin(obj){
 }
 
 function exit(){
-	localStorage.setItem("token", null);
 	GotoLogin();
 }

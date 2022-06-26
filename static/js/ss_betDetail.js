@@ -6,15 +6,34 @@ $(function(){
 
 function getBetDetailData(page){
 	var data = {
-		token: window.top.token,
-		gameID: window.top.gameArr[window.top.curIndex].id,
-		page: page,
-		pageSize: 50
+		"gameId": localStorage.getItem('gameId') || 1,
+		"amount":0
 	}
-	Send(httpUrlData.listBetDetail, data, function(obj){
-		betData = obj;
-		setPage(obj.totalCount, page);
+	$.ajax({
+		type: 'post',
+		url: serverMap[httpUrlData.listBetDetailList.server] + httpUrlData.listBetDetail.url,
+		data: JSON.stringify(data),
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(res) {
+			betData = res;
+			setPage(res.length, page);
+		}
 	})
+	// var data = {
+	// 	token: window.top.token,
+	// 	gameID: window.top.gameArr[window.top.curIndex].id,
+	// 	page: page,
+	// 	pageSize: 50
+	// }
+	// Send(httpUrlData.listBetDetail, data, function(obj){
+	// 	betData = obj;
+	// 	setPage(obj.totalCount, page);
+	// })
 }
 
 function updateBetDetailData(){

@@ -53,7 +53,7 @@ function listDailyLedger(beginDate, endDate) {
     "startTime": beginDate,
     "endTime": endDate,
     "userId": window.top.lotteryData.userId,
-    "gameId":"1"
+    "gameId": localStorage.getItem('gameId') || 1,
 	}
 	$.ajax({
 		type : 'post',
@@ -116,7 +116,7 @@ function arr2Sum(key, arr) {
 }
 function listClearedOrder(gamePeriod, date){
 	var data = {
-    "gameId":"1",
+    "gameId": localStorage.getItem('gameId') || 1,
     "userId": window.top.lotteryData.userId,
     "gamePeriod": gamePeriod
 	}

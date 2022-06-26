@@ -6,32 +6,58 @@ $(function(){
 })
 
 function getHistoryData(page){
-	if(page != 0 && getCurDataTimer != null){
-		clearTimeout(getCurDataTimer);
-		getCurDataTimer = null;
-	}
+	// if(page != 0 && getCurDataTimer != null){
+	// 	clearTimeout(getCurDataTimer);
+	// 	getCurDataTimer = null;
+	// }
+	// var data = {
+	// 	token: window.top.token,
+	// 	gameID: window.top.gameArr[window.top.curIndex].id,
+	// 	page: page,
+	// 	pageSize: 20
+	// }
+	// Send(httpUrlData.listLotteryResult, data, function(obj){
+	// 	historyData = obj;
+	// 	setPage(obj.total, page);
+	// })
 	var data = {
 		token: window.top.token,
-		gameID: window.top.gameArr[window.top.curIndex].id,
-		page: page,
-		pageSize: 20
+		gameId: localStorage.getItem('gameId') || 1,
+		current: page,
+		size: 20
 	}
-	Send(httpUrlData.listLotteryResult, data, function(obj){
-		historyData = obj;
-		setPage(obj.total, page);
+	$.ajax({
+		type: 'post',
+		url: serverMap[httpUrlData.listLotteryResult.server] + httpUrlData.listLotteryResult.url,
+		data: JSON.stringify(data),
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(res) {
+			console.log(res)
+			historyData = res.data;
+			setPage(historyData.total, page);
+		}
 	})
 }
 
 var getCurDataTimer = null;
+function formatNum(val) {
+	return val < 10 ? '0' + val : val
+}
 function updateHistoryData(){
 	var isGetData = false;
 	var html = '';
-	for(var i = 0; i < historyData.lotteryResultList.length; i++){
-		var numArr = historyData.lotteryResultList[i].resultNum.split(",");
-		var infoArr = historyData.lotteryResultList[i].resultInfo.split(",");
+	for(var i = 0; i < historyData.records.length; i++){
+		var item = historyData.records[i]
+		var numArr = [formatNum(item.openNum1), formatNum(item.openNum2), formatNum(item.openNum3), formatNum(item.openNum4), formatNum(item.openNum5), formatNum(item.openNum6), formatNum(item.openNum)]
+		var infoArr = [item.sxOpenNum1, item.sxOpenNum2, item.sxOpenNum3, item.sxOpenNum4, item.sxOpenNum5, item.sxOpenNum6, item.xiao, item.poultryBeast, item.temaDS, item.temaDX, item.andDS, item.totalDS, item.totalDX]
 		html += '<tr>'
-				+ '<td class="dateCell">' + historyData.lotteryResultList[i].resultDate + '</td>'
-				+ '<td class="issueCell">' + historyData.lotteryResultList[i].issue + '</td>'
+				+ '<td class="dateCell">' + item.createTime + '</td>'
+				+ '<td class="issueCell">' + item.gamePeriod + '</td>'
 				+ '<td class="numBallCell"><div class="' + ballInfoObj[numArr[0]].color + 'Ball">' + numArr[0] + '</div></td>'
 				+ '<td class="numAnimalCell">' + infoArr[0] + '</td>';
 		if(numArr.length > 1)
@@ -72,7 +98,7 @@ function updateHistoryData(){
 			html += '<td class="numBallCell"></td>'
 					+ '<td class="specialAnimalCell"></td>';
 		html += '<td class="animalTypeCell">' + (infoArr.length > 7 ? infoArr[7] : ' ') + '</td>'
-			+ '<td class="sumCell">' + historyData.lotteryResultList[i].sum + '</td>'
+			+ '<td class="sumCell">' + item.totalScore + '</td>'
 			+ '<td class="sNumOeCell">' + (infoArr.length > 8 ? infoArr[8] : ' ') + '</td>'
 			+ '<td class="sNumBsCell">' + (infoArr.length > 9 ? infoArr[9] : ' ') + '</td>'
 			+ '<td class="aNumOeCell">' + (infoArr.length > 10 ? infoArr[10] : ' ') + '</td>'
