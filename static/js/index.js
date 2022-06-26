@@ -973,6 +973,5 @@ function changeSkin(obj) {
 }
 
 function exit() {
-  // localStorage.setItem("token", null);
   GotoLogin();
 }
