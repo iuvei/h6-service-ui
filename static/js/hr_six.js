@@ -296,6 +296,7 @@ function setNumPanelRate(rate){
 		return;
 	curBtn.removeClass("curBtn");
 	$(".ctrlPanel .ctrlCont .quickBet .OddsBtn" + rate).addClass("curBtn");
+	localStorage.setItem('pankou', $(".ctrlPanel .ctrlCont .quickBet .OddsBtn" + rate).text()[0])
 	curRate = rate;
 	switch(window.top.curTab){
 		case 0 : initNumPanelOdds(101); break;
@@ -1243,7 +1244,7 @@ function bet(panelId){
 		if (panelId === 'sAnimalPanel') {
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
 				"content": null,
@@ -1255,7 +1256,7 @@ function bet(panelId){
 		} else if (panelId === 'colorTwoPanel') {
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
 				"content": null,
@@ -1267,7 +1268,7 @@ function bet(panelId){
 		} else if (panelId === 'animal1Panel') {
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
 				"content": null,
@@ -1279,7 +1280,7 @@ function bet(panelId){
 		} else if (panelId === 'unitNumPanel') {
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
 				"content": null,
@@ -1293,7 +1294,7 @@ function bet(panelId){
 			var bNum = pEle.find('.numCell').length > 0 ? pEle.find('.numCell').text() : pEle.find('.twoCell').text()
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": pEle.attr('data-creditplaytypeid'),
 				"content": null,
@@ -1351,7 +1352,7 @@ function betAnimal6(){
 	for(var i = 0; i < checkedArr.length; i++){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": rateEle.attr('data-creditplaytypeid'),
 			"content": betContent,
@@ -1593,7 +1594,7 @@ function betLinkNormalPanel(){
 		var content = type == 1 ? $('#linkNormalPanel').find('.w330 .linkNum').text() : null
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": $(selectedBallArr[i]).parent().parent().attr('data-creditplaytypeid'),
 			"content": content,
@@ -1623,7 +1624,7 @@ function betLinkHeadPanel(){
 		headSelectedBallArr.each(function() {
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": $(this).parent().parent().attr('data-creditplaytypeid'),
 				"content": content,
@@ -1636,7 +1637,7 @@ function betLinkHeadPanel(){
 		badySelectedBallArr.each(function() {
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": $(this).parent().parent().attr('data-creditplaytypeid'),
 				"content": content,
@@ -1735,7 +1736,7 @@ function betLinkAnimalPanel(){
 				if (window.top.animalNumArr[linkAnimalNumArr[0]].numArr.includes(Number(num))) {
 					data.push({
 						"gameId": localStorage.getItem('gameId') || 1,
-						"gamePeriodId": 20,
+						"gamePeriodId": window.top.lotteryData.issue,
 						"creditPlayId": localStorage.getItem('creditPlayId'),
 						"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
 						"content": content,
@@ -1753,7 +1754,7 @@ function betLinkAnimalPanel(){
 				if (window.top.animalNumArr[linkAnimalNumArr[1]].numArr.includes(Number(num))) {
 					data.push({
 						"gameId": localStorage.getItem('gameId') || 1,
-						"gamePeriodId": 20,
+						"gamePeriodId": window.top.lotteryData.issue,
 						"creditPlayId": localStorage.getItem('creditPlayId'),
 						"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
 						"content": content,
@@ -1796,7 +1797,7 @@ function betLinkUnitNumPanel(){
 			if (numArr1.includes(Number(num))) {
 				data.push({
 					"gameId": localStorage.getItem('gameId') || 1,
-					"gamePeriodId": 20,
+					"gamePeriodId": window.top.lotteryData.issue,
 					"creditPlayId": localStorage.getItem('creditPlayId'),
 					"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
 					"content": content,
@@ -1814,7 +1815,7 @@ function betLinkUnitNumPanel(){
 			if (numArr2.includes(Number(num))) {
 				data.push({
 					"gameId": localStorage.getItem('gameId') || 1,
-					"gamePeriodId": 20,
+					"gamePeriodId": window.top.lotteryData.issue,
 					"creditPlayId": localStorage.getItem('creditPlayId'),
 					"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
 					"content": content,
@@ -1853,7 +1854,7 @@ function betLinkMixturePanel(){
 			if (window.top.animalNumArr[linkMixNumArr[0]].numArr.includes(Number(num))) {
 				data.push({
 					"gameId": localStorage.getItem('gameId') || 1,
-					"gamePeriodId": 20,
+					"gamePeriodId": window.top.lotteryData.issue,
 					"creditPlayId": localStorage.getItem('creditPlayId'),
 					"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
 					"content": content,
@@ -1871,7 +1872,7 @@ function betLinkMixturePanel(){
 			if (numArr1.includes(Number(num))) {
 				data.push({
 					"gameId": localStorage.getItem('gameId') || 1,
-					"gamePeriodId": 20,
+					"gamePeriodId": window.top.lotteryData.issue,
 					"creditPlayId": localStorage.getItem('creditPlayId'),
 					"creditPlayTypeId": $(this).attr('data-creditplaytypeid'),
 					"content": content,
@@ -1904,7 +1905,7 @@ function betMissPanel(){
 		var selectedParent = selectedArr.eq(i).parents('.cell')
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": window.top.lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 			"content": numArr.toString(),
@@ -1964,7 +1965,7 @@ function betAnimalLinkPanel(){
 			var selectedParent = bodySelectedArr.eq(i).parents('.cell')
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 				"content": linkBetContent,
@@ -2008,7 +2009,7 @@ function betAnimalLinkPanel(){
 			var selectedParent = bodySelectedArr.eq(i).parents('.cell')
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 				"content": linkBetContentHead + "拖" + linkBetContentBody,
@@ -2023,7 +2024,7 @@ function betAnimalLinkPanel(){
 			var selectedParent = headSelectedArr.eq(i).parents('.cell')
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 				"content": linkBetContentHead + "拖" + linkBetContentBody,
@@ -2074,7 +2075,7 @@ function betUnitLinkPanel(){
 			var selectedParent = bodySelectedArr.eq(i).parents('.cell')
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 				"content": linkBetContent,
@@ -2118,7 +2119,7 @@ function betUnitLinkPanel(){
 			var selectedParent = bodySelectedArr.eq(i).parents('.cell')
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 				"content": linkBetContentHead + "拖" + linkBetContentBody,
@@ -2133,7 +2134,7 @@ function betUnitLinkPanel(){
 			var selectedParent = headSelectedArr.eq(i).parents('.cell')
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
-				"gamePeriodId": 20,
+				"gamePeriodId": window.top.lotteryData.issue,
 				"creditPlayId": localStorage.getItem('creditPlayId'),
 				"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 				"content": linkBetContentHead + "拖" + linkBetContentBody,

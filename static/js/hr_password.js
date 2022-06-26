@@ -27,11 +27,11 @@ function updatePassword(){
 		return;		
 	}
 	var data = {
-		token: localStorage.getItem("token"),
-		oldPassword: hex_sha1(curPassword + localData.passwordKey),
-		newPassword: hex_sha1(newPassword1 + localData.passwordKey),
+		password: curPassword,
+		newPassword: newPassword1,
+		confirmNewPassword: newPassword1,
 	}
-	Send(httpUrlData.updatePassword, data, function(obj){
+	Send(httpUrlData.updatePassword, JSON.stringify(data), function(obj){
 		alert("修改成功");
 		window.top.open("hr_index.html?v=" + version, "_self");
 	})

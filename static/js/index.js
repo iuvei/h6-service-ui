@@ -39,6 +39,7 @@ $(function() {
   localStorage.setItem('creditPlayId', '')
   localStorage.setItem('gameType', '特码')
   localStorage.setItem('creditPlayName', '')
+  localStorage.setItem('pankou', 'A')
   $("#logo").attr("src", localStorage.getItem("logoUrl"));
   var arr = localStorage.getItem("gameArrStr").split(",");
   for(var i = 0; i < arr.length; i++){
@@ -130,7 +131,14 @@ function getGameData(isInit) {
 						lotteryFrame.setResult();
 					})
 			}
-		}
+		},
+    error: function(error) {
+      console.log(error)
+      if (error.status == 401) {
+        alert('请先登录')
+        GotoLogin()
+      }
+    }
 	})
 }
 
@@ -593,6 +601,9 @@ function toPage(page, btn) {
 function clickLottery(index) {
   if (confirm("进入" + gameArr[index].name + "?")) {
     curIndex = index;
+    var gameId = localStorage.getItem('gameId')
+    var newGameId = gameId == 2 ? 1 : 2 
+    localStorage.setItem('gameId', newGameId)
     getGameData(true);
   }
 }
@@ -619,6 +630,7 @@ function toLotteryTab(tabIndex, isInit) {
     var creditPlayId = $(".secMenuCont .secItem:eq(" + tabIndex + ")").attr('data-creditplayid')
     localStorage.setItem('creditPlayId', creditPlayId)
     localStorage.setItem('gameType', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
+    localStorage.setItem('pankou', 'A')
     // if (lotteryData.status != READY_STATUS) {
       lotteryFrame.resetData();
       lotteryFrame.setLotteryTab();
@@ -875,7 +887,7 @@ function createQuickBetInfo() {
     tmpNumArr.push(numStr);
 		quickBetData.push({
 			"gameId": localStorage.getItem('gameId') || 1,
-			"gamePeriodId": 20,
+			"gamePeriodId": lotteryData.issue,
 			"creditPlayId": localStorage.getItem('creditPlayId'),
 			"creditPlayTypeId": numArr.eq(i).attr('data-creditplaytypeid'),
 			"content": null,
@@ -960,6 +972,6 @@ function changeSkin(obj) {
 }
 
 function exit() {
-  localStorage.setItem("token", null);
+  // localStorage.setItem("token", null);
   GotoLogin();
 }

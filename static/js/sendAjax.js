@@ -32,7 +32,7 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 				}
 				else{
 					console.log("错误码：" + localData.httpServer + url + "     " + obj.errorMsg)
-					alert(obj.errorMsg);
+					alert(obj.msg);
 					if(obj.code == 2){
 						GotoLogin();
 						return;
@@ -74,10 +74,6 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
  * 退出到登陆页面
  */
 function GotoLogin() {
-	localStorage.getItem("back");
-	var checkCodeToken = localStorage.getItem("checkCodeToken");
-	var domainName = localStorage.getItem("domainName");
-	var back = localStorage.getItem("back");
-	var code = localStorage.getItem("code");
-	window.top.open(domainName + "?token=" + checkCodeToken + "&c=" + code + "&back=" + back, "_self");
+  localStorage.removeItem('token')
+	window.top.open(window.location.origin + "/views/login.html?", "_self");
 }
