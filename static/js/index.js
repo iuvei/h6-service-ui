@@ -524,6 +524,7 @@ function getCurrentPeriod() {
     success(res) {
       var obj = res.data
 			var dt = new Date();
+      resultNum = []
 			timeDif = dt.getTime();
 			lotteryData.openResultTime = (obj.realOpen && obj.realOpen.getTime() || 0); // 开奖结果时间
 			lotteryData.especialNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0);
@@ -538,6 +539,7 @@ function getCurrentPeriod() {
           resultNum.push(item)
         }
       })
+      lotteryFrame.setLotteryInfo();
 			openResultTime = new Date('2020/06/03')
 			lotteryData.openResultTime =  new Date('2020/06/03')
       $('#cueIssue').text(lotteryData.issue);
