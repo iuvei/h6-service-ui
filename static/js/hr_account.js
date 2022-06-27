@@ -1,7 +1,6 @@
 var historyData = {};
 var dateArr = [];
 $(function(){
-	console.log()
 	var date = new Date();
 	date.setTime(new Date().getTime());
 	date.setDate(date.getDate() - 32)
@@ -71,7 +70,6 @@ function listDailyLedger(beginDate, endDate){
 			var className = "";
 			if (obj.length > 0) {
 				obj.forEach(function(item) {
-					console.log(item)
 					className = item.ctTotal > 0 ? " redFont" : "";
 					html += '<div class="row">'
 						+ '<div class="cell dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ',' + item.createTime + ')">' + item.createTime + '</a></div>'

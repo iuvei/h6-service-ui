@@ -285,8 +285,6 @@ function setNormalNumTab(){
 function initNumPanelOdds(betType){
 	var numStartIndex = betType * 10000 + 1
 	window.top.lotteryData.status = 1
-	window.top.otherNumCloseTime = 100
-	window.top.especialNumCloseTime = 100
 	for(var i = 0; i < 49; i++){
 		var itemId = numStartIndex + 1000 + i;
 		if(window.top.lotteryData.status == OPEN_STATUS && ((betType == 101 && window.top.especialNumCloseTime > 0) || (betType > 101 && window.top.otherNumCloseTime > 0))) {
@@ -414,7 +412,6 @@ function setSAnimalPanel(){
 }
 
 function updateSAnimalOdds(){
-	window.top.otherNumCloseTime = 100
 	for(var i = 0; i < 12; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
 			updateItemOdds($("#sAnimalPanel .animalRow:not(.title) .oddsCell:eq(" + i + ")"), window.top.rateData[1091001 + i][0]);
@@ -434,7 +431,6 @@ function setColorTwoPanel(){
 }
 
 function updateColorTwoOdds(){
-	window.top.otherNumCloseTime = 100
 	for(var i = 0; i < 12; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
 			updateItemOdds($("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + (i + 1) + ")"), window.top.rateData[1111001 + i][0]);
@@ -457,7 +453,6 @@ function setAnimal6Panel(){
 }
 
 function updateAnimal6Odds(){
-	window.top.otherNumCloseTime = 100
 	var oddId = $("#animal6Panel .animalCtrl .curBtn:eq(0)").attr("info");
 	$("#animal6Panel .animalCtrl .curBtn:eq(0)").attr('data-creditplaytypeid', window.top.rateData[oddId][2]);
 	var oddsCellArr = $("#animal6Panel .animalRow:not(.title) .oddsCell");
@@ -510,7 +505,6 @@ function setAnimal1Panel(betType){
 }
 
 function updateAnimal1Odds(betType){
-	window.top.otherNumCloseTime = 100
 	var startId = betType * 10000 + 1001
 	for(var i = 0; i < 12; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
@@ -531,7 +525,6 @@ function setUnitNumPanel(){
 }
 
 function updateUnitNumOdds(){
-	window.top.otherNumCloseTime = 100
 	for(var i = 0; i < 10; i++){
 		if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
 			updateItemOdds($("#unitNumPanel .unitRow:not(.title) .oddsCell:eq(" + i + ")"), window.top.rateData[1101000 + i][0]);
@@ -569,7 +562,6 @@ function setMissPanel(index, isInit){
 
 function updateMissOdds(){
 	var startId = linkBetType * 1000 + 1; 
-	window.top.otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){
 		$("#missPanel .betRow .betMoneyValue").removeAttr("disabled");
 		$("#missPanel .numRow .checkCell .check").removeClass("disable");
@@ -620,7 +612,6 @@ function clickAnimalLinkTypeBtn(count, obj){
 
 function setAnimalLinkOdds(){
 	var info = parseInt($(".ctrlPanel .ctrlCont .animalLinkType .curBtn").attr("info"));
-	window.top.otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){
 		linkCount = groupCount;
 		linkBetType = info
@@ -668,7 +659,6 @@ function clickUnitLinkTypeBtn(count, obj){
 
 function setUnitLinkOdds(){
 	var info = parseInt($(".ctrlPanel .ctrlCont .unitLinkType .curBtn").attr("info"));
-	window.top.otherNumCloseTime = 100
 	if(window.top.lotteryData.status == OPEN_STATUS && window.top.otherNumCloseTime > 0){
 		linkCount = groupCount;
 		linkBetType = info
@@ -769,7 +759,6 @@ function setLinkPanelOdds(panel){
 	$("#" + panel + " .systemCont .numRow .oddsCell .odds").hide();
 	var startId1 = linkBetType * 1000 + 1;
 	var startId2 = (linkBetType + 1) * 1000 + 1;
-	window.top.otherNumCloseTime = 100
 	if(linkCombType < 0)
 		return;
 	if(window.top.lotteryData.status != OPEN_STATUS || window.top.rateData[startId1][0] < 0){
@@ -1112,7 +1101,6 @@ function bet(panelId){
 		alert("余额不足！")
 		return;
 	}
-	console.log(data)
 	if(money <= 0)
 		return;
 	clearBet();
@@ -1174,7 +1162,6 @@ function betAnimal6(){
 	obj.info += '@<span style="color: red">' + odds + '</span>';
 	obj.infoTitle += '@' + odds + '';
 	var betInfoArr = [obj];
-	console.log(data)
 	clearBet();
 	window.top.initConfirmPanel(data, betInfoArr, betMoney, "normal");
 }
@@ -1532,7 +1519,6 @@ function getBetCombCount(ballCount){
 
 var combArr = [];
 function betLinkPanel(){
-	console.log('linkMode', linkMode)
 	switch(linkMode){
 		case 1: betLinkNormal(); break;
 		case 2: betLinkHead(); break;
@@ -1563,7 +1549,6 @@ function betLinkNormal(){
 			"commandLogAmount": parseInt(linkBetMoney)
 		})
 	}
-	console.log(data)
 	numArr.sort();
 	linkBetContent = numArr.join(",");
 	var combArr = getCombinationResult(numArr, linkCount);
@@ -1660,7 +1645,6 @@ function betLinkAnimalPanel(){
 			} else if (linkCombType == 4) {
 				rData = gData.find(e => e.creditPlayInfoName === '特串').creditPlayTypeInfoDtoList
 			}
-			console.log(num)
 			rData.forEach(function(rate) {
 				if (rate.creditPlayTypeName == num) {
 					data.push({
@@ -1736,7 +1720,6 @@ var linkMixCombArr = [];
 function betLinkMixturePanel(){
 	var animalRadio = $("#linkMixturePanel .animalRow input:checked");
 	var unitRadio = $("#linkMixturePanel .unitRow input:checked");
-	console.log(animalRadio, unitRadio)
 	linkBetMoney = parseInt($("#linkPanel .betRow .betMoneyValue").val());
 	if(animalRadio.length == 0 || unitRadio.length == 0 || isNaN(linkBetMoney))
 		return;
@@ -1896,7 +1879,6 @@ function betMissNormal(){
 	for(var i = 0; i < checkArr.length; i++){
 		numArr.push(checkArr.eq(i).attr("info"));
 	}
-	console.log(numArr)
 	numArr.sort();
 	for(var i = 0; i < checkArr.length; i++){
 		data.push({
@@ -2078,7 +2060,6 @@ function betGroupLinkHead(type){
 		combArr[i].sort();
 		combArr[i] = combArr[i].join(",");
 	}
-	console.log(combArr)
 	unitArr1.sort()
 	unitArr2.sort()
 	for(var i = 0; i < data.length; i++){
@@ -2330,7 +2311,6 @@ function initConfirmPanel(combArr, data){
 function getCombinationResult(numArr, ballCount){
     var combinationArr = [];
     combinationArr = GetCombinationBall(numArr, combinationArr, ballCount, 0, "");
-    //console.log(combinationArr);
     return combinationArr;
 }
 

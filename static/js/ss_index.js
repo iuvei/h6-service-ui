@@ -500,7 +500,6 @@ function getCurrentPeriod() {
       gameId: localStorage.getItem('gameId') || 1
     },
     success(res) {
-			console.log(res)
       var obj = res.data
 			var dt = new Date();
 			timeDif = dt.getTime();
@@ -509,10 +508,10 @@ function getCurrentPeriod() {
 			lotteryData.otherNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0)
 			// lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
 			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || 0)
-			openTime = lotteryData.openTime - dt.getTime();
-			especialNumCloseTime = lotteryData.especialNumCloseTime - dt.getTime();
-			otherNumCloseTime = lotteryData.otherNumCloseTime - dt.getTime();
-			openResultTime = lotteryData.openResultTime - dt.getTime();
+			openTime = lotteryData.openTime
+			especialNumCloseTime = lotteryData.especialNumCloseTime
+			otherNumCloseTime = lotteryData.otherNumCloseTime ;
+			openResultTime = lotteryData.openResultTime ;
       lotteryData.issue = obj.gamePeriod
       resultIssue = obj.gamePeriod
       var openNumArr = [obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6, obj.openNum]
@@ -1140,7 +1139,6 @@ function hideConfirmPanel(){
 }
 
 function bet(obj){
-	console.log('curBetInfo.type', curBetInfo.type)
 	obj = $(obj);
 	if(obj.text() == "提交中")
 		return;

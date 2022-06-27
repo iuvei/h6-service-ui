@@ -5,7 +5,6 @@ $(function(){
 
 function getMemberMaterial(){
 	Send(httpUrlData.getMemberMaterial, {}, function(obj){
-		console.log(obj)
 		var html = '';
 		for(var i = 0; i < obj.data.length; i++){
 			html += '<div class="row">'

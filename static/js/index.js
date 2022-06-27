@@ -523,14 +523,13 @@ function getCurrentPeriod() {
 		},
     success(res) {
       var obj = res.data
-      console.log(obj)
 			var dt = new Date();
 			timeDif = dt.getTime();
-			lotteryData.openResultTime = (obj.realOpen && obj.realOpen.getTime() || 0) + timeDif; // 开奖结果时间
-			lotteryData.especialNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0) + timeDif;
-			lotteryData.otherNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0) + timeDif;
+			lotteryData.openResultTime = (obj.realOpen && obj.realOpen.getTime() || 0); // 开奖结果时间
+			lotteryData.especialNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0);
+			lotteryData.otherNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0);
 			// lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
-			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || 0) + timeDif;
+			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || timeDif);
       lotteryData.issue = obj.gamePeriod
       resultIssue = obj.gamePeriod
       var openNumArr = [obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6, obj.openNum]
@@ -539,6 +538,8 @@ function getCurrentPeriod() {
           resultNum.push(item)
         }
       })
+			openResultTime = new Date('2020/06/03')
+			lotteryData.openResultTime =  new Date('2020/06/03')
       $('#cueIssue').text(lotteryData.issue);
     }
   })
@@ -967,7 +968,7 @@ function changeSkin(obj) {
   obj = $(obj);
   var skin = obj.val();
   localStorage.setItem("skinName", skin);
-  var url = skin + "_index.html?v=" + version;
+	var url = skin + "_index.html?v=" + version;
   window.open(url, "_self");
 }
 

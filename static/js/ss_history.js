@@ -37,7 +37,6 @@ function getHistoryData(page){
 			Authorization: localStorage.getItem('token')
 		},
 		success(res) {
-			console.log(res)
 			historyData = res.data;
 			setPage(historyData.total, page);
 		}

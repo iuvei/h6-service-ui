@@ -33,7 +33,6 @@ function resetData(){
 }
 
 function setLotteryInfo(){
-	console.log($('#cueIssue'))
 	$('#cueIssue').text(window.top.lotteryData.issue);
 	$(".lotteryBg").removeClass("lotteryBg1").removeClass("lotteryBg2").addClass("lotteryBg" + window.top.gameArr[window.top.curIndex].id);
 	setResult();

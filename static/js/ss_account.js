@@ -48,7 +48,6 @@ function findLastWeekAccountData(){
 }
 
 function listDailyLedger(beginDate, endDate) {
-	console.log(window.top.lotteryData)
 	var data = {
     "startTime": beginDate,
     "endTime": endDate,
