@@ -18,7 +18,7 @@ var httpUrlData = {
 	listLotteryResult: {name: "分页查询开奖结果", url: "/p/gameperiod/getGamePeriod", type: 'post', server: "MarkSixGame"},
 	listClearedOrder: {name: "账户历史查询已结注单", url: "/MarkSixGame/GameRecord/listClearedOrder", server: "MarkSixGame"},
 	updatePassword: {name: "修改密码", url: "/p/user/password", type: 'post', server: "MarkSixGame"},
-	listNotice: {name: "查询公告", url: "/p/gameperiod/getEntertainingDiversions", server: "MarkSixGame"},
+	listNotice: {name: "查询公告", url: "/p/gameperiod/getEntertainingDiversions", type: 'get', server: "MarkSixGame"},
 	getMemberMaterial: {name: "查询会员资料", url: "/p/user/userPlay", type: 'get', server: "MarkSixGame"},
 	getCurrentResultNum: {name: "查询当前期开奖号码", url: "/MarkSixGame/Game/getCurrentResultNum", server: "MarkSixGame"},
 }

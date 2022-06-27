@@ -41,6 +41,10 @@ $(function() {
   localStorage.setItem('creditPlayName', '')
   localStorage.setItem('pankou', 'A')
   localStorage.setItem('gameId', '1')
+  if (!localStorage.getItem('token')) {
+    alert('请先登录')
+    GotoLogin()
+  }
   $("#logo").attr("src", localStorage.getItem("logoUrl"));
   var arr = localStorage.getItem("gameArrStr").split(",");
   for(var i = 0; i < arr.length; i++){
@@ -663,16 +667,12 @@ var noticeContent;
 var noticeStop = false;
 
 function listNotice() {
-  // var data = {
-  //     token: token,
-  //     gameId: gameArr[curIndex].id
-  // }
-  // Send(httpUrlData.listNotice, data, function(obj){
-  //     noticeArr = [];
-  //     for(var i = 0; i < obj.noticeList.length; i++){
-  //         noticeArr.push(obj.noticeList[i]);
-  //     }
-  // })
+  Send(httpUrlData.listNotice, {}, function(obj){
+      noticeArr = [];
+      for(var i = 0; i < obj.data.length; i++){
+          noticeArr.push(obj.data[i]);
+      }
+  })
 }
 /**
  * 初始化公告栏
@@ -691,8 +691,8 @@ function InitNotice() {
     for (var i = 0; i < noticeArr.length; i++) {
       html += '<div class="row">'
         + '<div class="cell indexCell">' + (i + 1) + '</div>'
-        + '<div class="cell timeCell">' + noticeArr[i].n_create_time + '</div>'
-        + '<div class="cell infoCell">' + noticeArr[i].n_content + '</div>'
+        + '<div class="cell timeCell">' + noticeArr[i].createTime + '</div>'
+        + '<div class="cell infoCell">' + noticeArr[i].message + '</div>'
         + '</div>';
     }
     $(".noticePopupPanel .noticePopupPanelCont .systemTable .systemCont").html(html);
@@ -714,20 +714,20 @@ function ResetNotice() {
  * 设置公告栏公告状态
  */
 function SetNotice() {
-  // if (noticeStop) return;
-  // if (noticeArr.length > 0) {
-  //   if (noticeContent.html() == "") {
-  //     noticeIndex = 0;
-  //     noticeContent.html(noticeArr[noticeIndex].n_content).css("margin-left", noticeContent.parent().width());
-  //   } else {
-  //     noticeContent.css("margin-left", parseInt(noticeContent.css("margin-left")) - 2 + "px");
-  //     if (parseInt(noticeContent.css("margin-left")) <= parseInt(noticeContent.width()) * -1) {
-  //       if (noticeIndex >= noticeArr.length)
-  //         noticeIndex = 0;
-  //       noticeContent.html(noticeArr[noticeIndex++].n_content).css("margin-left", noticeContent.parent().width());
-  //     }
-  //   }
-  // }
+  if (noticeStop) return;
+  if (noticeArr.length > 0) {
+    if (noticeContent.html() == "") {
+      noticeIndex = 0;
+      noticeContent.html(noticeArr[noticeIndex].message).css("margin-left", noticeContent.parent().width());
+    } else {
+      noticeContent.css("margin-left", parseInt(noticeContent.css("margin-left")) - 2 + "px");
+      if (parseInt(noticeContent.css("margin-left")) <= parseInt(noticeContent.width()) * -1) {
+        if (noticeIndex >= noticeArr.length)
+          noticeIndex = 0;
+        noticeContent.html(noticeArr[noticeIndex++].message).css("margin-left", noticeContent.parent().width());
+      }
+    }
+  }
 }
 
 function showUseInfoPanel() {

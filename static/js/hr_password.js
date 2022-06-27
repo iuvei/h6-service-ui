@@ -33,7 +33,7 @@ function updatePassword(){
 	}
 	Send(httpUrlData.updatePassword, JSON.stringify(data), function(obj){
 		alert("修改成功");
-		window.top.open("hr_index.html?v=" + version, "_self");
+		window.top.open("index.html?v=" + version, "_self");
 	})
 }
 
