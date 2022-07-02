@@ -35,14 +35,14 @@ function updateBetDetailData(){
 		betMoneySum += Number(betData[i].betAmount)
 		recedeMoneySum += Number(betData[i].returnAmount)
 		var className = ''
-		infoHtml = '<td class="infoCell"><div class="infoCell clickInfo' + className + '" title="' + betData[i].betContent + '" onclick="showLinkBetInfo(' + i + ')">' + betData[i].betContent + '</div></td>';
+		infoHtml = '<td class="infoCell"><div class="infoCell clickInfo' + className + '" title="' + betData[i].betContent + '" onclick="showLinkBetInfo(' + i + ',' + betData[i].id + ')">' + betData[i].betContent + '</div></td>';
 		html += '<tr>'
 				+ '<td class="numCell"><div class="' + className + '">' + betData[i].id + '</div></td>'
 				+ '<td class="timeCell"><div class="' + className + '">' + betData[i].createTime + '</div></td>'
 				+ infoHtml
 				+ '<td class="moneyCell"><div class="' + className + '">' + betData[i].betAmount + '</div></td>'
 				+ '<td class="oddsCell"><div class="oddsCell' + className + '" title="' + betData[i].betOdds + '">' + betData[i].betOdds + '</div></td>'
-				+ '<td class="winCell"><div class="' + className + '">' + betData[i].betAmount + '</div></td>'
+				+ '<td class="winCell"><div class="' + className + '">' + betData[i].betWinAmount + '</div></td>'
 				+ '<td class="feedbackCell"><div class="' + className + '">' + betData[i].returnAmount + '</div></td>'
 			+ '</tr>';
 	}
@@ -52,14 +52,33 @@ function updateBetDetailData(){
 	$(".statisticsRow .feedbackCell").text(recedeMoneySum.toFixed(2));
 }
 
-function showLinkBetInfo(index){
+function showLinkBetInfo(index, id){
 	var html = ''
-	for(var i = 0; i < betData.length; i++){
-		html += '<div>' + betData[i] + '</div>'
+	var data = {
+		"gameId": localStorage.getItem('gameId') || 1,
+		"commandId":id
 	}
-	$("#betInfoTable .systemCont").html(html).show();
-	$("#betListTable, .ctrlPanel").hide();
-	$("#betInfoTable").show();
+	$.ajax({
+		type: 'post',
+		url: serverMap[httpUrlData.listBetDetail.server] + httpUrlData.listBetDetail.url,
+		data: JSON.stringify(data),
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(res) {
+			if (res) {
+				res.forEach(item => {
+					html += '<div>' + item + '</div>'
+				})
+				$("#betInfoTable .systemCont").html(html).show();
+				$("#betListTable, .ctrlPanel").hide();
+				$("#betInfoTable").show();
+			}
+		}
+	})
 }
 
 function showBetListTable(){

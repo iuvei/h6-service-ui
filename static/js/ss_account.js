@@ -72,12 +72,12 @@ function listDailyLedger(beginDate, endDate) {
 				obj.forEach(function(item) {
 					className = item.ctTotal > 0 ? " redFont" : "";
 					html += '<tr>'
-							+ '<td class="dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ',' + item.createTime + ')">' + item.createTime + '</a></td>'
+							+ '<td class="dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ',' + item.dateTime + ')">' + item.dateTime + '</a></td>'
 							+ '<td class="issueCell">' + item.gamePeriod + '</td>'
 							+ '<td class="allCountCell">' + (item.ctPeriod || 0) + '</td>'
 							+ '<td class="allMoneyCell">' + item.ctBalance + '</td>'
 							+ '<td class="allFeedbackCell">' + item.ctAmt + '</td>'
-							+ '<td class="allwinCell">' + item.ctTotal + '</td>'
+							+ '<td class="allwinCell">' + (item.ctTotal || '') + '</td>'
 						+ '</tr>'
 				})
 				html += '<tr>'
@@ -121,7 +121,7 @@ function listClearedOrder(gamePeriod, date){
 	}
 	$.ajax({
 		type : 'post',
-		url : serverMap[httpUrlData.listBetDetail.server] + httpUrlData.listBetDetail.url,
+		url : serverMap[httpUrlData.accountDetail.server] + httpUrlData.accountDetail.url,
 		data : JSON.stringify(data),
 		dataType : "json",
 		contentType: 'application/json;charset=UTF-8',

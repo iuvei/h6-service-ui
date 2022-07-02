@@ -1084,10 +1084,11 @@ function getLastRecord(){
     success(obj) {
         var html = '';
 				var money = 0
-				console.log(obj)
+				var count = 0
         for (var i = 0; i < 10; i++) {
           var data = obj[i]
 					if (data) {
+						count++
 						html += '<tr>'
 								+ '<td class="moneyCell" title="' + data.transactionsBalance+ '"><div>' + data.transactionsBalance + '</div></td>'
 								+ '<td class="contentCell" title="' + data.content + '"><div>' + data.content + '</div></td>'
@@ -1096,7 +1097,7 @@ function getLastRecord(){
 					money += parseInt(data.transactionsBalance);
         }
 				$("#lastRecordCont").html(html);
-				$("#lastRecordSum").text("共" + obj.length + "注，合计" + money);
+				$("#lastRecordSum").text("共" + count + "注，合计" + money);
     }
   })
 }
