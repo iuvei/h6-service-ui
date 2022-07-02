@@ -493,21 +493,9 @@ function UpdateRateData(data) {
 var resultNum = [];
 var resultIssue = 0;
 function getCurrentResultNum(gameID, call) {
-  // var data = {
-  //   token: token,
-  //   gameID: gameID
-  // };
-  // Send(httpUrlData.getCurrentResultNum, data, function (obj) {
-    // resultNum = [];
-    // if (obj.resultNum != "") {
-      // resultNum = ''.split(",");
-      // resultIssue = '27'
-      // getResultTime = 0;
-    // }
-    updateInfoPanel(lotteryData);
-    if (call != null)
-      call();
-  // })
+  updateInfoPanel(lotteryData);
+  if (call != null)
+    call();
 }
 
 function getCurrentPeriod() {
@@ -593,7 +581,7 @@ function initLotteryMenu() {
     var html = ''
     obj.data.forEach(function(item, i) {
       var status = i == curIndex ? 'current' : '';
-      html += `<div class="lotteryItem ${status}" onclick="clickLottery(${i}, ${item.gameId}, '${item.gameName}')">${item.gameName}</div>`
+      html += `<div class="lotteryItem ${status}" onclick="clickLottery(${i}, ${item.gameId})">${item.gameName}</div>`
     })
     $(".lotteryMenuCont").empty().append(html);
   })
@@ -610,13 +598,10 @@ function toPage(page, btn) {
   $("#lotteryFrame").hide();
 }
 
-function clickLottery(index, gameId, gameName) {
-  console.log($(this))
-  if (confirm("进入" + gameName + "?")) {
-    curIndex = index;
-    localStorage.setItem('gameId', gameId)
-    getGameData(true);
-  }
+function clickLottery(index, gameId) {
+  curIndex = index;
+  localStorage.setItem('gameId', gameId)
+  getGameData(true);
 }
 
 function toLottery(index) {

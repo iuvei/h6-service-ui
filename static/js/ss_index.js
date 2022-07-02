@@ -635,7 +635,7 @@ function setResult(){
 					+ '<div class="animal">' + animal + '</div>'
 		}
 	}
-	$(".lotteryMenuBox .lotteryResult").html(ballHtml);
+	$(".lotteryMenuBox .lotteryResult").empty().html(ballHtml);
 }
 
 function resize(){
@@ -653,7 +653,7 @@ function initLotteryMenu() {
     var html = ''
     obj.data.forEach(function(item, i) {
       var status = i == curIndex ? 'current' : '';
-      html += `<div class="lotteryItem ${status}" onclick="clickLottery(${i}, ${item.gameId}, '${item.gameName}')">${item.gameName}</div>`
+      html += `<div class="lotteryItem ${status}" onclick="clickLottery(${i}, ${item.gameId})">${item.gameName}</div>`
     })
     $(".lotteryMenuCont").empty().append(html);
   })
@@ -669,12 +669,10 @@ function toPage(page, btn) {
 	$("#lotteryFrame").hide();
 }
 
-function clickLottery(index, gameId, gameName) {
-  if (confirm("进入" + gameName + "?")) {
-    curIndex = index;
-    localStorage.setItem('gameId', gameId)
-    getGameData(true);
-  }
+function clickLottery(index, gameId) {
+	curIndex = index;
+	localStorage.setItem('gameId', gameId)
+	getGameData(true);
 }
 
 function toLottery(index){
