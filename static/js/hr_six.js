@@ -34,7 +34,6 @@ function resetData(){
 
 function setLotteryInfo(){
 	$('#cueIssue').text(window.top.lotteryData.issue);
-	$(".lotteryBg").removeClass("lotteryBg1").removeClass("lotteryBg2").addClass("lotteryBg" + window.top.gameArr[window.top.curIndex].id);
 	setResult();
 	if(window.top.lotteryData.status == READY_STATUS){
 		$(".systemTable, #linkBetPanel, .ctrlCont").hide();
@@ -80,7 +79,7 @@ function update(timeFrquency, dt){
 		resultTime -= timeFrquency;
 		if(resultTime < 0){
 			resultTime = RESULT_TIME;
-			window.top.getCurrentResultNum(window.top.gameArr[window.top.curIndex].id, setResult);
+			window.top.getCurrentResultNum('', setResult);
 		}
 	}
 }
@@ -92,7 +91,7 @@ function setResult(){
 		for(var i = 0; i < window.top.resultNum.length; i++){
 			if(i == 6)
 				ballHtml += '<div class="add">+</div>';
-			ballHtml += '<div class="' + ballInfoObj[window.top.resultNum[i]].color + 'Ball">' + window.top.resultNum[i] + '</div>';
+			ballHtml += '<div class="' + ballInfoObj[window.top.resultNum[i] < 10 ? '0' + window.top.resultNum[i] : window.top.resultNum[i]].color + 'Ball">' + window.top.resultNum[i] + '</div>';
 		}
 	}
 	$("#curResult").html(ballHtml);
@@ -1390,19 +1389,19 @@ function sendBet(rateType, betContent, data){
 		}
 		if(obj.status == 1){
 			alert("赔率下降");
-			window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, 0);
+			window.top.getGameData(false);
 			return;
 		}
 		alert("下注成功");
 		window.top.showBetResultPanel(result);
-		window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, window.top.lotteryData.rateVersion);
+		window.top.getGameData(false);
 	}, betErr)
 }
 
 function betErr(){
 	alert("网络延迟，请在下注明细中查看是否成功！");
 	window.top.showUseInfoPanel();
-	window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, window.top.localData.rateVersion);
+	window.top.getGameData(false);
 }
 
 var maxSelectedCount = 10;
@@ -2427,7 +2426,7 @@ function sendBetLink(){
 				betInfoObj.addClass("red");
 				linkNumGroup = linkNumGroup.replace(info[0]+ "-" + info[1], info[0]+ "-" + info[2])
 			}
-			window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, 0);
+			window.top.getGameData(false);
 			return;
 		}
 		alert("下注成功");
@@ -2464,7 +2463,7 @@ function sendBetLink(){
 		}
 		result = [resultStr]
 		window.top.showBetResultPanel(result);
-		window.top.getGameData(window.top.gameArr[window.top.curIndex].id, false, window.top.lotteryData.rateVersion);
+		window.top.getGameData(false);
 	},betErr)
 }
 

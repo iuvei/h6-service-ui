@@ -1,4 +1,3 @@
-var gameArr = [];
 var token = localStorage.getItem("token");
 var account = localStorage.getItem("account");
 var lotteryData = {};
@@ -46,14 +45,6 @@ $(function() {
     GotoLogin()
   }
   $("#logo").attr("src", localStorage.getItem("logoUrl"));
-  var arr = localStorage.getItem("gameArrStr").split(",");
-  for(var i = 0; i < arr.length; i++){
-      var id = parseInt(arr[i]);
-      for(var j = 0; j < lotteryArr.length; j++){
-          if(lotteryArr[j].id == id)
-              gameArr.push(lotteryArr[j]);
-      }
-  }
   initLotteryMenu();
   var animalIndex = parseInt(localStorage.getItem("animalIndex"));
   for(var i = 0; i < 49; i++){
@@ -89,6 +80,7 @@ function mergeObj(obj1, obj2) {
 var timeDif = 0;
 var getDataBetType = "";
 function getGameData(isInit) {
+  rateData = {}
   var data = {
     gameId: localStorage.getItem('gameId') || 1
   };
@@ -116,6 +108,16 @@ function getGameData(isInit) {
       }
 			lotteryData = mergeObj({rate: obj}, lotteryData)
 			lotteryData.quota = []
+      lotteryData.rate.forEach(game => {
+        game.creditPlayTypeDtoList.forEach(subGame => {
+          subGame.creditPlayTypeInfoDtoList.forEach(item => {
+            if (subGame.isClose == 1) {
+              item.odds = -1 
+              item.odds2 = -1
+            }
+          })
+        })
+      })
 			UpdateRateData(lotteryData.rate);
 			if (lotteryData.quota.length > 0)
 				quotaArr = lotteryData.quota;
@@ -564,7 +566,7 @@ function update() {
     getResultTime -= TIME_FREQUENCY;
     if (getResultTime <= 0) {
       getResultTime = GET_RESULT_TIME;
-      getCurrentResultNum(gameArr[curIndex].id);
+      getCurrentResultNum();
     }
   }
   noticeTime -= TIME_FREQUENCY;
@@ -587,12 +589,14 @@ function resize() {
 var curIndex = 0;
 var curTab = 0;
 function initLotteryMenu() {
-  var html = '';
-  for (var i = 0; i < gameArr.length; i++) {
-    var status = i == curIndex ? 'current' : '';
-    html += '<div class="lotteryItem ' + status + '" onclick="clickLottery(' + i + ')">' + gameArr[i].name + '</div>';
-  }
-  $(".lotteryMenuCont").empty().append(html);
+  Send(httpUrlData.getGameList, {}, function (obj) {
+    var html = ''
+    obj.data.forEach(function(item, i) {
+      var status = i == curIndex ? 'current' : '';
+      html += `<div class="lotteryItem ${status}" onclick="clickLottery(${i}, ${item.gameId}, '${item.gameName}')">${item.gameName}</div>`
+    })
+    $(".lotteryMenuCont").empty().append(html);
+  })
 }
 
 /**
@@ -606,12 +610,11 @@ function toPage(page, btn) {
   $("#lotteryFrame").hide();
 }
 
-function clickLottery(index) {
-  if (confirm("进入" + gameArr[index].name + "?")) {
+function clickLottery(index, gameId, gameName) {
+  console.log($(this))
+  if (confirm("进入" + gameName + "?")) {
     curIndex = index;
-    var gameId = localStorage.getItem('gameId')
-    var newGameId = gameId == 2 ? 1 : 2 
-    localStorage.setItem('gameId', newGameId)
+    localStorage.setItem('gameId', gameId)
     getGameData(true);
   }
 }
@@ -949,16 +952,17 @@ function getLastRecord(type) {
 		},
     success(obj) {
         var html = '';
-        for (var i = 0; obj.length; i++) {
+        for (var i = 0; i < 10; i++) {
           var data = obj[i]
-          html += '<div class="row">'
-            + '<div class="cell betTime">' + data.createTime + '</div>'
-            + '<div class="cell betType">' + data.content + '</div>'
-            + '<div class="cell betMoney">' + data.transactionsBalance + '</div>'
-            + '</div>'
+          if (data) {
+            html += '<div class="row">'
+              + '<div class="cell betTime">' + data.createTime + '</div>'
+              + '<div class="cell betType">' + data.content + '</div>'
+              + '<div class="cell betMoney">' + data.transactionsBalance + '</div>'
+              + '</div>'
+          }
         }
         $(".left .betInfoPanel .betInfoContent").html(html);
-        
         if (type) {
           showUseInfoPanel();
         }

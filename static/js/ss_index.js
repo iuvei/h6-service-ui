@@ -1,4 +1,3 @@
-var gameArr = [];
 var token = localStorage.getItem("token");
 var account = localStorage.getItem("account");
 var lotteryData = {};
@@ -28,14 +27,6 @@ $(function() {
   localStorage.setItem('pankou', 'A')
   localStorage.setItem('gameId', '1')
 	$("#logo").attr("src", localStorage.getItem("logoUrl"));
-	var arr = localStorage.getItem("gameArrStr").split(",");
-	for(var i = 0; i < arr.length; i++){
-		var id = parseInt(arr[i]);
-		for(var j = 0; j < lotteryArr.length; j++){
-			if(lotteryArr[j].id == id)
-				gameArr.push(lotteryArr[j]);
-		}
-	}
   getCurrentPeriod()
 	getUserInfo()
 	initLotteryMenu();
@@ -99,11 +90,21 @@ function getGameData(isInit){
 			}
 			lotteryData = mergeObj({rate: obj}, lotteryData)
 			lotteryData.quota = []
+      lotteryData.rate.forEach(game => {
+        game.creditPlayTypeDtoList.forEach(subGame => {
+          subGame.creditPlayTypeInfoDtoList.forEach(item => {
+            if (subGame.isClose == 1) {
+              item.odds = -1 
+              item.odds2 = -1
+            }
+          })
+        })
+      })
 			UpdateRateData(lotteryData.rate);
 			if (lotteryData.quota.length > 0)
 				quotaArr = lotteryData.quota;
 			if (isInit) {
-				getCurrentResultNum(data.gameId, function () {
+				getCurrentResultNum(function () {
 					showUseInfoPanel();
 					getLastRecord();
 					toLottery(curIndex);
@@ -115,7 +116,7 @@ function getGameData(isInit){
 				lotteryFrame.updateOdds();
 				lotteryFrame.updateOdds();
 				if (resultIssue != lotteryData.issue && resultNum.length > 0)
-					getCurrentResultNum(data.gameId, function () {
+					getCurrentResultNum(function () {
 						// showUseInfoPanel();
 						getLastRecord();
 					})
@@ -467,22 +468,10 @@ function UpdateRateData(data) {
 }
 
 var resultNum = [];
-function getCurrentResultNum(gameID, call){
-	// var data = {
-	// 	token: token,
-	// 	gameID: gameID
-	// };
-  // Send(httpUrlData.getCurrentResultNum, data, function (obj) {
-    // resultNum = [];
-    // if (obj.resultNum != "") {
-      // resultNum = ''.split(",");
-      // resultIssue = '27'
-      // getResultTime = 0;
-    // }
-    updateInfoPanel(lotteryData);
-    if (call != null)
-      call();
-  // })
+function getCurrentResultNum(call){
+	updateInfoPanel(lotteryData);
+	if (call != null)
+		call();
 }
 
 function getCurrentPeriod() {
@@ -564,7 +553,7 @@ function update(){
 		getResultTime -= TIME_FREQUENCY;
 		if(getResultTime <= 0){
 			getResultTime = GET_RESULT_TIME;
-			getCurrentResultNum(gameArr[curIndex].id);
+			getCurrentResultNum();
 		}
 	}
 	noticeTime -= TIME_FREQUENCY;
@@ -610,7 +599,7 @@ function update(){
 		resultTime -= TIME_FREQUENCY;
 		if(resultTime < 0){
 			resultTime = RESULT_TIME;
-			getCurrentResultNum(gameArr[curIndex].id, setResult);
+			getCurrentResultNum(setResult);
 		}
 	}
 }
@@ -626,6 +615,7 @@ function getTimeStr(time){
 function setResult(){
 	var ballHtml = '';
 	var animal = '';
+	console.log(resultNum)
 	if(resultNum.length > 0){
 		for(var i = 0; i < resultNum.length; i++){
 			if(i == 6)
@@ -641,7 +631,7 @@ function setResult(){
 				if(animal != "")
 					break;
 			}
-			ballHtml += '<div class="' + ballInfoObj[resultNum[i]].color + 'Ball">' + resultNum[i] + '</div>'
+			ballHtml += '<div class="' + ballInfoObj[resultNum[i] < 10 ? '0' + resultNum[i] : resultNum[i]].color + 'Ball">' + resultNum[i] + '</div>'
 					+ '<div class="animal">' + animal + '</div>'
 		}
 	}
@@ -658,15 +648,16 @@ function resize(){
 
 var curIndex = 0;
 var curTab = 0;
-function initLotteryMenu(){
-	var html = '';
-	for(var i = 0; i < gameArr.length; i++){
-		var status = i == curIndex ? 'current' : '';
-		html += '<div class="lotteryItem ' + status + '" onclick="clickLottery(' + i + ')">' + gameArr[i].name + '</div>';
-	}
-	$(".lotteryMenuCont").empty().append(html);
+function initLotteryMenu() {
+  Send(httpUrlData.getGameList, {}, function (obj) {
+    var html = ''
+    obj.data.forEach(function(item, i) {
+      var status = i == curIndex ? 'current' : '';
+      html += `<div class="lotteryItem ${status}" onclick="clickLottery(${i}, ${item.gameId}, '${item.gameName}')">${item.gameName}</div>`
+    })
+    $(".lotteryMenuCont").empty().append(html);
+  })
 }
-
 /**
  * 跳转到指定页面
  */
@@ -678,14 +669,12 @@ function toPage(page, btn) {
 	$("#lotteryFrame").hide();
 }
 
-function clickLottery(index){
-	if(confirm("进入" + gameArr[index].name + "?")){
-		curIndex = index;
-    var gameId = localStorage.getItem('gameId')
-    var newGameId = gameId == 2 ? 1 : 2 
-    localStorage.setItem('gameId', newGameId)
+function clickLottery(index, gameId, gameName) {
+  if (confirm("进入" + gameName + "?")) {
+    curIndex = index;
+    localStorage.setItem('gameId', gameId)
     getGameData(true);
-	}
+  }
 }
 
 function toLottery(index){
@@ -1095,7 +1084,8 @@ function getLastRecord(){
     success(obj) {
         var html = '';
 				var money = 0
-        for (var i = 0; obj.length; i++) {
+				console.log(obj)
+        for (var i = 0; i < obj.length; i++) {
           var data = obj[i]
 					html += '<tr>'
 							+ '<td class="moneyCell" title="' + data.transactionsBalance+ '"><div>' + data.transactionsBalance + '</div></td>'

@@ -6,20 +6,6 @@ $(function(){
 })
 
 function getHistoryData(page){
-	// if(page != 0 && getCurDataTimer != null){
-	// 	clearTimeout(getCurDataTimer);
-	// 	getCurDataTimer = null;
-	// }
-	// var data = {
-	// 	token: window.top.token,
-	// 	gameID: window.top.gameArr[window.top.curIndex].id,
-	// 	page: page,
-	// 	pageSize: 20
-	// }
-	// Send(httpUrlData.listLotteryResult, data, function(obj){
-	// 	historyData = obj;
-	// 	setPage(obj.total, page);
-	// })
 	var data = {
 		token: window.top.token,
 		gameId: localStorage.getItem('gameId') || 1,

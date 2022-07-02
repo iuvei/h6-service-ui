@@ -2,6 +2,7 @@
 <!-- saved from url=(0062)https://lhbb.tt6688.cc/?token=7685e7cb11e24868895b1832d21909d1 -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>搜索</title>
+    <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
 </head>
 <body>
         <style type="text/css">
@@ -55,23 +56,7 @@
                                                             <span id="lbl">如出現:Just a moment... <br>Checking your browser before <br>為驗證服務,請稍等5秒鐘</span>
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td height="200" align="left" class="fds">
-                                                            <div id="div2">
-                                                                代一：<a target="_blank" style="font-size:14px" href="https://lhag1.tt6688.cc/?token=7685e7cb11e24868895b1832d21909d1">https://lhag1.tt6688.cc/</a><br>                                                            </div>
-                                                        </td>
-                                                        <td height="200" style="width:50px;color:Red;" class="fds">
-                                                            <div id="div4" style="width:100px;"></div>
-                                                        </td>
-                                                        <td height="200" align="left" class="fds">
-                                                            <div id="div3">
-会一：<a target="_blank" style="font-size:14px" href="http://h6-index.wysdjx.com/login.html">http://h6-index.wysdjx.com</a><br>                                                            </div>
-                                                        </td>
-                                                        
-                                                        <td height="200" style="width:50px;color:Red;" class="fds">
-                                                            <div id="div5" style="width:100px;"></div>
-                                                        </td>
-                                                    </tr>
+                                                    <tr id="url-wrap"></tr>
                                                 </tbody>
                                             </table>
                                         </td>
@@ -84,6 +69,24 @@
             </table>
         </form>
         <script type="text/javascript">
+            loadUrl()
+            function loadUrl() {
+                var checkCodeData = sessionStorage.getItem('checkCodeData')
+                console.log(checkCodeData)
+                if (checkCodeData) {
+                    var html = ''
+                    checkCodeData = JSON.parse(checkCodeData)
+                    checkCodeData.agent.forEach(item => {
+                        html += '<td height="200" align="left" class="fds"><div>' + item.name + '：<a target="_blank" style="font-size:14px" href="' + item.url + '">' + item.url + '</a><br></div></td>'
+                    })
+                    checkCodeData.user.forEach(item => {
+                        html += '<td height="200" align="left" class="fds"><div>' + item.name + '：<a target="_blank" style="font-size:14px" href="' + item.url + '">' + item.url + '</a><br></div></td>'
+                    })
+                    $('#url-wrap').html(html)
+                } else {
+                    window.open(location.origin, '_self')
+                }
+            }
             function test() {
                 var dNum = document.getElementById("div2").getElementsByTagName("a").length;
                 var hNum = document.getElementById("div3").getElementsByTagName("a").length;

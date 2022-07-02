@@ -11,7 +11,7 @@ function getBetDetailData(page){
 	}
 	$.ajax({
 		type: 'post',
-		url: serverMap[httpUrlData.listBetDetailList.server] + httpUrlData.listBetDetail.url,
+		url: serverMap[httpUrlData.listBetDetailList.server] + httpUrlData.listBetDetailList.url,
 		data: JSON.stringify(data),
 		contentType: 'application/json;charset=UTF-8',
 		async : true,
@@ -24,10 +24,6 @@ function getBetDetailData(page){
 			setPage(res.length, page);
 		}
 	})
-	// Send(httpUrlData.listBetDetail, data, function(obj){
-	// 	betData = obj;
-	// 	setPage(obj.totalCount, page);
-	// })
 }
 
 function updateBetDetailData(){
@@ -35,26 +31,32 @@ function updateBetDetailData(){
 	var recedeMoneySum = 0;
 	var betMoneySum = 0;
 		var infoHtml = '';
+		
 	for(var i = 0; i < betData.length; i++){
-		var className = betData[i].status == 3 || betData.orderList[i].status == -1 ? " cancelInfo" : "";
-		if(betData.orderList[i].orderDetailList.length > 0)
-			infoHtml = '<div class="cell infoCell clickCell' + className + '" title="' + betData.orderList[i].betContent + '" onclick="showLinkBetInfo(' + i + ')">' + betData.orderList[i].betContent + '</div>';
+		var className =  ""
+		// cancelInfo
+		betMoneySum += Number(betData[i].betAmount)
+		recedeMoneySum += Number(betData[i].returnAmount)
+		if(betData[i].betContent)
+			infoHtml = '<div class="cell infoCell clickCell' + className + '" title="' + betData[i].betContent + '" onclick="showLinkBetInfo(' + i + ')">' + betData[i].betContent + '</div>';
 		else
-			infoHtml = '<div class="cell infoCell' + className + '" title="' + betData.orderList[i].betContent + '">' + betData.orderList[i].betContent + '</div>';
+			infoHtml = '<div class="cell infoCell' + className + '" title="' + betData[i].betContent + '">' + betData[i].betContent + '</div>';
 		html += '<div class="row">'
-				+ '<div class="cell numCell' + className + '">' + betData.orderList[i].orderNum + '</div>'
-				+ '<div class="cell timeCell' + className + '">' + betData.orderList[i].betTime + '</div>'
+				+ '<div class="cell numCell' + className + '">' + betData[i].orderNum + '</div>'
+				+ '<div class="cell timeCell' + className + '">' + betData[i].createTime + '</div>'
 				+ infoHtml
-				+ '<div class="cell moneyCell' + className + '">' + betData.orderList[i].betMoney + '</div>'
-				+ '<div class="cell oddsCell' + className + '" title="' + betData.orderList[i].rate + '">' + betData.orderList[i].rate + '</div>'
-				+ '<div class="cell winCell' + className + '">' + betData.orderList[i].willWinMoney + '</div>'
-				+ '<div class="cell feedbackCell' + className + '">' + betData.orderList[i].recedeMoney + '</div>'
+				+ '<div class="cell moneyCell' + className + '">' + betData[i].betAmount + '</div>'
+				+ '<div class="cell oddsCell' + className + '" title="' + betData[i].betOdds + '">' + betData[i].betOdds + '</div>'
+				+ '<div class="cell winCell' + className + '">' + betData[i].willWinMoney + '</div>'
+				+ '<div class="cell feedbackCell' + className + '">' + betData[i].returnAmount + '</div>'
 			+ '</div>';
+
+			
 	}
 	$(".systemCont").html(html);
-	$(".statisticsRow .sumCell").text("小计（" + betData.orderList.length + "笔）");
-	$(".statisticsRow .moneyCell").text(betData.pageBetMoney);
-	$(".statisticsRow .feedbackCell").text(betData.pageRecedeMoney);
+	$(".statisticsRow .sumCell").text("小计（" + betData.length + "笔）");
+	$(".statisticsRow .moneyCell").text(betMoneySum);
+	$(".statisticsRow .feedbackCell").text(recedeMoneySum);
 }
 
 function showLinkBetInfo(index){

@@ -7,5 +7,5 @@ var localData={
 
 var serverMap = {
 	"MarkSixGame": "http://h6-index.wysdjx.com:8086",
-	"MarkSixBet": "http://h6-index.wysdjx.com:8086"
+	"MarkSixBet": "http://h6-index.wysdjx.com:8086",
 };

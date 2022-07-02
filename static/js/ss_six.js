@@ -7,7 +7,7 @@ var nClose = false;
 var preinstallToggleObj;
 var preinstallValObj;
 $(function(){
-	window.top.getGameData(window.top.gameArr[window.top.curIndex].id, true, 0);
+	window.top.getGameData(true);
 	initAnimalPanel();
 	initAnimal6Panel();
 	preinstallToggleObj = $("#preinstallToggle");
@@ -41,7 +41,6 @@ function resetData(){
 
 function setLotteryInfo(){
 	$("#cueIssue").text(window.top.lotteryData.issue);
-	$("#lotteryName").attr("src", "img/lottery" + window.top.gameArr[window.top.curIndex].id + ".png");
 	setLotteryTab();
 }
 
