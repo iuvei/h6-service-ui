@@ -1085,12 +1085,14 @@ function getLastRecord(){
         var html = '';
 				var money = 0
 				console.log(obj)
-        for (var i = 0; i < obj.length; i++) {
+        for (var i = 0; i < 10; i++) {
           var data = obj[i]
-					html += '<tr>'
-							+ '<td class="moneyCell" title="' + data.transactionsBalance+ '"><div>' + data.transactionsBalance + '</div></td>'
-							+ '<td class="contentCell" title="' + data.content + '"><div>' + data.content + '</div></td>'
-						+ '</tr>';
+					if (data) {
+						html += '<tr>'
+								+ '<td class="moneyCell" title="' + data.transactionsBalance+ '"><div>' + data.transactionsBalance + '</div></td>'
+								+ '<td class="contentCell" title="' + data.content + '"><div>' + data.content + '</div></td>'
+							+ '</tr>';
+					}
 					money += parseInt(data.transactionsBalance);
         }
 				$("#lastRecordCont").html(html);
