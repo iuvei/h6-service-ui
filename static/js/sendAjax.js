@@ -61,6 +61,7 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 			},
 			error :function(XMLHttpRequest, errorInfo){
 				console.log("error错误信息:" + serverMap[url.server] + url.url + "     " + errorInfo);
+				alert(errorInfo)
 				if(errorCall != null && errorCall != "" && !isCall){
 					isCall = true;
 					setTimeout(errorCall, 1000);
@@ -68,7 +69,6 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 				// removeLoading();
 			}
 		})
-	console.log("send成功");
 }
 /**
  * 退出到登陆页面

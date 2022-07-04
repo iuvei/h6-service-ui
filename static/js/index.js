@@ -1,7 +1,11 @@
 var token = localStorage.getItem("token");
 var account = localStorage.getItem("account");
 var lotteryData = {};
-var rateData = {};
+var rateData = {}
+var initRate = [1012001, 1012002, 1013001, 1013002, 1014001, 1014002, 1015001, 1015002, 1015003, 1016001, 1016002, 1017001, 1017002]
+for (let i = 1011001; i < 1011049; i++) {
+  rateData[i] = [-1, -1]
+}
 var READY_STATUS = 0;
 var OPEN_STATUS = 1;
 var CLOSE_STATUS = 2;
@@ -80,7 +84,6 @@ function mergeObj(obj1, obj2) {
 var timeDif = 0;
 var getDataBetType = "";
 function getGameData(isInit) {
-  rateData = {}
   var data = {
     gameId: localStorage.getItem('gameId') || 1
   };
@@ -144,6 +147,8 @@ function getGameData(isInit) {
       if (error.status == 401) {
         alert('请先登录')
         GotoLogin()
+      } else {
+        alert(error.responseJSON.error)
       }
     }
 	})
@@ -530,9 +535,10 @@ function getCurrentPeriod() {
         }
       })
       lotteryFrame.setLotteryInfo();
-			openResultTime = new Date('2020/06/03')
-			lotteryData.openResultTime =  new Date('2020/06/03')
       $('#cueIssue').text(lotteryData.issue);
+    },
+    error(res) {
+      alert(res.responseJSON.error)
     }
   })
 }
@@ -951,6 +957,9 @@ function getLastRecord(type) {
         if (type) {
           showUseInfoPanel();
         }
+    },
+    error(res) {
+      alert(res.responseJSON.error)
     }
   })
 }

@@ -1,6 +1,5 @@
 
 function verifCode() {
-      console.log($('#kw').val())
   $.ajax({
     type: 'get',
 		url : serverMap[httpUrlData.verifyCheckCode.server] + httpUrlData.verifyCheckCode.url,

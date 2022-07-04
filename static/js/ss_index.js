@@ -66,6 +66,8 @@ function getGameData(isInit){
 	var data = {
     gameId: localStorage.getItem('gameId') || 1
 	};
+	console.log('前面', lotteryData.rate)
+	console.log('前面', rateData)
 	$.ajax({
 		type: 'post',
 		url: serverMap[httpUrlData.getGameData.server] + httpUrlData.getGameData.url,
@@ -101,6 +103,8 @@ function getGameData(isInit){
         })
       })
 			UpdateRateData(lotteryData.rate);
+			console.log('后面', lotteryData.rate)
+			console.log('后面', rateData)
 			if (lotteryData.quota.length > 0)
 				quotaArr = lotteryData.quota;
 			if (isInit) {
@@ -121,7 +125,16 @@ function getGameData(isInit){
 						getLastRecord();
 					})
 			}
-		}
+		},
+    error: function(error) {
+      console.log(error)
+      if (error.status == 401) {
+        alert('请先登录')
+        GotoLogin()
+      } else {
+        alert(error.responseJSON.error)
+      }
+    }
 	})
 }
 
@@ -510,6 +523,9 @@ function getCurrentPeriod() {
         }
       })
       // $('#cueIssue').text(lotteryData.issue);
+    },
+    error(res) {
+      alert(res.responseJSON.error)
     }
   })
 }
@@ -615,7 +631,6 @@ function getTimeStr(time){
 function setResult(){
 	var ballHtml = '';
 	var animal = '';
-	console.log(resultNum)
 	if(resultNum.length > 0){
 		for(var i = 0; i < resultNum.length; i++){
 			if(i == 6)
@@ -1096,6 +1111,9 @@ function getLastRecord(){
         }
 				$("#lastRecordCont").html(html);
 				$("#lastRecordSum").text("共" + count + "注，合计" + money);
+    },
+    error(res) {
+      alert(res.responseJSON.error)
     }
   })
 }

@@ -72,7 +72,6 @@
             loadUrl()
             function loadUrl() {
                 var checkCodeData = sessionStorage.getItem('checkCodeData')
-                console.log(checkCodeData)
                 if (checkCodeData) {
                     var html = ''
                     checkCodeData = JSON.parse(checkCodeData)

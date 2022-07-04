@@ -29,7 +29,10 @@ function getHistoryData(page){
 		success(res) {
 			historyData = res.data;
 			setPage(historyData.total, page);
-		}
+		},
+    error(res) {
+      alert(res.responseJSON.error)
+    }
 	})
 	// Send(httpUrlData.listLotteryResult, data, function(obj){
 	// })

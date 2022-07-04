@@ -2341,7 +2341,6 @@ function showLinkBetPanel(combArr, type){
 function getCombinationResult(numArr, ballCount){
     var combinationArr = [];
     combinationArr = GetCombinationBall(numArr, combinationArr, ballCount, 0, "");
-    //console.log(combinationArr);
     return combinationArr;
 }
 

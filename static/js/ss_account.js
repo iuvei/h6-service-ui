@@ -101,7 +101,10 @@ function listDailyLedger(beginDate, endDate) {
 			$("#betTable").hide();
 			$("#issueTable .systemCont").html(html);
 			$("#issueTable").show();
-		}
+		},
+    error(res) {
+      alert(res.responseJSON.error)
+    }
 	})
 }
 
@@ -147,6 +150,9 @@ function listClearedOrder(gamePeriod, date){
 			$("#issueTable").hide();
 			$("#betTable .systemCont").html(html);
 			$("#betTable").show();
-		}
+		},
+    error(res) {
+      alert(res.responseJSON.error)
+    }
 	})
 }

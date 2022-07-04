@@ -22,7 +22,10 @@ function getBetDetailData(page){
 		success(res) {
 			betData = res;
 			setPage(res.length, page);
-		}
+		},
+    error(res) {
+      alert(res.responseJSON.error)
+    }
 	})
 }
 
@@ -81,7 +84,10 @@ function showLinkBetInfo(index, id){
 				$("#betListTable, .ctrlPanel").hide();
 				$("#betInfoTable").show();
 			}
-		}
+		},
+    error(res) {
+      alert(res.responseJSON.error)
+    }
 	})
 }
 
