@@ -6,6 +6,9 @@ var initRate = [1012001, 1012002, 1013001, 1013002, 1014001, 1014002, 1015001, 1
 for (let i = 1011001; i < 1011049; i++) {
   rateData[i] = [-1, -1]
 }
+for (let i = 0; i < initRate.length; i++) {
+  rateData[initRate[i]] = [-1, -1]
+}
 var READY_STATUS = 0;
 var OPEN_STATUS = 1;
 var CLOSE_STATUS = 2;
