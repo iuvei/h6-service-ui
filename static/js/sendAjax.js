@@ -60,8 +60,7 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 				}
 			},
 			error :function(XMLHttpRequest, errorInfo){
-				console.log("error错误信息:" + serverMap[url.server] + url.url + "     " + errorInfo);
-				alert(errorInfo)
+				alert(XMLHttpRequest.responseText)
 				if(errorCall != null && errorCall != "" && !isCall){
 					isCall = true;
 					setTimeout(errorCall, 1000);

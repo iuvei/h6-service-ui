@@ -33,12 +33,12 @@ function init(){
 			return;
 		} else {
 			var data = {
-				"userName": 'huazai',
-				"passWord": '123456',
-				"role": "sys",
-				"uuid": "37e00636-9ac6-4016-8ecf-11092df33c61",
+				"userName": txt_U_name,
+				"passWord": password,
+				"uuid": createUUID(),
 				"captchaVerification": val
 			}
+			console.log(data)
 			Send(httpUrlData.login, JSON.stringify(data), function(res) {
 				localStorage.setItem("token", res.data.accessToken);
 				localStorage.setItem("refreshToken", res.data.refreshToken);

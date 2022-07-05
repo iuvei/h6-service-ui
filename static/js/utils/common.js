@@ -164,7 +164,15 @@ function tounicode(data)
     //return encodeURIComponent(data);                    // 编译一次,后台不需要做任何处理
     return encodeURIComponent(encodeURIComponent(data)); //编译了两次,后台需转码
 }
-
+function  createUUID() {
+    var ele = [1,2,3,4,5,6,7,8,9,0,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','W','R','S','T','U','V','W','X','Y','Z','-']
+    var result = ''
+    for (var i = 0; i < 36; i++) {
+        var random = parseInt(Math.random() * ele.length)
+        result += ele[random]
+    }
+    return result
+}
 document.oncontextmenu = function (event) {
     if (window.event) {
         event = window.event;
