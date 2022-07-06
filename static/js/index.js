@@ -537,7 +537,7 @@ function getCurrentPeriod() {
           resultNum.push(item)
         }
       })
-      lotteryFrame.setLotteryInfo();
+      // lotteryFrame.setLotteryInfo();
       $('#cueIssue').text(lotteryData.issue);
     },
     error(res) {
