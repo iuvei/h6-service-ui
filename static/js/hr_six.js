@@ -351,6 +351,16 @@ function clickOpNumBtn(index, obj){
 	clearBet();
 	setNormalSpecialNumTab(index)
 	localStorage.setItem('creditPlayName', '正' + index)
+	window.top.lotteryData.rate.forEach(item => {
+		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+			console.log()
+			item.creditPlayTypeDtoList.forEach(s => {
+				if (s.creditPlayInfoName == ('正' + index + '特')) {
+					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+				}
+			})
+		}
+	})
 	window.top.heartTime = 0;
 }
 
@@ -687,6 +697,16 @@ function setMissPanel(index, isInit){
 		case 4 : missCheckMaxCount = 11; linkCount = 9; localStorage.setItem('creditPlayName', '九不中'); break;
 		case 5 : missCheckMaxCount = 12; linkCount = 10; localStorage.setItem('creditPlayName', '十不中'); break;
 	}
+	window.top.lotteryData.rate.forEach(item => {
+		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+			console.log()
+			item.creditPlayTypeDtoList.forEach(s => {
+				if (s.creditPlayInfoName == localStorage.getItem('creditPlayName')) {
+					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+				}
+			})
+		}
+	})
 	linkBetType = 1381 + index * 10;
 	window.top.getDataBetType = linkBetType.toString();
 	if(isInit)
@@ -748,6 +768,17 @@ function setAnimalLinkCount(count, updateOdds){
 	groupCount = count;
 	$("#animalLinkPanel .animalLinkCell .radio.selected").removeClass("selected");
 	$("#animalLinkPanel .animalLinkCell .animalRadio" + groupCount).addClass("selected");
+	var name = $("#animalLinkPanel .animalLinkCell .animalRadio" + groupCount).next().text()
+	var miss = $("#animalLinkPanel .animalMissTypeCell .selected").next().text() == '中' ? '' : $("#animalLinkPanel .animalMissTypeCell .selected").next().text()
+	window.top.lotteryData.rate.forEach(item => {
+		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+			item.creditPlayTypeDtoList.forEach(s => {
+				if (s.creditPlayInfoName == (name + miss)) {
+					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+				}
+			})
+		}
+	})
 	if(updateOdds != null || updateOdds != false){
 		$("#animalLinkPanel .betRow .betMoneyValue").removeAttr("disabled");
 		$("#animalLinkPanel .numRow .cell .check").removeClass("disable");
@@ -762,6 +793,17 @@ function setAnimalLinkIsMiss(isMiss, updateOdds){
 	groupMiss = isMiss;
 	$("#animalLinkPanel .animalMissTypeCell .radio.selected").removeClass("selected");
 	$("#animalLinkPanel .animalMissTypeCell ." + isMiss + "MissRadio").addClass("selected");
+	var name = $("#animalLinkPanel .animalLinkCell .selected").next().text()
+	var miss = $("#animalLinkPanel .animalMissTypeCell .selected").next().text() == '中' ? '' : $("#animalLinkPanel .animalMissTypeCell .selected").next().text()
+	window.top.lotteryData.rate.forEach(item => {
+		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+			item.creditPlayTypeDtoList.forEach(s => {
+				if (s.creditPlayInfoName == (name + miss)) {
+					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+				}
+			})
+		}
+	})
 	if(updateOdds != null || updateOdds != false){
 		$("#animalLinkPanel .betRow .betMoneyValue").removeAttr("disabled");
 		$("#animalLinkPanel .numRow .cell .check").removeClass("disable");
@@ -813,6 +855,17 @@ function setUnitLinkCount(count, updateOdds){
 	groupCount = count;
 	$("#unitLinkPanel .unitLinkCell .radio.selected").removeClass("selected");
 	$("#unitLinkPanel .unitLinkCell .unitRadio" + groupCount).addClass("selected");
+	var name = $("#unitLinkPanel .unitLinkCell .unitRadio" + groupCount).next().text()
+	var miss = $("#unitLinkPanel .unitMissTypeCell .selected").next().text() == '中' ? '' : $("#unitLinkPanel .unitMissTypeCell .selected").next().text()
+	window.top.lotteryData.rate.forEach(item => {
+		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+			item.creditPlayTypeDtoList.forEach(s => {
+				if (s.creditPlayInfoName == (name + miss)) {
+					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+				}
+			})
+		}
+	})
 	if(updateOdds != null || updateOdds != false){
 		$("#unitLinkPanel .betRow .betMoneyValue").removeAttr("disabled");
 		$("#unitLinkPanel .numRow .cell .check").removeClass("disable");
@@ -827,6 +880,17 @@ function setUnitLinkIsMiss(isMiss, updateOdds){
 	groupMiss = isMiss;
 	$("#unitLinkPanel .unitMissTypeCell .radio.selected").removeClass("selected");
 	$("#unitLinkPanel .unitMissTypeCell ." + isMiss + "MissRadio").addClass("selected");
+	var name = $("#unitLinkPanel .unitLinkCell .unitRadio" + groupCount).next().text()
+	var miss = $("#unitLinkPanel .unitMissTypeCell .selected").next().text() == '中' ? '' : $("#unitLinkPanel .unitMissTypeCell .selected").next().text()
+	window.top.lotteryData.rate.forEach(item => {
+		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+			item.creditPlayTypeDtoList.forEach(s => {
+				if (s.creditPlayInfoName == (name + miss)) {
+					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+				}
+			})
+		}
+	})
 	if(updateOdds != null || updateOdds != false){
 		$("#unitLinkPanel .betRow .betMoneyValue").removeAttr("disabled");
 		$("#unitLinkPanel .numRow .cell .check").removeClass("disable");
@@ -875,6 +939,17 @@ function clickLinkCombTypeRadio(type, obj){
 	var index = $(".linkNumBtnBox .curBtn").index();
 	linkCombType = type;
 	window.top.getDataBetType = "0";
+	console.log()
+	window.top.lotteryData.rate.forEach(item => {
+		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+			item.creditPlayTypeDtoList.forEach(s => {
+				if (s.creditPlayInfoName == obj.next().text()) {
+					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+				}
+			})
+		}
+	})
+	
 	setLinkTab(index);
 	window.top.heartTime = 0;
 	clearBet();
@@ -1243,7 +1318,7 @@ function bet(panelId){
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
 				"gamePeriodId": window.top.lotteryData.issue,
-				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
 				"content": null,
 				"panKou": null,
@@ -1255,7 +1330,7 @@ function bet(panelId){
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
 				"gamePeriodId": window.top.lotteryData.issue,
-				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
 				"content": null,
 				"panKou": null,
@@ -1267,7 +1342,7 @@ function bet(panelId){
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
 				"gamePeriodId": window.top.lotteryData.issue,
-				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
 				"content": null,
 				"panKou": null,
@@ -1279,7 +1354,7 @@ function bet(panelId){
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
 				"gamePeriodId": window.top.lotteryData.issue,
-				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 				"creditPlayTypeId": $(betMoneyValueArr[i]).parent().prev().attr('data-creditplaytypeid'),
 				"content": null,
 				"panKou": null,
@@ -1293,7 +1368,7 @@ function bet(panelId){
 			data.push({
 				"gameId": localStorage.getItem('gameId') || 1,
 				"gamePeriodId": window.top.lotteryData.issue,
-				"creditPlayId": localStorage.getItem('creditPlayId'),
+				"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 				"creditPlayTypeId": pEle.attr('data-creditplaytypeid'),
 				"content": null,
 				"panKou": localStorage.getItem('pankou') || 'A',
@@ -1350,7 +1425,7 @@ function betAnimal6(){
 	data.push({
 		"gameId": localStorage.getItem('gameId') || 1,
 		"gamePeriodId": window.top.lotteryData.issue,
-		"creditPlayId": localStorage.getItem('creditPlayId'),
+		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		"creditPlayTypeId": rateEle.attr('data-creditplaytypeid'),
 		"content": betContent,
 		"panKou": null,
@@ -1593,7 +1668,7 @@ function betLinkNormalPanel(){
 	data.push({
 		"gameId": localStorage.getItem('gameId') || 1,
 		"gamePeriodId": window.top.lotteryData.issue,
-		"creditPlayId": localStorage.getItem('creditPlayId'),
+		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		"creditPlayTypeId": null,
 		"content": contentArr.toString(),
 		"panKou": null,
@@ -1630,7 +1705,7 @@ function betLinkHeadPanel(){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": window.top.lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": null,
 			"content": a.toString() + (linkMode == 2 ? '拖' : '碰') + b.toString(),
 			"panKou": null,
@@ -1721,7 +1796,7 @@ function betLinkAnimalPanel(){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": window.top.lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": null,
 			"content": $('#linkAnimalPanel .linkNum').text(),
 			"panKou": null,
@@ -1754,7 +1829,7 @@ function betLinkUnitNumPanel(){
 	data.push({
 		"gameId": localStorage.getItem('gameId') || 1,
 		"gamePeriodId": window.top.lotteryData.issue,
-		"creditPlayId": localStorage.getItem('creditPlayId'),
+		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		"creditPlayTypeId": null,
 		"content": $('#linkUnitNumPanel .linkNum').text(),
 		"panKou": null,
@@ -1783,7 +1858,7 @@ function betLinkMixturePanel(){
 	data.push({
 		"gameId": localStorage.getItem('gameId') || 1,
 		"gamePeriodId": window.top.lotteryData.issue,
-		"creditPlayId": localStorage.getItem('creditPlayId'),
+		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		"creditPlayTypeId": null,
 		"content": $('#linkMixturePanel .linkNum').text(),
 		"panKou": null,
@@ -1814,7 +1889,7 @@ function betMissPanel(){
 	// 	data.push({
 	// 		"gameId": localStorage.getItem('gameId') || 1,
 	// 		"gamePeriodId": window.top.lotteryData.issue,
-	// 		"creditPlayId": localStorage.getItem('creditPlayId'),
+	// 		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 	// 		"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 	// 		"content": numArr.toString(),
 	// 		"panKou": null,
@@ -1826,7 +1901,7 @@ function betMissPanel(){
 	data.push({
 		"gameId": localStorage.getItem('gameId') || 1,
 		"gamePeriodId": window.top.lotteryData.issue,
-		"creditPlayId": localStorage.getItem('creditPlayId'),
+		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		"creditPlayTypeId": null,
 		"content": ar.toString(),
 		"panKou": null,
@@ -1885,7 +1960,7 @@ function betAnimalLinkPanel(){
 		// 	data.push({
 		// 		"gameId": localStorage.getItem('gameId') || 1,
 		// 		"gamePeriodId": window.top.lotteryData.issue,
-		// 		"creditPlayId": localStorage.getItem('creditPlayId'),
+		// 		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		// 		"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 		// 		"content": linkBetContent,
 		// 		"panKou": null,
@@ -1898,7 +1973,7 @@ function betAnimalLinkPanel(){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": window.top.lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": null,
 			"content": linkBetContent,
 			"panKou": null,
@@ -1940,7 +2015,7 @@ function betAnimalLinkPanel(){
 		// 	data.push({
 		// 		"gameId": localStorage.getItem('gameId') || 1,
 		// 		"gamePeriodId": window.top.lotteryData.issue,
-		// 		"creditPlayId": localStorage.getItem('creditPlayId'),
+		// 		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		// 		"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 		// 		"content": linkBetContentHead + "拖" + linkBetContentBody,
 		// 		"panKou": null,
@@ -1955,7 +2030,7 @@ function betAnimalLinkPanel(){
 		// 	data.push({
 		// 		"gameId": localStorage.getItem('gameId') || 1,
 		// 		"gamePeriodId": window.top.lotteryData.issue,
-		// 		"creditPlayId": localStorage.getItem('creditPlayId'),
+		// 		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		// 		"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 		// 		"content": linkBetContentHead + "拖" + linkBetContentBody,
 		// 		"panKou": null,
@@ -1968,7 +2043,7 @@ function betAnimalLinkPanel(){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": window.top.lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": null,
 			"content": linkBetContentHead + "拖" + linkBetContentBody,
 			"panKou": null,
@@ -2016,7 +2091,7 @@ function betUnitLinkPanel(){
 		// 	data.push({
 		// 		"gameId": localStorage.getItem('gameId') || 1,
 		// 		"gamePeriodId": window.top.lotteryData.issue,
-		// 		"creditPlayId": localStorage.getItem('creditPlayId'),
+		// 		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		// 		"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 		// 		"content": linkBetContent,
 		// 		"panKou": null,
@@ -2029,7 +2104,7 @@ function betUnitLinkPanel(){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": window.top.lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": null,
 			"content": linkBetContent,
 			"panKou": null,
@@ -2070,7 +2145,7 @@ function betUnitLinkPanel(){
 		// 	data.push({
 		// 		"gameId": localStorage.getItem('gameId') || 1,
 		// 		"gamePeriodId": window.top.lotteryData.issue,
-		// 		"creditPlayId": localStorage.getItem('creditPlayId'),
+		// 		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		// 		"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 		// 		"content": linkBetContentHead + "拖" + linkBetContentBody,
 		// 		"panKou": null,
@@ -2085,7 +2160,7 @@ function betUnitLinkPanel(){
 		// 	data.push({
 		// 		"gameId": localStorage.getItem('gameId') || 1,
 		// 		"gamePeriodId": window.top.lotteryData.issue,
-		// 		"creditPlayId": localStorage.getItem('creditPlayId'),
+		// 		"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 		// 		"creditPlayTypeId": selectedParent.find('.oddsCell').attr('data-creditplaytypeid'),
 		// 		"content": linkBetContentHead + "拖" + linkBetContentBody,
 		// 		"panKou": null,
@@ -2098,7 +2173,7 @@ function betUnitLinkPanel(){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": window.top.lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": null,
 			"content": linkBetContentHead + "拖" + linkBetContentBody,
 			"panKou": null,
