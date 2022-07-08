@@ -61,7 +61,7 @@ $(function() {
   }
   getCurrentPeriod()
   InitNotice();
-  getGameData('init')
+  getGameData('init', 'pageInit')
   getUserInfo('init')
   setInterval(update, TIME_FREQUENCY);
   getLastRecord(true)
@@ -70,6 +70,7 @@ $(function() {
 function getUserInfo(type) {
   Send(httpUrlData.getUserInfo, {}, function (obj) {
     lotteryData = mergeObj(obj.data, lotteryData)
+    sessionStorage.setItem('masterId', obj.data.masterId)
     updateInfoPanel(obj.data)
     if (type) {
       showUseInfoPanel()
@@ -86,7 +87,7 @@ function mergeObj(obj1, obj2) {
 
 var timeDif = 0;
 var getDataBetType = "";
-function getGameData(isInit) {
+function getGameData(isInit, pageInit) {
   var data = {
     gameId: localStorage.getItem('gameId') || 1
   };
@@ -115,6 +116,11 @@ function getGameData(isInit) {
 			lotteryData = mergeObj({rate: obj}, lotteryData)
 			lotteryData.quota = []
       lotteryData.rate.forEach(game => {
+        if (pageInit) {
+          if (game.creditPlayName == '特码') {
+            sessionStorage.setItem('creditPlayInfoId', game.creditPlayTypeDtoList[0].creditPlayInfoId)
+          }
+        }
         game.creditPlayTypeDtoList.forEach(subGame => {
           subGame.creditPlayTypeInfoDtoList.forEach(item => {
             if (subGame.isClose == 1) {
@@ -640,6 +646,11 @@ function toLotteryTab(tabIndex, isInit) {
       lotteryFrame.setLotteryTab();
       lotteryFrame.setLotteryInfo();
     // }
+    lotteryData.rate.forEach(item => {
+      if (item.creditPlayId == creditPlayId) {
+        sessionStorage.setItem('creditPlayInfoId', item.creditPlayTypeDtoList[0].creditPlayInfoId)
+      }
+    })
   }
   if (originCreditPlayId !== creditPlayId) {
     switch($(".secMenuCont .secItem:eq(" + tabIndex + ")").text()) {
