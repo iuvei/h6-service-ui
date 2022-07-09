@@ -133,7 +133,7 @@ function getGameData(isInit, pageInit) {
 			UpdateRateData(lotteryData.rate);
 			if (lotteryData.quota.length > 0)
 				quotaArr = lotteryData.quota;
-			if (isInit === true) {
+			if (isInit) {
 				getCurrentResultNum(data.gameId, function () {
 					showUseInfoPanel();
 					toLottery(curIndex);

@@ -5,6 +5,7 @@ var curRate = 0;
 var sClose = false;
 var nClose = false;
 $(function(){
+	setSpecialNumTab()
 	initLinkAnimalPanel("linkAnimalPanel");
 	initLinkMixtureAnimalPanel();
 	initAnimalLinkPanel();

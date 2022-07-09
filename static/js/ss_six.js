@@ -8,6 +8,7 @@ var preinstallToggleObj;
 var preinstallValObj;
 $(function(){
 	window.top.getGameData(true);
+	setSpecialNumTab('init')
 	initAnimalPanel();
 	initAnimal6Panel();
 	preinstallToggleObj = $("#preinstallToggle");
@@ -165,7 +166,7 @@ function setNumPanelRate(rate){
 	clearBet();
 }
 
-function setSpecialNumTab(){
+function setSpecialNumTab(type){
 	$("#numPanel .opNumBtnBox .btn").hide();
 	$("#numPanel .systemCont:eq(0) .numRow .cell .oddsCell").text("");
 	var curBtn = $(".ctrlPanel .ctrlCont .quickBet .OddsBtn.curBtn");
@@ -201,7 +202,7 @@ function setSpecialNumTab(){
 					+ '<td class="cell w250"><div class="twoCell"></div><div class="oddsCell"></div><div class="betMoneyCell"></div></td>'
 				+ '</tr>';
 	$("#numPanel .towBox").empty().append(html);
-	initNumPanelOdds(101);
+	initNumPanelOdds(101, type);
 	$("#numPanel").show();
 }
 
@@ -281,10 +282,14 @@ function setNormalNumTab(){
 	$("#numPanel").show();
 }
 
-function initNumPanelOdds(betType){
+function initNumPanelOdds(betType, type){
 	var numStartIndex = betType * 10000 + 1
 	window.top.lotteryData.status = 1
 	for(var i = 0; i < 49; i++){
+		if (type === 'init') {
+			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), -1);
+			continue
+		}
 		var itemId = numStartIndex + 1000 + i;
 		if(window.top.lotteryData.status == OPEN_STATUS && ((betType == 101 && window.top.especialNumCloseTime > 0) || (betType > 101 && window.top.otherNumCloseTime > 0))) {
 			$("#numPanel .numRow .item" + (1001 + i)).attr('data-creditplaytypeid', window.top.rateData[itemId][2]);
@@ -293,6 +298,22 @@ function initNumPanelOdds(betType){
 		else
 			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), -1);
 	}			
+	if (type === 'init') {
+		updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two3001 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two3002 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two4001 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two4002 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two5001 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two5002 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two6001 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two6002 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two7001 .oddsCell"), -1);
+		updateItemOdds($("#numPanel .towBox .twoRow .two7002 .oddsCell"), -1);
+		return
+	}
 	switch(betType){
 		case 101 : 
 			$("#cueRate").text("特码" + (curRate == 0 ? "A" : "B") + "盘");
