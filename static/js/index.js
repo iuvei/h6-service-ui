@@ -64,7 +64,7 @@ $(function() {
   getGameData('init', 'pageInit')
   getUserInfo('init')
   setInterval(update, TIME_FREQUENCY);
-  getLastRecord(true)
+  getLastRecord()
   window.open("hr_six.html?v=" + version, 'lotteryFrame');
 });
 function getUserInfo(type) {
@@ -136,7 +136,6 @@ function getGameData(isInit, pageInit) {
 			if (isInit === true) {
 				getCurrentResultNum(data.gameId, function () {
 					showUseInfoPanel();
-					getLastRecord();
 					toLottery(curIndex);
 				});
 			}
@@ -146,7 +145,6 @@ function getGameData(isInit, pageInit) {
 				if (resultIssue != lotteryData.issue && resultNum.length > 0)
 					getCurrentResultNum(data.gameId, function () {
 						// showUseInfoPanel();
-						getLastRecord();
 						lotteryFrame.setResult();
 					})
 			}
@@ -626,7 +624,6 @@ function toLottery(index) {
   $("#systemFrame").hide();
   lotteryFrame.setLotteryInfo();
   toLotteryTab(curTab, true); 
-  getLastRecord();
   ResetNotice();
 }
 
@@ -899,7 +896,7 @@ function createQuickBetInfo() {
 		quickBetData.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": numArr.eq(i).attr('data-creditplaytypeid'),
 			"content": null,
 			"panKou": localStorage.getItem('pankou') || 'A',
