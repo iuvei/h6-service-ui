@@ -1038,7 +1038,7 @@ function quickBet(){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": numArr.eq(i).attr('data-creditplaytypeid'),
 			"content": null,
 			"panKou": localStorage.getItem('pankou') || 'A',

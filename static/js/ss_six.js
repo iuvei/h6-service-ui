@@ -1118,7 +1118,7 @@ function bet(panelId){
 		data.push({
 			"gameId": localStorage.getItem('gameId') || 1,
 			"gamePeriodId": window.top.lotteryData.issue,
-			"creditPlayId": localStorage.getItem('creditPlayId'),
+			"creditPlayId": sessionStorage.getItem('creditPlayInfoId'),
 			"creditPlayTypeId": creditPlayTypeId,
 			"content": null,
 			"panKou": localStorage.getItem('pankou') || 'A',

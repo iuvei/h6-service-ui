@@ -353,7 +353,6 @@ function clickOpNumBtn(index, obj){
 	localStorage.setItem('creditPlayName', '正' + index)
 	window.top.lotteryData.rate.forEach(item => {
 		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
-			console.log()
 			item.creditPlayTypeDtoList.forEach(s => {
 				if (s.creditPlayInfoName == ('正' + index + '特')) {
 					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
