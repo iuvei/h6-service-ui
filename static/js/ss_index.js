@@ -28,7 +28,6 @@ $(function() {
   localStorage.setItem('gameId', '1')
 	$("#logo").attr("src", localStorage.getItem("logoUrl"));
   getCurrentPeriod()
-	getUserInfo()
 	initLotteryMenu();
 	var animalIndex = parseInt(localStorage.getItem("animalIndex"));
 	for(var i = 0; i < 49; i++){
@@ -38,9 +37,9 @@ $(function() {
 	}
 	InitNotice();
 	setInterval(update, TIME_FREQUENCY);
-  getGameData('init')
+  getGameData('init', 'pageInit')
   getUserInfo('init')
-  getLastRecord(true)
+  getLastRecord()
 	window.open("ss_six.html?v=" + version, 'lotteryFrame');
 });
 function getUserInfo(type) {
@@ -62,12 +61,10 @@ function mergeObj(obj1, obj2) {
 
 var timeDif = 0;
 var getDataBetType = "";
-function getGameData(isInit){
+function getGameData(isInit, pageInit){
 	var data = {
     gameId: localStorage.getItem('gameId') || 1
 	};
-	console.log('前面', lotteryData.rate)
-	console.log('前面', rateData)
 	$.ajax({
 		type: 'post',
 		url: serverMap[httpUrlData.getGameData.server] + httpUrlData.getGameData.url,
@@ -93,6 +90,11 @@ function getGameData(isInit){
 			lotteryData = mergeObj({rate: obj}, lotteryData)
 			lotteryData.quota = []
       lotteryData.rate.forEach(game => {
+        if (pageInit) {
+          if (game.creditPlayName == '特码') {
+            sessionStorage.setItem('creditPlayInfoId', game.creditPlayTypeDtoList[0].creditPlayInfoId)
+          }
+        }
         game.creditPlayTypeDtoList.forEach(subGame => {
           subGame.creditPlayTypeInfoDtoList.forEach(item => {
             if (subGame.isClose == 1) {
@@ -103,14 +105,11 @@ function getGameData(isInit){
         })
       })
 			UpdateRateData(lotteryData.rate);
-			console.log('后面', lotteryData.rate)
-			console.log('后面', rateData)
 			if (lotteryData.quota.length > 0)
 				quotaArr = lotteryData.quota;
 			if (isInit) {
 				getCurrentResultNum(function () {
 					showUseInfoPanel();
-					getLastRecord();
 					toLottery(curIndex);
 					setResult();
 				});
@@ -122,7 +121,6 @@ function getGameData(isInit){
 				if (resultIssue != lotteryData.issue && resultNum.length > 0)
 					getCurrentResultNum(function () {
 						// showUseInfoPanel();
-						getLastRecord();
 					})
 			}
 		},
@@ -559,7 +557,6 @@ function update(){
 	if(heartTime <= 0){
 		heartTime += HEART_TIME;
     getGameData(false);
-    getLastRecord()
     getCurrentPeriod()
     getUserInfo()
 	}
@@ -697,7 +694,6 @@ function toLottery(index){
 	$("#systemFrame").hide();
 	lotteryFrame.setLotteryInfo();
 	toLotteryTab(curTab, true);
-	getLastRecord();
 	ResetNotice();
 }
 
@@ -714,6 +710,11 @@ function toLotteryTab(tabIndex, isInit) {
     localStorage.setItem('creditPlayId', creditPlayId)
     localStorage.setItem('gameType', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
     localStorage.setItem('pankou', 'A')
+    lotteryData.rate.forEach(item => {
+      if (item.creditPlayId == creditPlayId) {
+        sessionStorage.setItem('creditPlayInfoId', item.creditPlayTypeDtoList[0].creditPlayInfoId)
+      }
+    })
 		switch($(".secMenuCont .secItem:eq(" + tabIndex + ")").text()) {
 			case '正码特':
 				localStorage.setItem('creditPlayName', '正1')
