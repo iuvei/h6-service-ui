@@ -10,7 +10,7 @@ function getHistoryData(page){
 		token: window.top.token,
 		gameId: localStorage.getItem('gameId') || 1,
 		current: page,
-		masterId: localStorage.getItem('gameId') == 1 ? sessionStorage.getItem('masterId') : 0,
+		// masterId: localStorage.getItem('gameId') == 1 ? sessionStorage.getItem('masterId') : 0,
 		size: 20
 	}
 	$.ajax({
