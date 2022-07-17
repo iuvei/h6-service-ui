@@ -1,8 +1,15 @@
 var show_num = [];
 $(function() {
 	$("title").text(localData.loginTitle);
+	loadUrl()
 	init();
 })
+function loadUrl() {
+	var checkCodeData = sessionStorage.getItem('checkCodeData')
+	if (!checkCodeData) {
+		window.open(location.origin, '_self')
+	}
+}
 function init(){
 	// var urlArr = location.href.split("?");	
 	// var back = getUrlParam("back")

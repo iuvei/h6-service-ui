@@ -1384,7 +1384,7 @@ function bet(panelId){
 			betContent += ";";
 		betContent += betMap["info" + infoArr[i]];
 	}
-	if(money > window.top.lotteryData.usableMoney){
+	if(money > window.top.lotteryData.creditBalance){
 		alert("余额不足！")
 		return;
 	}
@@ -1410,7 +1410,7 @@ function betAnimal6(){
 		alert("请选择6个生肖且输入下注金额！")
 		return;
 	}
-	if(parseInt(betMoney) > window.top.lotteryData.usableMoney){
+	if(parseInt(betMoney) > window.top.lotteryData.creditBalance){
 		alert("余额不足！")
 		return;
 	}
@@ -1465,6 +1465,9 @@ function sendBet(rateType, betContent, data){
 			return;
 		}
 		alert("下注成功");
+		window.top.getCurrentPeriod()
+		window.top.getUserInfo('init')
+		window.top.getLastRecord()
 		window.top.showBetResultPanel(result);
 		window.top.getGameData(false);
 	}, betErr)
@@ -2189,7 +2192,7 @@ function betUnitLinkPanel(){
 
 function showLinkBetPanel(combArr, type){
 	var allBetMoney = linkBetMoney * combArr.length
-	if(allBetMoney > window.top.lotteryData.usableMoney){
+	if(allBetMoney > window.top.lotteryData.creditBalance){
 		alert("余额不足！")
 		return;
 	}
@@ -2466,6 +2469,9 @@ function sendBetLink(){
 			return;
 		}
 		alert("下注成功");
+		window.top.getCurrentPeriod()
+		window.top.getUserInfo('init')
+		window.top.getLastRecord()
 		var result = []
 		var balls = []
 		var rates = []

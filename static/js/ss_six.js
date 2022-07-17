@@ -1153,7 +1153,7 @@ function bet(panelId){
 		betContent += betMap["info" + infoArr[i]].betContent;
 		betInfoArr.push(betMap["info" + infoArr[i]].betInfo)
 	}
-	if(money > window.top.lotteryData.usableMoney){
+	if(money > window.top.lotteryData.creditBalance){
 		alert("余额不足！")
 		return;
 	}
@@ -1180,7 +1180,7 @@ function betAnimal6(){
 		alert("请选择6个生肖且输入下注金额！")
 		return;
 	}
-	if(parseInt(betMoney) > window.top.lotteryData.usableMoney){
+	if(parseInt(betMoney) > window.top.lotteryData.creditBalance){
 		alert("余额不足！")
 		return;
 	}

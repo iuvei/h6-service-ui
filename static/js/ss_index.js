@@ -824,7 +824,7 @@ function updateInfoPanel(data){
 	// $("#userName").text(account);
 	// $("#creditAmount").text(lotteryData.creditMoney);
 	// $("#usedAmount").text(lotteryData.usedMoney);
-	// $("#balance").text(lotteryData.usableMoney);
+	// $("#balance").text(lotteryData.creditBalance);
 	$("#issue").text(lotteryData.issue);
 	$(".issueInfo .issue").text(lotteryData.issue);
 }
@@ -1197,6 +1197,8 @@ function sendBet(){
 		showBetResultPanel(obj.betResult);
 		getGameData(false)
 		getLastRecord();
+		getCurrentPeriod()
+		getUserInfo()
 	}, betTimeOut, betErr)
 }
 
@@ -1238,6 +1240,8 @@ function sendBetLink(){
 		showBetResultPanel(obj.betResult);
 		getGameData(false)
 		getLastRecord();
+		getCurrentPeriod()
+		getUserInfo()
 	}, betTimeOut, betErr)
 }
 
