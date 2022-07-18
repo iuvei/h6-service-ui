@@ -78,11 +78,10 @@ function getUserInfo(type) {
   })
 }
 function mergeObj(obj1, obj2) {
-    var result = obj1
-    for (var key in obj2) {
-        result[key] = obj2[key]
+    return {
+      ...obj2,
+      ...obj1
     }
-    return result
 }
 
 var timeDif = 0;

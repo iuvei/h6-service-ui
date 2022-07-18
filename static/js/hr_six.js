@@ -1466,7 +1466,7 @@ function sendBet(rateType, betContent, data){
 		}
 		alert("下注成功");
 		window.top.getCurrentPeriod()
-		window.top.getUserInfo('init')
+		window.top.getUserInfo()
 		window.top.getLastRecord()
 		window.top.showBetResultPanel(result);
 		window.top.getGameData(false);
@@ -2470,7 +2470,7 @@ function sendBetLink(){
 		}
 		alert("下注成功");
 		window.top.getCurrentPeriod()
-		window.top.getUserInfo('init')
+		window.top.getUserInfo()
 		window.top.getLastRecord()
 		var result = []
 		var balls = []
