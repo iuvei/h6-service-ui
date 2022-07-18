@@ -79,7 +79,7 @@
                         html += '<td height="200" align="left" class="fds"><div>' + item.name + '：<a target="_blank" style="font-size:14px" href="' + item.url + '">' + item.url + '</a><br></div></td>'
                     })
                     checkCodeData.user.forEach(item => {
-                        html += '<td height="200" align="left" class="fds"><div>' + item.name + '：<a target="_blank" style="font-size:14px" href="' + item.url + '">' + item.url + '</a><br></div></td>'
+                        html += '<td height="200" align="left" class="fds"><div>' + item.name + '：<a target="_blank" style="font-size:14px" href="' + item.url + '?auth=true' + '">' + item.url + '</a><br></div></td>'
                     })
                     $('#url-wrap').html(html)
                 } else {

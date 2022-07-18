@@ -5,7 +5,7 @@ $(function() {
 	init();
 })
 function loadUrl() {
-	var checkCodeData = sessionStorage.getItem('checkCodeData')
+	var checkCodeData = window.location.href.includes('auth=true')
 	if (!checkCodeData) {
 		window.open(location.origin, '_self')
 	}
@@ -45,7 +45,6 @@ function init(){
 				"uuid": createUUID(),
 				"captchaVerification": val
 			}
-			console.log(data)
 			Send(httpUrlData.login, JSON.stringify(data), function(res) {
 				localStorage.setItem("token", res.data.accessToken);
 				localStorage.setItem("refreshToken", res.data.refreshToken);
