@@ -23,4 +23,6 @@ var httpUrlData = {
 	getMemberMaterial: {name: "查询会员资料", url: "/p/user/userPlay", type: 'get', server: "MarkSixGame"},
 	getCurrentResultNum: {name: "查询当前期开奖号码", url: "/MarkSixGame/Game/getCurrentResultNum", server: "MarkSixGame"},
 	getGameList: {name: "获取游戏列表", url: "/p/gametype/getGameTypeList", type: 'get', server: "MarkSixGame"},
+	refresh: {name: "刷新", url: "/index/refresh", type: 'get', server: "MarkSixGame"},
+	testSpeed: {name: "测速", url: "/index/testSpeed", type: 'get', server: "MarkSixGame"},
 }
