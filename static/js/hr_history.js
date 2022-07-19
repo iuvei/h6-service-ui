@@ -11,9 +11,7 @@ function getHistoryData(page){
 	// 	getCurDataTimer = null;
 	// }
 	var data = {
-		token: window.top.token,
 		gameId: localStorage.getItem('gameId') || 1,
-		// masterId: localStorage.getItem('gameId') == 1 ? sessionStorage.getItem('masterId') : 0,
 		current: page,
 		size: 20
 	}

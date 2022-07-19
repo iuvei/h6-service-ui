@@ -15,6 +15,7 @@
     <script src="/static/js/utils/common.js"></script>
     <script src="/static/js/sendAjax.js"></script>
     <script src="/static/js/login.js"></script>
+    <link rel="stylesheet" href="/static/css/hr_common.css">
 </head>
 <style type="text/css">
 
@@ -23,7 +24,7 @@
         margin-top: 0px;
         margin-right: 0px;
         margin-bottom: 0px;
-        background-color: #FFFFFF;
+        background-color: #7be0fe;
         overflow: hidden;
         background-repeat: repeat-x;
     }
@@ -35,8 +36,45 @@
         background-image: url( '/static/img/loginBtn.png');
         cursor: pointer;
     }
-    body{
-        background-color: #7be0fe;
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: rgba(0, 0, 0, .4);
+    }
+    .update-pwd {
+        position: absolute;
+        top: 10vh;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 350px;
+        background: #fff;
+        border-radius: 4px;
+        padding: 50px;
+        box-sizing: border-box;
+    }
+    .inputItem {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    .inputLabel {
+        width: 80px;
+        text-align: right;
+    }
+    .tip {
+        margin-left: 80px;
+        color: red;
+    }
+    .btn-pwd {
+        margin-right: 20px;
     }
 </style>
 </head>
@@ -112,5 +150,28 @@
     </tr>
     </tbody>
 </table>
+<div class="modal">
+    <div class="update-pwd">
+        <div class="passwordPanel">
+			<div class="inputItem">
+				<div class="inputLabel">旧密码：</div>
+				<input id="curPassword" type="password">
+			</div>
+            <div class="tip">密码不能存在空格,6-16位,密码至少包含一个数字和一个字母</div>
+			<div class="inputItem">
+				<div class="inputLabel">新密码：</div>
+				<input id="newPassword1" type="password">
+			</div>
+			<div class="inputItem">
+				<div class="inputLabel">重新输入：</div>
+				<input id="newPassword2" type="password">
+			</div>
+			<div class="inputItem" style="padding-left: 80px">
+				<button class="btn-pwd" onclick="updatePassword();">确定</button>
+				<button class="btn-pwd" id="clear">重置</button>
+			</div>
+		</div>
+    </div>
+</div>
 </body>
 </html>

@@ -74,5 +74,5 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
  */
 function GotoLogin() {
   localStorage.removeItem('token')
-	window.top.open(window.location.origin + "/login.html?", "_self");
+	window.top.open(window.location.origin + "/login.html?auth=true", "_self");
 }
