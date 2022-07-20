@@ -44,6 +44,7 @@ $(function() {
 });
 function getUserInfo(type) {
   Send(httpUrlData.getUserInfo, {}, function (obj) {
+		delete obj.data.status
     lotteryData = mergeObj(obj.data, lotteryData)
     updateInfoPanel(obj.data)
     if (type) {
@@ -52,11 +53,10 @@ function getUserInfo(type) {
   })
 }
 function mergeObj(obj1, obj2) {
-    var result = obj1
-    for (var key in obj2) {
-        result[key] = obj2[key]
-    }
-    return result
+	return {
+		...obj2,
+		...obj1
+	}
 }
 
 var timeDif = 0;
@@ -514,6 +514,7 @@ function getCurrentPeriod() {
 			openResultTime = lotteryData.openResultTime ;
       lotteryData.issue = obj.gamePeriod
       resultIssue = obj.gamePeriod
+      lotteryData.status = obj.statusType
       var openNumArr = [obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6, obj.openNum]
       openNumArr.forEach(function(item) {
         if (item) {
