@@ -9,7 +9,7 @@ for (let i = 1011001; i < 1011049; i++) {
 for (let i = 0; i < initRate.length; i++) {
   rateData[initRate[i]] = [-1, -1]
 }
-var READY_STATUS = 0;
+// var READY_STATUS = 0;
 var OPEN_STATUS = 1;
 var CLOSE_STATUS = 2;
 // 计时器频率
@@ -535,7 +535,12 @@ function getCurrentPeriod() {
 			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || timeDif);
       lotteryData.issue = obj.gamePeriod
       resultIssue = obj.gamePeriod
-      lotteryData.status = obj.statusType
+      var gameType = localStorage.getItem('gameType')
+      if (gameType === '特码') {
+        lotteryData.pkStatus = obj.tmStatus
+      } else {
+        lotteryData.pkStatus = obj.noTmStatus
+      }
       var openNumArr = [obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6, obj.openNum]
       openNumArr.forEach(function(item) {
         if (item) {
@@ -639,7 +644,7 @@ function toLotteryTab(tabIndex, isInit) {
     localStorage.setItem('creditPlayId', creditPlayId)
     localStorage.setItem('gameType', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
     localStorage.setItem('pankou', 'A')
-    // if (lotteryData.status != READY_STATUS) {
+    // if (lotteryData.pkStatus != READY_STATUS) {
       lotteryFrame.resetData();
       lotteryFrame.setLotteryTab();
       lotteryFrame.setLotteryInfo();
@@ -859,7 +864,7 @@ function clickQuickBetAnimal(index) {
 
 var quickBetContent = "";
 function createQuickBetInfo() {
-  if (lotteryData.status != OPEN_STATUS)
+  if (lotteryData.pkStatus != OPEN_STATUS)
     return;
   var betMoney = parseInt($(".quickBetPanel .quickBetMoneyRow .betMoneyInput").val());
   if (isNaN(betMoney) || betMoney < 0)

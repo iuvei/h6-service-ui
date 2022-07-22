@@ -2,7 +2,6 @@ var token = localStorage.getItem("token");
 var account = localStorage.getItem("account");
 var lotteryData = {};
 var rateData = {};
-var READY_STATUS = 0;
 var OPEN_STATUS = 1;
 var CLOSE_STATUS = 2;
 var animalNumArr = [
@@ -501,20 +500,27 @@ function getCurrentPeriod() {
     },
     success(res) {
       var obj = res.data
+			console.log(obj)
 			var dt = new Date();
 			timeDif = dt.getTime();
-			lotteryData.openResultTime = (obj.realOpen && obj.realOpen.getTime() || 0) // 开奖结果时间
 			lotteryData.especialNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0)
 			lotteryData.otherNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0)
 			// lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
-			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || 0)
+			lotteryData.openTime = (obj.startTime && new Date(obj.startTime).getTime() || 0) // 开盘时间
+			lotteryData.openResultTime = (obj.openTime && new Date(obj.openTime).getTime() || 0) // 开奖结果时间
 			openTime = lotteryData.openTime
 			especialNumCloseTime = lotteryData.especialNumCloseTime
 			otherNumCloseTime = lotteryData.otherNumCloseTime ;
 			openResultTime = lotteryData.openResultTime ;
       lotteryData.issue = obj.gamePeriod
       resultIssue = obj.gamePeriod
-      lotteryData.status = obj.statusType
+      var gameType = localStorage.getItem('gameType')
+      if (gameType === '特码') {
+        lotteryData.pkStatus = obj.tmStatus
+      } else {
+        lotteryData.pkStatus = obj.noTmStatus
+      }
+			console.log(lotteryData)
       var openNumArr = [obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6, obj.openNum]
       openNumArr.forEach(function(item) {
         if (item) {
@@ -557,8 +563,8 @@ function update(){
 	heartTime -= TIME_FREQUENCY;
 	if(heartTime <= 0){
 		heartTime += HEART_TIME;
-    getGameData(false);
     getCurrentPeriod()
+    getGameData(false);
     getUserInfo()
 	}
 	if(lotteryFrame.update != null)
@@ -585,10 +591,10 @@ function update(){
 			especialNumCloseTime = lotteryData.especialNumCloseTime - dt.getTime();
 			otherNumCloseTime = lotteryData.otherNumCloseTime - dt.getTime();
 			openResultTime = lotteryData.openResultTime - dt.getTime();
-			if(lotteryData.status == READY_STATUS && openTime > 0){
-				$(".openStatus").text("距离开盘：" + getTimeStr(openTime))
-			}
-			else if(lotteryData.status == OPEN_STATUS){
+			// if(openTime > 0){
+			// 	$(".openStatus").text("距离开盘：" + getTimeStr(openTime))
+ 			// } else 
+			if(lotteryData.pkStatus == OPEN_STATUS){
 				if(curTab == 0 && especialNumCloseTime > 0)
 					$(".openStatus").text("距离封盘：" + getTimeStr(especialNumCloseTime));
 				else if(curTab != 0 && otherNumCloseTime > 0)
@@ -599,7 +605,7 @@ function update(){
 						lotteryFrame.updateOdds();
 				}
 			}
-			else if(lotteryData.status == CLOSE_STATUS && openResultTime > 0){
+			else if(lotteryData.pkStatus == CLOSE_STATUS && openResultTime > 0){
 				$(".openStatus").text("距离开奖：" + getTimeStr(openResultTime));
 			}
 			else{
@@ -1003,7 +1009,7 @@ function clickQuickBetAnimalType(type, obj){
 
 var quickBetContent = "";
 function quickBet(){
-	if(lotteryData.status != OPEN_STATUS)
+	if(lotteryData.pkStatus != OPEN_STATUS)
 		return;
 	var betMoney = parseInt($(".quickBetPanel .betInfoBox .betMoneyValue").val());
 	if(isNaN(betMoney) || betMoney < 0)
@@ -1196,9 +1202,9 @@ function sendBet(){
 		$(".content .left .confirmPanel").hide();
 		$(".content .left .userInfoPanel").show();
 		showBetResultPanel(obj.betResult);
+		getCurrentPeriod()
 		getGameData(false)
 		getLastRecord();
-		getCurrentPeriod()
 		getUserInfo()
 	}, betTimeOut, betErr)
 }
@@ -1239,9 +1245,9 @@ function sendBetLink(){
 		$(".content .left .confirmPanel").hide();
 		$(".content .left .userInfoPanel").show();
 		showBetResultPanel(obj.betResult);
+		getCurrentPeriod()
 		getGameData(false)
 		getLastRecord();
-		getCurrentPeriod()
 		getUserInfo()
 	}, betTimeOut, betErr)
 }
