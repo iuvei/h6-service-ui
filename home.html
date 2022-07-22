@@ -83,15 +83,18 @@
                     var html = ''
                     checkCodeData = JSON.parse(checkCodeData)
                     checkCodeData.agent.forEach(item => {
-                        html += '<div class="url-item">' + item.name + '：<a target="_blank" style="font-size:14px" href="' + item.url + '">' + item.url + '</a><span class="speed">&nbsp;</span></div>'
+                        html += `<div class="url-item">${item.name}：<span onclick="jumpPage('${item.url}')" style="font-size:14px; cursor: pointer; color: blue;">${item.url}</span><span class="speed"></span></div>`
                     })
                     checkCodeData.user.forEach(item => {
-                        html += '<div class="url-item">' + item.name + '：<a target="_blank" style="font-size:14px" href="' + item.url + '?auth=true' + '">' + item.url + '</a><span class="speed"></span></div>'
+                        html += `<div class="url-item">${item.name}：<span onclick="jumpPage('${item.url}?auth=true')" style="font-size:14px; cursor: pointer; color: blue;">${item.url}</span><span class="speed"></span></div>`
                     })
                     $('#url-wrap').html(html)
                 } else {
                     window.open(location.origin, '_self')
                 }
+            }
+            function jumpPage(url) {
+                window.open(url)
             }
             function test() {
                 var dNum = document.getElementById("div2").getElementsByTagName("a").length;

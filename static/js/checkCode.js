@@ -13,6 +13,7 @@ function verifCode() {
     success(res) {
       if (res.code == 1) {
         sessionStorage.setItem('checkCodeData', JSON.stringify(res.data))
+        sessionStorage.setItem('safeCode', $('#kw').val())
         window.open('home.html', '_self')
       } else {
         alert(res.msg)
