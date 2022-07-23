@@ -36,7 +36,7 @@ function init(){
 				"passWord": password,
 				"uuid": createUUID(),
 				"captchaVerification": val,
-				"code": sessionStorage.getItem('safeCode')
+				"securityCode": sessionStorage.getItem('safeCode')
 			}
 			Send(httpUrlData.login, JSON.stringify(data), function(res) {
 				if (res.data.firstLogin == 1) {
