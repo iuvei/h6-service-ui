@@ -1,4 +1,5 @@
 var show_num = [];
+var uuid = ''
 $(function() {
 	$("title").text(localData.loginTitle);
 	loadUrl()
@@ -34,7 +35,7 @@ function init(){
 			var data = {
 				"userName": txt_U_name,
 				"passWord": password,
-				"uuid": createUUID(),
+				"uuid": uuid,
 				"captchaVerification": val,
 				"securityCode": sessionStorage.getItem('safeCode')
 			}
@@ -63,7 +64,8 @@ function init(){
 	})
 }
 function draw() {
-	$('#verifyCode').attr('src', httpUrlData.getVerifyCode.url + new Date().getTime())
+	uuid = createUUID()
+	$('#verifyCode').attr('src', httpUrlData.getVerifyCode.url + uuid)
 }
 
 function resize(){
