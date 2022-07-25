@@ -429,7 +429,6 @@ function setNormalNumTab(){
 
 function initNumPanelOdds(betType){
 	var numStartIndex = betType * 10000 + 1
-	window.top.lotteryData.pkStatus = 1
 	for(var i = 0; i < 49; i++){
 		var itemId = numStartIndex + 1000 + i;
 		// if(window.top.lotteryData.pkStatus == OPEN_STATUS && ((betType == 101 && especialNumCloseTime > 0) || (betType > 101 && otherNumCloseTime > 0))) {
