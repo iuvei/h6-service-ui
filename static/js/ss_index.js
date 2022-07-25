@@ -4,6 +4,8 @@ var lotteryData = {};
 var rateData = {};
 var OPEN_STATUS = 1;
 var CLOSE_STATUS = 2;
+var tmStatus = 2
+var noTmStatus = 2
 var animalNumArr = [
 	{animal: '鼠', numArr: [], type: 1},
 	{animal: '牛', numArr: [], type: 0},
@@ -514,6 +516,8 @@ function getCurrentPeriod() {
 			openResultTime = lotteryData.openResultTime ;
       lotteryData.issue = obj.gamePeriod
       resultIssue = obj.gamePeriod
+      tmStatus = obj.tmStatus
+      noTmStatus = obj.noTmStatus
       var gameType = localStorage.getItem('gameType')
       if (gameType === '特码') {
         lotteryData.pkStatus = obj.tmStatus
@@ -710,13 +714,17 @@ function toLotteryTab(tabIndex, isInit) {
 		$(".secMenuCont .secItem.current").removeClass("current");
 		$(".secMenuCont .secItem:eq(" + tabIndex + ")").addClass("current");
 		curTab = tabIndex;
-		lotteryFrame.resetData();
-		lotteryFrame.setLotteryTab();
 		
     var creditPlayId = $(".secMenuCont .secItem:eq(" + tabIndex + ")").attr('data-creditplayid')
     localStorage.setItem('creditPlayId', creditPlayId)
     localStorage.setItem('gameType', $(".secMenuCont .secItem:eq(" + tabIndex + ")").text())
     localStorage.setItem('pankou', 'A')
+    var gameType = localStorage.getItem('gameType')
+    if (gameType === '特码') {
+      lotteryData.pkStatus = tmStatus
+    } else {
+      lotteryData.pkStatus = noTmStatus
+    }
     lotteryData.rate.forEach(item => {
       if (item.creditPlayId == creditPlayId) {
         sessionStorage.setItem('creditPlayInfoId', item.creditPlayTypeDtoList[0].creditPlayInfoId)
@@ -730,6 +738,8 @@ function toLotteryTab(tabIndex, isInit) {
 				localStorage.setItem('creditPlayName', '五不中')
 				break
 		}
+		lotteryFrame.resetData();
+		lotteryFrame.setLotteryTab();
   }
 	if(!isInit)
 		window.top.heartTime = 0;

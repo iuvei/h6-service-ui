@@ -36,8 +36,8 @@ function setLotteryInfo(){
 	$('#cueIssue').text(window.top.lotteryData.issue);
 	setResult();
 	if(window.top.lotteryData.pkStatus == CLOSE_STATUS){
-		$(".systemTable, #linkBetPanel, .ctrlCont").hide();
-		$(".ready").show();
+		// $(".systemTable, #linkBetPanel, .ctrlCont").hide();
+		// $(".ready").show();
 	}
 	else{
 		$(".systemTable, #linkBetPanel, .ctrlCont").show();
@@ -237,10 +237,10 @@ function updateOdds(){
 		$(".ctrlCont").show();
 		$(".ready").hide();
 	}
-	else if(window.top.lotteryData.pkStatus == CLOSE_STATUS && !$(".ready").is(':visible')){
-		$(".systemTable, #linkBetPanel, .ctrlCont").hide();
-		$(".ready").show();
-	}
+	// else if(window.top.lotteryData.pkStatus == CLOSE_STATUS && !$(".ready").is(':visible')){
+	// 	$(".systemTable, #linkBetPanel, .ctrlCont").hide();
+	// 	$(".ready").show();
+	// }
 	if(window.top.lotteryData.pkStatus != OPEN_STATUS)
 		clearBet();
 	switch(window.top.curTab){
