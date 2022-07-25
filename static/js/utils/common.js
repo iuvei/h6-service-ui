@@ -61,13 +61,14 @@ function getCookie(c_name)
     return ""
 }
 
-function setCookie(c_name,value,expiredays)
+function setCookie(c_name,value,doamin,expiredays,)
 {
     expiredays = expiredays==null ? 7 : expiredays;
     var exdate=new Date()
     exdate.setDate(exdate.getDate()+expiredays)
-    document.cookie=c_name+ "=" +escape(value)+
-        (";expires="+exdate.toGMTString())
+    console.log(c_name+ "=" +value+(";expires="+exdate.toGMTString()) + ';domain=' + doamin)
+    document.cookie=c_name+ "=" +value+
+        (";expires="+exdate.toGMTString()) + ';domain=' + doamin
 }
 
 /**
