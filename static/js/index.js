@@ -89,7 +89,7 @@ function mergeObj(obj1, obj2) {
 
 var timeDif = 0;
 var getDataBetType = "";
-function getGameData(isInit, pageInit) {
+function getGameData(isInit, pageInit, changeGame) {
   var data = {
     gameId: localStorage.getItem('gameId') || 1
   };
@@ -129,16 +129,25 @@ function getGameData(isInit, pageInit) {
               item.odds = -1 
               item.odds2 = -1
             }
+            if (item.odds == null) {
+              item.odds = -1
+              if (item.odds2 == null) {
+                item.odds2 = -1
+              }
+            }
           })
         })
       })
+      if (changeGame) {
+        toLottery(0);
+      }
 			UpdateRateData(lotteryData.rate);
 			if (lotteryData.quota.length > 0)
 				quotaArr = lotteryData.quota;
 			if (isInit) {
 				getCurrentResultNum(data.gameId, function () {
 					showUseInfoPanel();
-					toLottery(curIndex);
+					toLottery(curTab);
 				});
 			}
 			else {
@@ -165,41 +174,41 @@ function getGameData(isInit, pageInit) {
 
 function UpdateRateData(data) {
   for (var item of data) {
-    if (item.creditPlayId == 1) { // 特码
+    if (item.creditPlayName == '特码') { // 特码
       for (var sub of item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList) {
-        if (sub.creditPlayTypeId < 10) {
-          rateData['101100' + sub.creditPlayTypeId] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
-        } else if (sub.creditPlayTypeId < 50) {
-          rateData['10110' + sub.creditPlayTypeId] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
-        } else if (sub.creditPlayTypeId == 50) {
+        if (sub.creditPlayTypeName == '特码大') {
           rateData['1013001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特码大
-        } else if (sub.creditPlayTypeId == 51) {
+        } else if (sub.creditPlayTypeName == '特码小') {
           rateData['1013002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特码小
-        } else if (sub.creditPlayTypeId == 52) {
+        } else if (sub.creditPlayTypeName == '特码单') {
           rateData['1012001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特码单
-        } else if (sub.creditPlayTypeId == 53) {
+        } else if (sub.creditPlayTypeName == '特码双') {
           rateData['1012002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特码双
-        } else if (sub.creditPlayTypeId == 54) {
+        } else if (sub.creditPlayTypeName == '特码合双') {
           rateData['1014002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 合双
-        } else if (sub.creditPlayTypeId == 55) {
+        } else if (sub.creditPlayTypeName == '特码合单') {
           rateData['1014001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 合单
-        } else if (sub.creditPlayTypeId == 56) {
+        } else if (sub.creditPlayTypeName == '特码红波') {
           rateData['1015001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 红波
-        } else if (sub.creditPlayTypeId == 57) {
+        } else if (sub.creditPlayTypeName == '特码蓝波') {
           rateData['1015002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 蓝波
-        } else if (sub.creditPlayTypeId == 58) {
+        } else if (sub.creditPlayTypeName == '特码绿波') {
           rateData['1015003'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 绿波
-        } else if (sub.creditPlayTypeId == 59) {
+        } else if (sub.creditPlayTypeName == '特码尾大') {
           rateData['1016002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特尾大
-        } else if (sub.creditPlayTypeId == 60) {
+        } else if (sub.creditPlayTypeName == '特码尾小') {
           rateData['1016001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特尾小
-        } else if (sub.creditPlayTypeId == 61) {
+        } else if (sub.creditPlayTypeName == '特码野兽') {
           rateData['1017001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 野兽
-        } else if (sub.creditPlayTypeId == 62) {
+        } else if (sub.creditPlayTypeName == '特码家禽') {
           rateData['1017002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 家禽
+        } else if (sub.creditPlayTypeName < 10) {
+          rateData['101100' + sub.creditPlayTypeName] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
+        } else if (sub.creditPlayTypeName < 50) {
+          rateData['10110' + sub.creditPlayTypeName] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
         }
       }
-    } else if (item.creditPlayId == 2) { // 正码
+    } else if (item.creditPlayName == '正码') { // 正码
       for (var sub of item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList) {
         if (sub.creditPlayTypeName == '总单') {
           rateData['1082001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
@@ -215,10 +224,10 @@ function UpdateRateData(data) {
           rateData['10810' + sub.creditPlayTypeName] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
         }
       }
-    } else if (item.creditPlayId == 3) { // 正码特
+    } else if (item.creditPlayName == '正码特') { // 正码特
       for (var sub of item.creditPlayTypeDtoList) {
         for (var child of sub.creditPlayTypeInfoDtoList) {
-          if (sub.creditPlayInfoId == 3) { // 正1特
+          if (sub.creditPlayInfoName == '正1特') { // 正1特
             if (child.creditPlayTypeName < 10) {
               rateData['102100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
@@ -242,7 +251,7 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName == '绿波') {
               rateData['1025003'] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 4) { // 正2特
+          } else if (sub.creditPlayInfoName == '正2特') { // 正2特
             if (child.creditPlayTypeName < 10) {
               rateData['103100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
@@ -266,7 +275,7 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName == '绿波') {
               rateData['1035003'] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 5) { // 正3特
+          } else if (sub.creditPlayInfoName == '正2特') { // 正3特
             if (child.creditPlayTypeName < 10) {
               rateData['104100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
@@ -290,7 +299,7 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName == '绿波') {
               rateData['1045003'] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 6) { // 正4特
+          } else if (sub.creditPlayInfoName == '正4特') { // 正4特
             if (child.creditPlayTypeName < 10) {
               rateData['105100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
@@ -314,7 +323,7 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName == '绿波') {
               rateData['1055003'] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 7) { // 正5特
+          } else if (sub.creditPlayInfoName == '正5特') { // 正5特
             if (child.creditPlayTypeName < 10) {
               rateData['106100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
@@ -338,7 +347,7 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName == '绿波') {
               rateData['1065003'] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 8) { // 正6特
+          } else if (sub.creditPlayInfoName == '正6特') { // 正6特
             if (child.creditPlayTypeName < 10) {
               rateData['107100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
@@ -365,16 +374,16 @@ function UpdateRateData(data) {
           }
         }
       }
-    } else if (item.creditPlayId == 9) { // 连码
+    } else if (item.creditPlayName == '连码') { // 连码
       for (var sub of item.creditPlayTypeDtoList) {
         for (var child of sub.creditPlayTypeInfoDtoList) {
-          if (sub.creditPlayInfoId == 9) { // 三全中
+          if (sub.creditPlayInfoName == '三全中') { // 三全中
             if (child.creditPlayTypeName < 10) {
               rateData['115100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
               rateData['11510' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 10) { // 三中二
+          } else if (sub.creditPlayInfoName == '三中二') { // 三中二
             if (child.creditPlayTypeName < 10) {
               rateData['116100' + child.creditPlayTypeName] = [child.odds, child.odds, child.creditPlayTypeId];
               rateData['116200' + child.creditPlayTypeName] = [child.odds2, child.odds2, child.creditPlayTypeId];
@@ -382,13 +391,13 @@ function UpdateRateData(data) {
               rateData['11610' + child.creditPlayTypeName] = [child.odds, child.odds, child.creditPlayTypeId];
               rateData['11620' + child.creditPlayTypeName] = [child.odds2, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 12) { // 二全中
+          } else if (sub.creditPlayInfoName == '二全中') { // 二全中
             if (child.creditPlayTypeName < 10) {
               rateData['118100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
               rateData['11810' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 14) { // 二中特
+          } else if (sub.creditPlayInfoName == '二中特') { // 二中特
             if (child.creditPlayTypeName < 10) {
               rateData['120100' + child.creditPlayTypeName] = [child.odds, child.odds, child.creditPlayTypeId];
               rateData['120200' + child.creditPlayTypeName] = [child.odds2, child.odds2, child.creditPlayTypeId];
@@ -396,7 +405,7 @@ function UpdateRateData(data) {
               rateData['12010' + child.creditPlayTypeName] = [child.odds, child.odds, child.creditPlayTypeId];
               rateData['12020' + child.creditPlayTypeName] = [child.odds2, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoId == 13) { // 特串
+          } else if (sub.creditPlayInfoName == '特串') { // 特串
             if (child.creditPlayTypeName < 10) {
               rateData['119100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
@@ -405,97 +414,97 @@ function UpdateRateData(data) {
           }
         }
       }
-    } else if (item.creditPlayId == 16) { // 特肖
+    } else if (item.creditPlayName == '特肖') { // 特肖
       for (var i = 0; i < item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList.length; i++) {
         var sub = item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList[i]
         rateData[1091001 + i] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
       }
-    } else if (item.creditPlayId == 17) { // 半波
+    } else if (item.creditPlayName == '半波') { // 半波
       for (var i = 0; i < item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList.length; i++) {
         var sub = item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList[i]
         rateData[1111001 + i] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
       }
-    } else if (item.creditPlayId == 18) { // 六肖
+    } else if (item.creditPlayName == '六肖') { // 六肖
       for (var i = 0; i < item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList.length; i++) {
         var sub = item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList[i]
         rateData[1141001 + i] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
       }
-    } else if (item.creditPlayId == 19) { // 一肖
+    } else if (item.creditPlayName == '一肖') { // 一肖
       for (var i = 0; i < item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList.length; i++) {
         var sub = item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList[i]
         rateData[1121001 + i] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
       }
-    } else if (item.creditPlayId == 20) { // 一肖不中
+    } else if (item.creditPlayName == '一肖不中') { // 一肖不中
       for (var i = 0; i < item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList.length; i++) {
         var sub = item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList[i]
         rateData[1131001 + i] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
       }
-    } else if (item.creditPlayId == 21) { // 尾数
+    } else if (item.creditPlayName == '尾数') { // 尾数
       for (var i = 0; i < item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList.length; i++) {
         var sub = item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList[i]
         rateData[1101000 + i] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
       }
-    } else if (item.creditPlayId == 22) { // 五不中
+    } else if (item.creditPlayName == '五不中') { // 五不中
       for (var sub of item.creditPlayTypeDtoList) {
         for (var i = 0; i < sub.creditPlayTypeInfoDtoList.length; i++) {
           var child = sub.creditPlayTypeInfoDtoList[i]
-          if (sub.creditPlayInfoId == 22) { // 五全中
+          if (sub.creditPlayInfoName == '五不中') { // 五不中
             rateData[1381001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 23) { // 六不中
+          } else if (sub.creditPlayInfoName == '六不中') { // 六不中
             rateData[1391001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 24) { // 七不中
+          } else if (sub.creditPlayInfoName == '七不中') { // 七不中
             rateData[1401001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 25) { // 八不中
+          } else if (sub.creditPlayInfoName == '八不中') { // 八不中
             rateData[1411001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 26) { // 九不中
+          } else if (sub.creditPlayInfoName == '九不中') { // 九不中
             rateData[1421001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 27) { // 十不中
+          } else if (sub.creditPlayInfoName == '十不中') { // 十不中
             rateData[1431001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
           }
         }
       }
-    } else if (item.creditPlayId == 28) { // 生肖连
+    } else if (item.creditPlayName == '生肖连') { // 生肖连
       for (var sub of item.creditPlayTypeDtoList) {
         for (var i = 0; i < sub.creditPlayTypeInfoDtoList.length; i++) {
           var child = sub.creditPlayTypeInfoDtoList[i]
-          if (sub.creditPlayInfoId == 28) { // 二肖连中
+          if (sub.creditPlayInfoName == '二肖连') { // 二肖连中
             rateData[1221001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 29) { // 二肖连不中
+          } else if (sub.creditPlayInfoName == '二肖连不中') { // 二肖连不中
             rateData[1231001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 30) { // 三肖连中
+          } else if (sub.creditPlayInfoName == '三肖连') { // 三肖连中
             rateData[1241001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 31) { // 三肖连不中
+          } else if (sub.creditPlayInfoName == '三肖连不中') { // 三肖连不中
             rateData[1251001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 32) { // 四肖连中
+          } else if (sub.creditPlayInfoName == '四肖连') { // 四肖连中
             rateData[1261001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 33) { // 四肖连不中
+          } else if (sub.creditPlayInfoName == '四肖连不中') { // 四肖连不中
             rateData[1271001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 34) { // 五肖连中
+          } else if (sub.creditPlayInfoName == '五肖连') { // 五肖连中
             rateData[1281001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 35) { // 五肖连不中
+          } else if (sub.creditPlayInfoName == '五肖连不中') { // 五肖连不中
             rateData[1291001 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
           }
         }
       }
-    } else if (item.creditPlayId == 36) { // 尾数连
+    } else if (item.creditPlayName == '尾数连') { // 尾数连
       for (var sub of item.creditPlayTypeDtoList) {
         for (var i = 0; i < sub.creditPlayTypeInfoDtoList.length; i++) {
           var child = sub.creditPlayTypeInfoDtoList[i]
-          if (sub.creditPlayInfoId == 36) { // 二尾连中
+          if (sub.creditPlayInfoName == '二尾连') { // 二尾连中
             rateData[1301000 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 37) { // 二尾连不中
+          } else if (sub.creditPlayInfoName == '二尾连不中') { // 二尾连不中
             rateData[1311000 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 38) { // 三尾连中
+          } else if (sub.creditPlayInfoName == '三尾连') { // 三尾连中
             rateData[1321000 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 39) { // 三尾连不中
+          } else if (sub.creditPlayInfoName == '三尾连不中') { // 三尾连不中
             rateData[1331000 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 40) { // 四尾连中
+          } else if (sub.creditPlayInfoName == '四尾连') { // 四尾连中
             rateData[1341000 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 41) { // 四尾连不中
+          } else if (sub.creditPlayInfoName == '四尾连不中') { // 四尾连不中
             rateData[1351000 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 42) { // 五尾连中
+          } else if (sub.creditPlayInfoName == '五尾连') { // 五尾连中
             rateData[1361000 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
-          } else if (sub.creditPlayInfoId == 43) { // 五尾连不中
+          } else if (sub.creditPlayInfoName == '五尾连不中') { // 五尾连不中
             rateData[1371000 + i] = [child.odds, child.odds2, child.creditPlayTypeId];
           }
         }
@@ -623,17 +632,22 @@ function toPage(page, btn) {
 
 function clickLottery(index, gameId) {
   curIndex = index;
+  $(".lotteryMenuCont .lotteryItem.current").removeClass("current");
+  $(".lotteryMenuCont .lotteryItem:eq(" + index + ")").addClass("current");
   localStorage.setItem('gameId', gameId)
-  getGameData(true);
+  toLottery(0)
+  getCurrentPeriod()
+  InitNotice();
+  getGameData('init', 'pageInit', true)
+  getUserInfo('init')
+  getLastRecord()
 }
 
 function toLottery(index) {
   $(".mainMenu .comMenu.current").removeClass("current");
-  $(".lotteryMenuCont .lotteryItem.current").removeClass("current");
-  $(".lotteryMenuCont .lotteryItem:eq(" + index + ")").addClass("current");
   $("#systemFrame").hide();
   lotteryFrame.setLotteryInfo();
-  toLotteryTab(curTab, true); 
+  toLotteryTab(index, true); 
   ResetNotice();
 }
 
