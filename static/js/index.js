@@ -129,12 +129,6 @@ function getGameData(isInit, pageInit, changeGame) {
               item.odds = -1 
               item.odds2 = -1
             }
-            if (item.odds == null) {
-              item.odds = -1
-              if (item.odds2 == null) {
-                item.odds2 = -1
-              }
-            }
           })
         })
       })
