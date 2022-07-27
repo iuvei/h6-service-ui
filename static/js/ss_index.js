@@ -1131,8 +1131,8 @@ function getLastRecord(){
 								+ '<td class="moneyCell" title="' + data.transactionsBalance+ '"><div>' + data.transactionsBalance + '</div></td>'
 								+ '<td class="contentCell" title="' + data.content + '"><div>' + data.content + '</div></td>'
 							+ '</tr>';
+						money += parseInt(data.transactionsBalance);
 					}
-					money += parseInt(data.transactionsBalance);
         }
 				$("#lastRecordCont").html(html);
 				$("#lastRecordSum").text("共" + count + "注，合计" + money);

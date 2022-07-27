@@ -291,8 +291,8 @@ function initNumPanelOdds(betType, type){
 		var itemId = numStartIndex + 1000 + i;
 		// if(window.top.lotteryData.pkStatus == OPEN_STATUS && ((betType == 101 && window.top.especialNumCloseTime > 0) || (betType > 101 && window.top.otherNumCloseTime > 0))) {
 		if(window.top.lotteryData.pkStatus == OPEN_STATUS) {
-			$("#numPanel .numRow .item" + (1001 + i)).attr('data-creditplaytypeid', window.top.rateData[itemId][2]);
-			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), window.top.rateData[itemId][curRate]);
+			$("#numPanel .numRow .item" + (1001 + i)).attr('data-creditplaytypeid', window.top.rateData[itemId] && window.top.rateData[itemId][2]);
+			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), window.top.rateData[itemId] && window.top.rateData[itemId][curRate]);
 		}
 		else
 			updateItemOdds($("#numPanel .numRow .item" + (1001 + i) + " .oddsCell"), -1);
@@ -318,32 +318,32 @@ function initNumPanelOdds(betType, type){
 			$("#cueRate").text("特码" + (curRate == 0 ? "A" : "B") + "盘");
 			// if(window.top.lotteryData.pkStatus == OPEN_STATUS && window.top.especialNumCloseTime > 0){
 			if(window.top.lotteryData.pkStatus == OPEN_STATUS){
-				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), window.top.rateData[1012001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), window.top.rateData[1012002][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two3001 .oddsCell"), window.top.rateData[1013001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two3002 .oddsCell"), window.top.rateData[1013002][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two4001 .oddsCell"), window.top.rateData[1014001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two4002 .oddsCell"), window.top.rateData[1014002][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two5001 .oddsCell"), window.top.rateData[1015001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two5002 .oddsCell"), window.top.rateData[1015002][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[1015003][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two6001 .oddsCell"), window.top.rateData[1016001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two6002 .oddsCell"), window.top.rateData[1016002][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two7001 .oddsCell"), window.top.rateData[1017001][curRate]);
-				updateItemOdds($("#numPanel .towBox .twoRow .two7002 .oddsCell"), window.top.rateData[1017002][curRate]);
-				$("#numPanel .towBox .twoRow .two2001").attr('data-creditplaytypeid', window.top.rateData[1012001][2]);
-				$("#numPanel .towBox .twoRow .two2002").attr('data-creditplaytypeid', window.top.rateData[1012002][2]);
-				$("#numPanel .towBox .twoRow .two3001").attr('data-creditplaytypeid', window.top.rateData[1013001][2]);
-				$("#numPanel .towBox .twoRow .two3002").attr('data-creditplaytypeid', window.top.rateData[1013002][2]);
-				$("#numPanel .towBox .twoRow .two4001").attr('data-creditplaytypeid', window.top.rateData[1014001][2]);
-				$("#numPanel .towBox .twoRow .two4002").attr('data-creditplaytypeid', window.top.rateData[1014002][2]);
-				$("#numPanel .towBox .twoRow .two5001").attr('data-creditplaytypeid', window.top.rateData[1015001][2]);
-				$("#numPanel .towBox .twoRow .two5002").attr('data-creditplaytypeid', window.top.rateData[1015002][2]);
-				$("#numPanel .towBox .twoRow .two5003").attr('data-creditplaytypeid', window.top.rateData[1015003][2]);
-				$("#numPanel .towBox .twoRow .two6001").attr('data-creditplaytypeid', window.top.rateData[1016001][2]);
-				$("#numPanel .towBox .twoRow .two6002").attr('data-creditplaytypeid', window.top.rateData[1016002][2]);
-				$("#numPanel .towBox .twoRow .two7001").attr('data-creditplaytypeid', window.top.rateData[1017001][2]);
-				$("#numPanel .towBox .twoRow .two7002").attr('data-creditplaytypeid', window.top.rateData[1017002][2]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), window.top.rateData[1012001] &&  window.top.rateData[1012001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two2002 .oddsCell"), window.top.rateData[1012002] &&  window.top.rateData[1012002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two3001 .oddsCell"), window.top.rateData[1013001] &&  window.top.rateData[1013001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two3002 .oddsCell"), window.top.rateData[1013002] &&  window.top.rateData[1013002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two4001 .oddsCell"), window.top.rateData[1014001] &&  window.top.rateData[1014001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two4002 .oddsCell"), window.top.rateData[1014002] &&  window.top.rateData[1014002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two5001 .oddsCell"), window.top.rateData[1015001] &&  window.top.rateData[1015001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two5002 .oddsCell"), window.top.rateData[1015002] &&  window.top.rateData[1015002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two5003 .oddsCell"), window.top.rateData[1015003] &&  window.top.rateData[1015003][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two6001 .oddsCell"), window.top.rateData[1016001] &&  window.top.rateData[1016001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two6002 .oddsCell"), window.top.rateData[1016002] &&  window.top.rateData[1016002][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two7001 .oddsCell"), window.top.rateData[1017001] &&  window.top.rateData[1017001][curRate]);
+				updateItemOdds($("#numPanel .towBox .twoRow .two7002 .oddsCell"), window.top.rateData[1017002] &&  window.top.rateData[1017002][curRate]);
+				$("#numPanel .towBox .twoRow .two2001").attr('data-creditplaytypeid', window.top.rateData[1012001] &&  window.top.rateData[1012001][2]);
+				$("#numPanel .towBox .twoRow .two2002").attr('data-creditplaytypeid', window.top.rateData[1012002] &&  window.top.rateData[1012002][2]);
+				$("#numPanel .towBox .twoRow .two3001").attr('data-creditplaytypeid', window.top.rateData[1013001] &&  window.top.rateData[1013001][2]);
+				$("#numPanel .towBox .twoRow .two3002").attr('data-creditplaytypeid', window.top.rateData[1013002] &&  window.top.rateData[1013002][2]);
+				$("#numPanel .towBox .twoRow .two4001").attr('data-creditplaytypeid', window.top.rateData[1014001] &&  window.top.rateData[1014001][2]);
+				$("#numPanel .towBox .twoRow .two4002").attr('data-creditplaytypeid', window.top.rateData[1014002] &&  window.top.rateData[1014002][2]);
+				$("#numPanel .towBox .twoRow .two5001").attr('data-creditplaytypeid', window.top.rateData[1015001] &&  window.top.rateData[1015001][2]);
+				$("#numPanel .towBox .twoRow .two5002").attr('data-creditplaytypeid', window.top.rateData[1015002] &&  window.top.rateData[1015002][2]);
+				$("#numPanel .towBox .twoRow .two5003").attr('data-creditplaytypeid', window.top.rateData[1015003] &&  window.top.rateData[1015003][2]);
+				$("#numPanel .towBox .twoRow .two6001").attr('data-creditplaytypeid', window.top.rateData[1016001] &&  window.top.rateData[1016001][2]);
+				$("#numPanel .towBox .twoRow .two6002").attr('data-creditplaytypeid', window.top.rateData[1016002] &&  window.top.rateData[1016002][2]);
+				$("#numPanel .towBox .twoRow .two7001").attr('data-creditplaytypeid', window.top.rateData[1017001] &&  window.top.rateData[1017001][2]);
+				$("#numPanel .towBox .twoRow .two7002").attr('data-creditplaytypeid', window.top.rateData[1017002] &&  window.top.rateData[1017002][2]);
 			}
 			else{
 				updateItemOdds($("#numPanel .towBox .twoRow .two2001 .oddsCell"), -1);

@@ -5,6 +5,7 @@
 .ctrlPanel .ctrlTitle{
 	height: 40px;
 	line-height: 40px;
+	padding-left: 20px;
 }
 
 .ctrlPanel .ctrlTitle label,
@@ -12,24 +13,16 @@
 	display: inline-block;
 }
 
-.ctrlPanel .ctrlTitle .issue{
-	position: absolute;
-	left: 20px;
-}
-
-.ctrlPanel .ctrlTitle .lotteryType{
-	position: absolute;
-	left: 120px;
-}
-
-.ctrlPanel .ctrlTitle .curTime{
-	position: absolute;
-	left: 250px;
+.ctrlPanel .ctrlTitle .issue,
+.ctrlPanel .ctrlTitle .lotteryType,
+.ctrlPanel .ctrlTitle .curTime,
+.ctrlPanel .ctrlTitle .closeTime{
+	/* position: absolute;
+	left: 20px; */
+	margin-right: 20px;
 }
 
 .ctrlPanel .ctrlTitle .closeTime{
-	position: absolute;
-	left: 490px;
 	color: yellow;
 }
 
