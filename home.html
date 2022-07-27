@@ -116,8 +116,9 @@
             }
         
             $('#btnFlash').click(function() {
-                Send(httpUrlData.refresh, {}, function (obj) {
+                Send(httpUrlData.refresh, { securityCode: sessionStorage.getItem('safeCode') }, function (obj) {
                     console.log(obj)
+                    loadUrl()
                 })
             })
             $('#testSpeed').click(function() {
