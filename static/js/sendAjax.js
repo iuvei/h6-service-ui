@@ -60,7 +60,7 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 				}
 			},
 			error :function(XMLHttpRequest, errorInfo){
-				alert(XMLHttpRequest.responseText || url.url + '接口调用异常')
+				alert(XMLHttpRequest && XMLHttpRequest.responseText || url.url + '接口调用异常')
 				if(errorCall != null && errorCall != "" && !isCall){
 					isCall = true;
 					setTimeout(errorCall, 1000);
