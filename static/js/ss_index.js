@@ -244,7 +244,7 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName == '绿波') {
               rateData['1035003'] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoName == '正2特') { // 正3特
+          } else if (sub.creditPlayInfoName == '正3特') { // 正3特
             if (child.creditPlayTypeName < 10) {
               rateData['104100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {

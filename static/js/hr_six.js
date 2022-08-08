@@ -91,7 +91,7 @@ function setResult(){
 		for(var i = 0; i < window.top.resultNum.length; i++){
 			if(i == 6)
 				ballHtml += '<div class="add">+</div>';
-			ballHtml += '<div class="' + ballInfoObj[window.top.resultNum[i] < 10 ? '0' + window.top.resultNum[i] : window.top.resultNum[i]].color + 'Ball">' + window.top.resultNum[i] + '</div>';
+			ballHtml += '<div class="' + (ballInfoObj[window.top.resultNum[i]] && ballInfoObj[window.top.resultNum[i]].color) + 'Ball">' + window.top.resultNum[i] + '</div>';
 		}
 	}
 	$("#curResult").html(ballHtml);

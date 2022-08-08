@@ -269,7 +269,7 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName == '绿波') {
               rateData['1035003'] = [child.odds, child.odds2, child.creditPlayTypeId];
             }
-          } else if (sub.creditPlayInfoName == '正2特') { // 正3特
+          } else if (sub.creditPlayInfoName == '正3特') { // 正3特
             if (child.creditPlayTypeName < 10) {
               rateData['104100' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName < 50) {
@@ -533,7 +533,7 @@ function getCurrentPeriod() {
 			var dt = new Date();
       resultNum = []
 			timeDif = dt.getTime();
-			lotteryData.openResultTime = (obj.realOpen && obj.realOpen.getTime() || 0); // 开奖结果时间
+			lotteryData.openResultTime = (obj.realOpen && new Date(obj.realOpen).getTime() || 0); // 开奖结果时间
 			lotteryData.especialNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0);
 			lotteryData.otherNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0);
 			// lotteryData.showCloseUpcomingTime = obj.showCloseUpcomingTime + timeDif;
