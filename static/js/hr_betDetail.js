@@ -24,7 +24,11 @@ function getBetDetailData(page){
 			setPage(res.length, page);
 		},
     error(res) {
-      alert(res.responseJSON.error)
+			if (res.responseJSON && res.responseJSON.error) {
+        alert(res.responseJSON.error)
+      } else {
+        alert('接口请求失败')
+      }
     }
 	})
 }
@@ -86,7 +90,11 @@ function showLinkBetInfo(index, id){
 			}
 		},
     error(res) {
-      alert(res.responseJSON.error)
+			if (res.responseJSON && res.responseJSON.error) {
+        alert(res.responseJSON.error)
+      } else {
+        alert('接口请求失败')
+      }
     }
 	})
 }

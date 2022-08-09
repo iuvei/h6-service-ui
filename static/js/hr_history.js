@@ -30,7 +30,11 @@ function getHistoryData(page){
 			setPage(historyData.total, page);
 		},
     error(res) {
-      alert(res.responseJSON.error)
+			if (res.responseJSON && res.responseJSON.error) {
+        alert(res.responseJSON.error)
+      } else {
+        alert('接口请求失败')
+      }
     }
 	})
 	// Send(httpUrlData.listLotteryResult, data, function(obj){
