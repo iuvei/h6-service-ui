@@ -32,7 +32,9 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 				}
 				else{
 					console.log("错误码：" + localData.httpServer + url + "     " + obj.errorMsg)
-					alert(obj.msg);
+					if (obj.msg) {
+						alert(obj.msg);
+					}
 					if(obj.code == 2){
 						GotoLogin();
 						return;
@@ -60,7 +62,8 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 				}
 			},
 			error :function(XMLHttpRequest, errorInfo){
-				alert(XMLHttpRequest && XMLHttpRequest.responseText || url.url + '接口调用异常')
+				console.log('sendAjax：error', XMLHttpRequest, errorInfo)
+				alert((XMLHttpRequest && XMLHttpRequest.responseText) || url.url + '接口调用异常')
 				if(errorCall != null && errorCall != "" && !isCall){
 					isCall = true;
 					setTimeout(errorCall, 1000);
