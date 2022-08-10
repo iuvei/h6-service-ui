@@ -67,7 +67,7 @@
             <div class="text-center">
                 <input type="button" name="btnFlash" value="刷新" id="btnFlash" class="btn111">
                 <input class="btn111" type="button" id="testSpeed" value="测速">
-                <input name="TextBox1" type="text" value="#|http://6338.6201d.ak617.net|#|#|http://6333.6201d.ak617.net|#|#|#|http://1938.6201d.ak617.net|#|#|http://1933.6201d.ak617.net|#|#|" id="TextBox1" style="display:none">&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://h6-index.wysdjx.com/home.html"><font color="#FF0000" style="font-size:16px; font-weight:bold;">D_.N_.S设置教程</font></a>
+                <input name="TextBox1" type="text" value="#|http://6338.6201d.ak617.net|#|#|http://6333.6201d.ak617.net|#|#|#|http://1938.6201d.ak617.net|#|#|http://1933.6201d.ak617.net|#|#|" id="TextBox1" style="display:none">&nbsp;&nbsp;&nbsp;&nbsp;<a href="" id="dns"><font color="#FF0000" style="font-size:16px; font-weight:bold;">D_.N_.S设置教程</font></a>
             </div>
             <div class="text-center liuhecai">
                 <div id="div1">六合彩</div>
@@ -76,6 +76,7 @@
             <div id="url-wrap" class="liuhecai"></div>
         </div>
         <script type="text/javascript">
+            $('#dns').attr('href', window.location.href)
             loadUrl()
             function loadUrl() {
                 var checkCodeData = sessionStorage.getItem('checkCodeData')
