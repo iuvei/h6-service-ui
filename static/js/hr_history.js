@@ -37,20 +37,15 @@ function getHistoryData(page){
       }
     }
 	})
-	// Send(httpUrlData.listLotteryResult, data, function(obj){
-	// })
 }
 
 var getCurDataTimer = null;
-function formatNum(val) {
-	return val < 10 ? '0' + val : val
-}
 function updateHistoryData(){
 	var isGetData = false;
 	var html = '';
 	for(var i = 0; i < historyData.records.length; i++){
 		var item = historyData.records[i]
-		var numArr = [formatNum(item.openNum1), formatNum(item.openNum2), formatNum(item.openNum3), formatNum(item.openNum4), formatNum(item.openNum5), formatNum(item.openNum6), formatNum(item.openNum)]
+		var numArr = [item.openNum1, item.openNum2, item.openNum3, item.openNum4, item.openNum5, item.openNum6, item.openNum]
 		var infoArr = [item.sxOpenNum1, item.sxOpenNum2, item.sxOpenNum3, item.sxOpenNum4, item.sxOpenNum5, item.sxOpenNum6, item.xiao, item.poultryBeast, item.temaDS, item.temaDX, item.andDS, item.totalDS, item.totalDX]
 		html += '<div class="row">'
 				+ '<div class="cell dateCell">' + item.createTime + '</div>'

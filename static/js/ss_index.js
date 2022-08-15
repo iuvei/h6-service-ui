@@ -661,7 +661,7 @@ function setResult(){
 				if(animal != "")
 					break;
 			}
-			ballHtml += '<div class="' + ballInfoObj[resultNum[i] < 10 ? '0' + resultNum[i] : resultNum[i]].color + 'Ball">' + resultNum[i] + '</div>'
+			ballHtml += '<div class="' + ballInfoObj[resultNum[i]].color + 'Ball">' + resultNum[i] + '</div>'
 					+ '<div class="animal">' + animal + '</div>'
 		}
 	}
