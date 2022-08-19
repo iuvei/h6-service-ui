@@ -119,7 +119,7 @@ function getGameData(isInit, pageInit, changeGame) {
 			lotteryData.quota = []
       lotteryData.rate.forEach(game => {
         if (pageInit) {
-          if (game.creditPlayName == '特码') {
+          if (game.creditPlayName == localStorage.getItem('gameType')) {
             sessionStorage.setItem('creditPlayInfoId', game.creditPlayTypeDtoList[0].creditPlayInfoId)
           }
         }
