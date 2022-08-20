@@ -6,6 +6,6 @@ var localData={
 };
 
 var serverMap = {
-	"MarkSixGame": "http://47.106.220.221:8086",
-	"MarkSixBet": "http://47.106.220.221:8086",
+	"MarkSixGame": "http://43.229.155.113:8086",
+	"MarkSixBet": "http://43.229.155.113:8086",
 };
