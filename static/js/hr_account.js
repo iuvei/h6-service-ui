@@ -71,14 +71,7 @@ function listDailyLedger(beginDate, endDate){
 			if (obj.length > 0) {
 				obj.forEach(function(item) {
 					className = item.ctTotal > 0 ? " redFont" : "";
-					html += '<div class="row">'
-						+ '<div class="cell dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ')">' + item.dateTime + '</a></div>'
-						+ '<div class="cell issueCell">' + item.gamePeriod + '</div>'
-						+ '<div class="cell allCountCell">' + (item.ctPeriod || 0) + '</div>'
-						+ '<div class="cell allMoneyCell">' + item.ctBalance + '</div>'
-						+ '<div class="cell allFeedbackCell">' + item.ctAmt + '</div>'
-						+ '<div class="cell allwinCell' + className + '">' + (item.ctTotal || '') + '</div>'
-					+ '</div>'
+					html += `<div class="row"><div class="cell dateCell"><a class="accountDate" href="#" onclick="listClearedOrder('${item.gamePeriod}')">${item.dateTime}</a></div><div class="cell issueCell">${item.gamePeriod}</div><div class="cell allCountCell">${item.ctPeriod || 0}</div><div class="cell allMoneyCell">${item.ctBalance}</div><div class="cell allFeedbackCell">${item.ctAmt}</div><div class="cell allwinCell ${className}">${item.ctTotal || ''}</div>`
 				})
 				html += '<div class="row">'
 						+ '<div class="cell dateCell"></div>'

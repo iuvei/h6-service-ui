@@ -71,14 +71,16 @@ function listDailyLedger(beginDate, endDate) {
 			if (obj.length > 0) {
 				obj.forEach(function(item) {
 					className = item.ctTotal > 0 ? " redFont" : "";
-					html += '<tr>'
-							+ '<td class="dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ',' + item.dateTime + ')">' + item.dateTime + '</a></td>'
-							+ '<td class="issueCell">' + item.gamePeriod + '</td>'
-							+ '<td class="allCountCell">' + (item.ctPeriod || 0) + '</td>'
-							+ '<td class="allMoneyCell">' + item.ctBalance + '</td>'
-							+ '<td class="allFeedbackCell">' + item.ctAmt + '</td>'
-							+ '<td class="allwinCell">' + (item.ctTotal || '') + '</td>'
-						+ '</tr>'
+					html += 
+					`
+					<tr>
+						<td class="dateCell"><a class="accountDate" href="#" onclick="listClearedOrder('${item.gamePeriod}')">${item.dateTime}</a></td>
+						<td class="issueCell">${item.gamePeriod}</td>
+						<td class="allCountCell">${(item.ctPeriod || 0)}</td>
+						<td class="allMoneyCell">${(item.ctBalance)}</td>
+						<td class="allFeedbackCell">${(item.ctAmt)}</td>
+						<td class="allwinCell">${(item.ctTotal)}</td>
+					`
 				})
 				html += '<tr>'
 						+ '<td class="dateCell"></td>'
