@@ -72,7 +72,7 @@ function listDailyLedger(beginDate, endDate){
 				obj.forEach(function(item) {
 					className = item.ctTotal > 0 ? " redFont" : "";
 					html += '<div class="row">'
-						+ '<div class="cell dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ',' + item.dateTime + ')">' + item.dateTime + '</a></div>'
+						+ '<div class="cell dateCell"><a class="accountDate" href="#" onclick="listClearedOrder(' + item.gamePeriod + ')">' + item.dateTime + '</a></div>'
 						+ '<div class="cell issueCell">' + item.gamePeriod + '</div>'
 						+ '<div class="cell allCountCell">' + (item.ctPeriod || 0) + '</div>'
 						+ '<div class="cell allMoneyCell">' + item.ctBalance + '</div>'
@@ -101,7 +101,6 @@ function listDailyLedger(beginDate, endDate){
 			$("#betTable").hide();
 			$("#issueTable .systemCont").html(html);
 			$("#issueTable").show();
-
 		},
     error(res) {
       if (res.responseJSON && res.responseJSON.error) {
@@ -121,7 +120,7 @@ function arr2Sum(key, arr) {
 	}
 	return sum
 }
-function listClearedOrder(gamePeriod, date){
+function listClearedOrder(gamePeriod){
 	var data = {
     "gameId": localStorage.getItem('gameId') || 1,
     "userId": window.top.lotteryData.userId,
