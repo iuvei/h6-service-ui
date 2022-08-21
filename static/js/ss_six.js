@@ -1612,7 +1612,6 @@ function betLinkNormal(){
 	linkBetContent = ""
 	for(var i = 0; i < checkedArr.length; i++){
 		numArr.push(checkedArr.eq(i).attr("info"));
-		console.log()
 		var numCell = checkedArr.eq(i).parents('.cell').find('.numCell')
 		contentArr.push(parseInt(numCell.text()))
 	}
@@ -2077,7 +2076,7 @@ function initConfirmPanel(combArr, data){
 		else{
 			linkNumGroup += combArr[i] + "-";
 			for(var j = 0; j < numArr.length; j++){
-				id = linkBetType + "0" + numArr[j];
+				id = linkBetType + "00" + numArr[j];
 				if(window.top.rateData[id][0] == 0){
 					alert("赔率为0不可下注！")
 					return;
