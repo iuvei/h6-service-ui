@@ -775,7 +775,7 @@ function showUseInfoPanel() {
 function updateInfoPanel(data) {
   $("#userName").text(data.username);
   $("#creditAmount").text(data.credit);
-  $("#usedAmount").text(data.credit - data.creditBalance);
+  $("#usedAmount").text(data.usedAmount);
   $("#balance").text(data.creditBalance);
 }
 

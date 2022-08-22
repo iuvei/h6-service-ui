@@ -846,13 +846,8 @@ var betType = 0;
 function updateInfoPanel(data){
   $("#userName").text(data.username);
   $("#creditAmount").text(data.credit);
-  $("#usedAmount").text(data.credit - data.creditBalance);
+  $("#usedAmount").text(data.usedAmount);
   $("#balance").text(data.creditBalance);
-
-	// $("#userName").text(account);
-	// $("#creditAmount").text(lotteryData.creditMoney);
-	// $("#usedAmount").text(lotteryData.usedMoney);
-	// $("#balance").text(lotteryData.creditBalance);
 	$("#issue").text(lotteryData.issue);
 	$(".issueInfo .issue").text(lotteryData.issue);
 }
