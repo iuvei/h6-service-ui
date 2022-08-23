@@ -79,7 +79,7 @@ function listDailyLedger(beginDate, endDate) {
 						<td class="allCountCell">${(item.ctPeriod || 0)}</td>
 						<td class="allMoneyCell">${(item.ctBalance)}</td>
 						<td class="allFeedbackCell">${(item.ctAmt)}</td>
-						<td class="allwinCell">${(item.ctTotal)}</td>
+						<td class="allwinCell ${className}">${(item.ctTotal)}</td>
 					`
 				})
 				html += '<tr>'
@@ -97,7 +97,7 @@ function listDailyLedger(beginDate, endDate) {
 						+ '<td class="allCountCell">' + arr2Sum('ctPeriod', obj) + '</td>'
 						+ '<td class="allMoneyCell">' + arr2Sum('ctBalance', obj) + '</td>'
 						+ '<td class="allFeedbackCell">' + arr2Sum('ctAmt', obj) + '</td>'
-						+ '<td class="allwinCell">' + arr2Sum('ctTotal', obj) + '</td>'
+						+ '<td class="allwinCell' + className + '">' + arr2Sum('ctTotal', obj) + '</td>'
 					+ '</tr>'
 			}
 			$("#betTable").hide();

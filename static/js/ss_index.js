@@ -504,8 +504,9 @@ function getCurrentPeriod() {
       gameId: localStorage.getItem('gameId') || 1
     },
     success(res) {
+			resultNum = []
+			console.log(res)
       var obj = res.data
-			console.log(obj)
 			var dt = new Date();
 			timeDif = dt.getTime();
 			lotteryData.especialNumCloseTime = (obj.closeTime && new Date(obj.closeTime).getTime() || 0)
@@ -527,7 +528,6 @@ function getCurrentPeriod() {
       } else {
         lotteryData.pkStatus = obj.noTmStatus
       }
-			console.log(lotteryData)
       var openNumArr = [obj.openNum1, obj.openNum2, obj.openNum3, obj.openNum4, obj.openNum5, obj.openNum6, obj.openNum]
       openNumArr.forEach(function(item) {
         if (item) {

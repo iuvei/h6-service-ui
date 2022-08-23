@@ -37,7 +37,10 @@ childrenPage{
 	border: solid 1px #d1a832;
 	width: 1000px;
 }
-
+#betTable,
+#issueTable {
+	width: 1073px;
+}
 .systemTable .head{
 	background: #d8bb64;
 	height: 20px;

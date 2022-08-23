@@ -171,3 +171,6 @@ tr.btnRow{
 .cancelInfo{
 	text-decoration:line-through;
 }
+.redFont{
+	color: red;
+}
