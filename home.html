@@ -118,7 +118,6 @@
         
             $('#btnFlash').click(function() {
                 Send(httpUrlData.refresh, { securityCode: sessionStorage.getItem('safeCode') }, function (obj) {
-                    console.log(obj)
                     loadUrl()
                 })
             })

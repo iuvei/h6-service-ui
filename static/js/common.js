@@ -66,7 +66,6 @@ function setCookie(c_name,value,doamin,expiredays)
     expiredays = expiredays==null ? 7 : expiredays;
     var exdate=new Date()
     exdate.setDate(exdate.getDate()+expiredays)
-    console.log(c_name+ "=" +value+(";expires="+exdate.toGMTString()) + ';domain=' + doamin)
     document.cookie=c_name+ "=" +value+
         (";expires="+exdate.toGMTString()) + ';domain=' + doamin
 }

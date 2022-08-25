@@ -59,8 +59,8 @@ function updateBetDetailData(){
 	}
 	$(".systemCont").html(html);
 	$(".statisticsRow .sumCell").text("小计（" + betData.length + "笔）");
-	$(".statisticsRow .moneyCell").text(betMoneySum);
-	$(".statisticsRow .feedbackCell").text(recedeMoneySum);
+	$(".statisticsRow .moneyCell").text(betMoneySum.toFixed(2));
+	$(".statisticsRow .feedbackCell").text(recedeMoneySum.toFixed(2));
 }
 
 function showLinkBetInfo(index, id){

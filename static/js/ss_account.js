@@ -95,9 +95,9 @@ function listDailyLedger(beginDate, endDate) {
 						+ '<td class="dateCell"></td>'
 						+ '<td class="issueCell">总计</td>'
 						+ '<td class="allCountCell">' + arr2Sum('ctPeriod', obj) + '</td>'
-						+ '<td class="allMoneyCell">' + arr2Sum('ctBalance', obj) + '</td>'
-						+ '<td class="allFeedbackCell">' + arr2Sum('ctAmt', obj) + '</td>'
-						+ '<td class="allwinCell' + className + '">' + arr2Sum('ctTotal', obj) + '</td>'
+						+ '<td class="allMoneyCell">' + arr2Sum('ctBalance', obj).toFixed(2) + '</td>'
+						+ '<td class="allFeedbackCell">' + arr2Sum('ctAmt', obj).toFixed(2) + '</td>'
+						+ '<td class="allwinCell' + className + '">' + arr2Sum('ctTotal', obj).toFixed(2) + '</td>'
 					+ '</tr>'
 			}
 			$("#betTable").hide();
@@ -145,7 +145,7 @@ function listClearedOrder(gamePeriod, date){
 				var winClassName = item.yk > 0 ? " redFont" : "";
 				html += '<tr>'
 						+ '<td class="issueCell">' + item.gamePeriod + '</td>'
-						+ '<td class="timeCell">' + item.createTime + '</td>'
+						+ '<td class="timeCell">' + item.openTime + '</td>'
 						+ '<td class="betInfoCell"><div class="betInfoCell" title="' + item.content + '">' + item.content + '</div></td>'
 						+ '<td class="betMoneyCell">' + item.transactionsBalance + '</td>'
 						+ '<td class="oddCell"><div class="oddCell" title="' + item.oddsDetails + '">' + item.oddsDetails + '</div></td>'
