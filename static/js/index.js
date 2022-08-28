@@ -61,6 +61,7 @@ $(function() {
       index = index < 0 ? index + 12 : index;
       animalNumArr[index].numArr.push(i + 1);
   }
+  console.log(animalNumArr)
   getCurrentPeriod()
   InitNotice();
   getGameData('init', 'pageInit')

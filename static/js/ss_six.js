@@ -904,7 +904,7 @@ function initAnimalPanel(){
 function initAnimal6Panel(){
 	for(var i = 0; i < 12; i++){
 		var str = "";
-		for(var j = 0; j < window.top.animalNumArr[i].numArr.length && j < 4; j++){
+		for(var j = 0; j < window.top.animalNumArr[i].numArr.length; j++){
 			if(str != "")
 				str += ", "
 			if(window.top.animalNumArr[i].numArr[j] < 10)
@@ -2076,8 +2076,8 @@ function initConfirmPanel(combArr, data){
 		else{
 			linkNumGroup += combArr[i] + "-";
 			for(var j = 0; j < numArr.length; j++){
-				id = linkBetType + "00" + numArr[j];
-				if(window.top.rateData[id][0] == 0){
+				id = linkBetType + "0" + numArr[j];
+				if(window.top.rateData[id] &&  window.top.rateData[id][0] == 0){
 					alert("赔率为0不可下注！")
 					return;
 				}
@@ -2136,8 +2136,8 @@ function initConfirmPanel(combArr, data){
 				linkNumGroup += oddsArr[0];
 				break;
 			case 1251 : 
-				obj.info = "四肖连不中" + combArr[i] + '@<span style="color: red">' + oddsArr[0] + '</span>';
-				obj.infoTitle = "四三肖连不中" + combArr[i] + '@' + oddsArr[0];
+				obj.info = "三肖连不中" + combArr[i] + '@<span style="color: red">' + oddsArr[0] + '</span>';
+				obj.infoTitle = "三肖连不中" + combArr[i] + '@' + oddsArr[0];
 				linkNumGroup += oddsArr[0];
 				break;
 			case 1261 : 
