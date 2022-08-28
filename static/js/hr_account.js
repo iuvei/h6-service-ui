@@ -98,8 +98,6 @@ function listDailyLedger(beginDate, endDate){
     error(res) {
       if (res.responseJSON && res.responseJSON.error) {
         alert(res.responseJSON.error)
-      } else {
-        alert('接口请求失败')
       }
     }
 	})
@@ -151,8 +149,6 @@ function listClearedOrder(gamePeriod){
     error(res) {
       if (res.responseJSON && res.responseJSON.error) {
         alert(res.responseJSON.error)
-      } else {
-        alert('接口请求失败')
       }
     }
 	})

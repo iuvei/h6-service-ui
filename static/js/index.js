@@ -560,8 +560,6 @@ function getCurrentPeriod() {
     error(res) {
 			if (res.responseJSON && res.responseJSON.error) {
         alert(res.responseJSON.error)
-      } else {
-        alert(httpUrlData.currentPeriod.url + '接口请求失败')
       }
     }
   })
@@ -1000,8 +998,6 @@ function getLastRecord(type) {
     error(res) {
 			if (res.responseJSON && res.responseJSON.error) {
         alert(res.responseJSON.error)
-      } else {
-        alert(httpUrlData.newListBet.url + '接口请求失败')
       }
     }
   })
