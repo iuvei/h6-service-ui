@@ -38,7 +38,7 @@ function getHistoryData(page){
 }
 
 function formatNum(val) {
-	return ((val && val.length === 1 && val < 10) ? '0' + val : val)
+	return ((val && val.length === 1 && val < 10) ? '0' + val : (val || ''))
 }
 var getCurDataTimer = null;
 function updateHistoryData(){

@@ -143,7 +143,7 @@ function listClearedOrder(gamePeriod, date){
 				var winClassName = item.yk > 0 ? " redFont" : "";
 				html += '<tr>'
 						+ '<td class="issueCell">' + item.gamePeriod + '</td>'
-						+ '<td class="timeCell">' + item.openTime + '</td>'
+						+ '<td class="timeCell">' + item.createTime + '</td>'
 						+ '<td class="betInfoCell"><div class="betInfoCell" title="' + item.content + '">' + item.content + '</div></td>'
 						+ '<td class="betMoneyCell">' + item.transactionsBalance + '</td>'
 						+ '<td class="oddCell"><div class="oddCell" title="' + item.oddsDetails + '">' + item.oddsDetails + '</div></td>'
