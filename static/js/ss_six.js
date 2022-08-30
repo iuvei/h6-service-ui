@@ -1615,7 +1615,7 @@ function betLinkNormal(){
 		var numCell = checkedArr.eq(i).parents('.cell').find('.numCell')
 		contentArr.push(parseInt(numCell.text()))
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	contentArr.sort()
 	data.push({
 		"gameId": localStorage.getItem('gameId') || 1,
@@ -1648,7 +1648,7 @@ function betLinkHead(){
 		var numCell = bodyCheckArr.eq(i).parents('.cell').find('.numCell')
 		b.push(parseInt(numCell.text()))
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	for(var i = 0; i < numArr.length; i++){
 		if(linkBetContent != "")
 			linkBetContent += ",";
@@ -1664,7 +1664,7 @@ function betLinkHead(){
 		var numCell = headCheckArr.eq(i).parents('.cell').find('.numCell')
 		a.push(parseInt(numCell.text()))
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	a.sort()
 	b.sort()
 	data.push({
@@ -1829,7 +1829,7 @@ function betMissNormal(){
 	for(var i = 0; i < checkArr.length; i++){
 		numArr.push(parseInt(checkArr.eq(i).attr("info")));
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	data.push({
 		"gameId": localStorage.getItem('gameId') || 1,
 		"gamePeriodId": window.top.lotteryData.issue,
@@ -1858,7 +1858,7 @@ function betMissHead(){
 	for(var i = 0; i < bodyCheckArr.length; i++){
 		numArr.push(bodyCheckArr.eq(i).attr("info"));
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	for(var i = 0; i < numArr.length; i++){
 		if(linkBetContent != "")
 			linkBetContent += ",";
@@ -1872,7 +1872,7 @@ function betMissHead(){
 	for(var i = checkHeadArr.length - 1; i >= 0; i--){
 		numArr.push(headCheckArr.eq(i).attr("info"));
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	for(var i = numArr.length - 1; i >= 0; i--){
 		if(headLinkBetContent != "")
 			headLinkBetContent = "," + headLinkBetContent;
@@ -1911,7 +1911,7 @@ function betGroupLinkNormal(type){
 		numArr.push(checkArr.eq(i).attr("info"));
 		a.push(checkArr.eq(i).parents('.cell').find('.unitCell').text());
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	if(type == "animal"){
 		for(var i = 0; i < numArr.length; i++){
 			if(i > 0)
@@ -1954,7 +1954,7 @@ function betGroupLinkHead(type){
 			unitArr2.push(checkBodyArr.eq(i).parents('.cell').find('.unitCell').text())
 		}
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	for(var i = 0; i < numArr.length; i++){
 		if(linkBetContent != "")
 			linkBetContent += ",";
@@ -1974,7 +1974,7 @@ function betGroupLinkHead(type){
 		}
 		numArr.push(checkHeadArr.eq(i).attr("info"));
 	}
-	numArr.sort();
+	numArr.sort((a, b) => a - b);
 	for(var i = numArr.length - 1; i >= 0; i--){
 		if(headLinkBetContent != "")
 			headLinkBetContent = "," + headLinkBetContent;
@@ -2076,7 +2076,7 @@ function initConfirmPanel(combArr, data){
 		else{
 			linkNumGroup += combArr[i] + "-";
 			for(var j = 0; j < numArr.length; j++){
-				id = linkBetType + "0" + numArr[j];
+				id = Number(`${linkBetType}000`) + Number(numArr[j])
 				if(window.top.rateData[id] &&  window.top.rateData[id][0] == 0){
 					alert("赔率为0不可下注！")
 					return;
