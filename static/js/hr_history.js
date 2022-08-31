@@ -48,7 +48,7 @@ function updateHistoryData(){
 		var item = historyData.records[i]
 		var numArr = [formatNum(item.openNum1), formatNum(item.openNum2), formatNum(item.openNum3), formatNum(item.openNum4), formatNum(item.openNum5), formatNum(item.openNum6), formatNum(item.openNum)]
 		console.log(numArr[3])
-		var infoArr = [item.sxOpenNum1, item.sxOpenNum2, item.sxOpenNum3, item.sxOpenNum4, item.sxOpenNum5, item.sxOpenNum6, item.xiao, item.poultryBeast, item.temaDS, item.temaDX, item.andDS, item.totalDS, item.totalDX]
+		var infoArr = [item.sxOpenNum1 || '', item.sxOpenNum2 || '', item.sxOpenNum3 || '', item.sxOpenNum4 || '', item.sxOpenNum5 || '', item.sxOpenNum6 || '', item.xiao || '', item.poultryBeast || '', item.temaDS || '', item.temaDX || '', item.andDS || '', item.totalDS || '', item.totalDX || '']
 		html += '<div class="row">'
 				+ '<div class="cell dateCell">' + item.openTime + '</div>'
 				+ '<div class="cell issueCell">' + item.gamePeriod + '</div>'

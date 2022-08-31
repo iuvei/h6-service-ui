@@ -44,7 +44,7 @@ function updateHistoryData(){
 	for(var i = 0; i < historyData.records.length; i++){
 		var item = historyData.records[i]
 		var numArr = [formatNum(item.openNum1), formatNum(item.openNum2), formatNum(item.openNum3), formatNum(item.openNum4), formatNum(item.openNum5), formatNum(item.openNum6), formatNum(item.openNum)]
-		var infoArr = [item.sxOpenNum1, item.sxOpenNum2, item.sxOpenNum3, item.sxOpenNum4, item.sxOpenNum5, item.sxOpenNum6, item.xiao, item.poultryBeast, item.temaDS, item.temaDX, item.andDS, item.totalDS, item.totalDX]
+		var infoArr = [item.sxOpenNum1 || '', item.sxOpenNum2 || '', item.sxOpenNum3 || '', item.sxOpenNum4 || '', item.sxOpenNum5 || '', item.sxOpenNum6 || '', item.xiao || '', item.poultryBeast || '', item.temaDS || '', item.temaDX || '', item.andDS || '', item.totalDS || '', item.totalDX || '']
 		html += '<tr>'
 				+ '<td class="dateCell">' + item.openTime + '</td>'
 				+ '<td class="issueCell">' + item.gamePeriod + '</td>'
