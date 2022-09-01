@@ -1,13 +1,16 @@
 var betData = {};
+var total = 0
 $(function(){
-	initPage(getBetDetailData, updateBetDetailData, 10, 50)
+	initPage(getBetDetailData, updateBetDetailData, 10, 20)
 	getBetDetailData(0);
 })
 
 function getBetDetailData(page){
 	var data = {
 		"gameId": localStorage.getItem('gameId') || 1,
-		"amount":0
+		"amount":0,
+		current: page + 1,
+		size: 20
 	}
 	$.ajax({
 		type: 'post',
@@ -20,8 +23,9 @@ function getBetDetailData(page){
 			Authorization: localStorage.getItem('token')
 		},
 		success(res) {
-			betData = res;
-			setPage(res.length, page);
+			betData = res.records;
+			total = res.total
+			setPage(res.total, page);
 		},
     error(res) {
 			if (res.responseJSON && res.responseJSON.error) {
@@ -39,10 +43,10 @@ function updateBetDetailData(){
 		
 	for(var i = 0; i < betData.length; i++){
 		var className =  ""
-		// cancelInfo
+		// cancelInfo 删除线
 		betMoneySum += Number(betData[i].betAmount)
 		recedeMoneySum += Number(betData[i].returnAmount)
-		infoHtml = '<div class="cell infoCell clickCell' + className + '" title="' + betData[i].betContent + '" onclick="showLinkBetInfo(' + i + ',' + betData[i].id + ')">' + betData[i].betContent + '</div>';
+		infoHtml = '<div class="cell infoCell' + className + (betData[i].isClick === 1 ? ' clickCell ' : '') + '" title="' + betData[i].betContent + '" onclick="showLinkBetInfo(' + i + ',' + betData[i].id + ',' + betData[i].isClick + ')">' + betData[i].betContent + '</div>';
 		html += '<div class="row">'
 				+ '<div class="cell numCell' + className + '">' + betData[i].id + '</div>'
 				+ '<div class="cell timeCell' + className + '">' + betData[i].createTime + '</div>'
@@ -56,13 +60,14 @@ function updateBetDetailData(){
 			
 	}
 	$(".systemCont").html(html);
-	$(".statisticsRow .sumCell").text("小计（" + betData.length + "笔）");
+	$(".statisticsRow .sumCell").text("小计（" + (total || 0) + "笔）");
 	$(".statisticsRow .moneyCell").text(betMoneySum.toFixed(2));
 	$(".statisticsRow .feedbackCell").text(recedeMoneySum.toFixed(2));
 }
 
-function showLinkBetInfo(index, id){
+function showLinkBetInfo(index, id, flag){
 	var html = ''
+	if (flag != 1) return
 	var data = {
 		"gameId": localStorage.getItem('gameId') || 1,
 		"commandId":id
