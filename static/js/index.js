@@ -79,7 +79,7 @@ function getUserInfo(type) {
     if (type) {
       showUseInfoPanel()
     }
-    if (obj.data.updateFlag == 0) {
+    if (obj.data.updateFlag == 1) {
       if (!$('#system-pwd').parent().hasClass('current')) {
         alert('您的信息被修改，请重置密码')
         setTimeout(() => {
