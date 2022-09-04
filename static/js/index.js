@@ -79,6 +79,15 @@ function getUserInfo(type) {
     if (type) {
       showUseInfoPanel()
     }
+    if (obj.data.updateFlag == 0) {
+      if (!$('#system-pwd').parent().hasClass('current')) {
+        alert('您的信息被修改，请重置密码')
+        setTimeout(() => {
+          toPage('hr_password.html', '#system-pwd')
+        }, 300)
+      }
+      return
+    }
   })
 }
 function mergeObj(obj1, obj2) {
@@ -106,6 +115,9 @@ function getGameData(isInit, pageInit, changeGame) {
 			Authorization: localStorage.getItem('token')
 		},
 		success(obj) {
+			if (lotteryData.updateFlag == 0) {
+				return
+			}
       $('.secMenuCont').find('.secItem').each(function() {
         for (var item of obj) {
           if ($(this).text() === item.creditPlayName) {
