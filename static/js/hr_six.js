@@ -951,24 +951,27 @@ function clickLinkCombTypeRadio(type, obj){
 		return;
 	canSelect = true;
 	$(".linkCombType.ctrlBox .selected").removeClass("selected");
-	obj.addClass("selected")
-	var index = $(".linkNumBtnBox .curBtn").index();
-	linkCombType = type;
-	window.top.getDataBetType = "0";
-	console.log()
-	window.top.lotteryData.rate.forEach(item => {
-		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
-			item.creditPlayTypeDtoList.forEach(s => {
-				if (s.creditPlayInfoName == obj.next().text()) {
-					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+	var timer = setInterval(() => {
+		if (window.top.lotteryData.rate) {
+			obj.addClass("selected")
+			var index = $(".linkNumBtnBox .curBtn").index();
+			linkCombType = type;
+			window.top.getDataBetType = "0";
+			window.top.lotteryData.rate.forEach(item => {
+				if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+					item.creditPlayTypeDtoList.forEach(s => {
+						if (s.creditPlayInfoName == obj.next().text()) {
+							sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+						}
+					})
 				}
 			})
+			setLinkTab(index);
+			window.top.heartTime = 0;
+			clearBet();
+			clearInterval(timer)
 		}
-	})
-	
-	setLinkTab(index);
-	window.top.heartTime = 0;
-	clearBet();
+	}, 10)
 }
 
 function setLinkTab(linkType){

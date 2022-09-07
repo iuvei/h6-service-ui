@@ -88,7 +88,7 @@ function getGameData(isInit, pageInit, changeGame){
 			Authorization: localStorage.getItem('token')
 		},
 		success(obj) {
-			if (lotteryData.updateFlag == 0) {
+			if (lotteryData.updateFlag == 1) {
 				return
 			}
 			$('.secMenuCont').find('.secItem').each(function() {
@@ -106,6 +106,7 @@ function getGameData(isInit, pageInit, changeGame){
       lotteryData.rate.forEach(game => {
         if (pageInit) {
           if (game.creditPlayName == localStorage.getItem('gameType')) {
+            localStorage.setItem('creditPlayId', game.creditPlayId)
             sessionStorage.setItem('creditPlayInfoId', game.creditPlayTypeDtoList[0].creditPlayInfoId)
           }
         }
