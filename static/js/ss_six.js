@@ -904,7 +904,7 @@ function initAnimalPanel(){
 function initAnimal6Panel(){
 	for(var i = 0; i < 12; i++){
 		var str = "";
-		for(var j = 0; j < window.top.animalNumArr[i].numArr.length; j++){
+		for(var j = 0; j < window.top.animalNumArr[i].numArr.length && j < 4; j++){
 			if(str != "")
 				str += ", "
 			if(window.top.animalNumArr[i].numArr[j] < 10)
