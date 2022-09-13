@@ -46,7 +46,7 @@ function updateBetDetailData(){
 		// cancelInfo 删除线
 		betMoneySum += Number(betData[i].betAmount)
 		recedeMoneySum += Number(betData[i].returnAmount)
-		infoHtml = '<div class="cell infoCell' + className + (betData[i].isClick === 1 ? ' clickCell ' : '') + '" title="' + betData[i].betContent + '" onclick="showLinkBetInfo(' + i + ',' + betData[i].id + ',' + betData[i].isClick + ')">' + betData[i].betContent + '</div>';
+		infoHtml = '<div class="cell infoCell' + className + (betData[i].isClick === 1 ? ' clickCell ' : '') + '" title="' + betData[i].betContent + '" onclick="showLinkBetInfo(\'' + betData[i].id + '\',' + betData[i].isClick + ')">' + betData[i].betContent + '</div>';
 		html += '<div class="row">'
 				+ '<div class="cell numCell' + className + '">' + betData[i].id + '</div>'
 				+ '<div class="cell timeCell' + className + '">' + betData[i].createTime + '</div>'
@@ -65,12 +65,12 @@ function updateBetDetailData(){
 	$(".statisticsRow .feedbackCell").text(recedeMoneySum.toFixed(2));
 }
 
-function showLinkBetInfo(index, id, flag){
+function showLinkBetInfo(id, flag){
 	var html = ''
 	if (flag != 1) return
 	var data = {
 		"gameId": localStorage.getItem('gameId') || 1,
-		"commandId":id
+		"commandId": id
 	}
 	$.ajax({
 		type: 'post',

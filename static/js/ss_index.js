@@ -1314,5 +1314,27 @@ function changeSkin(obj){
 }
 
 function exit(){
-	GotoLogin();
+	$.ajax({
+		type: 'post',
+		url: serverMap[httpUrlData.getGameData.server] + httpUrlData.logOut.url,
+		dataType: "json",
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+		success(obj) {
+      GotoLogin()
+    },
+    error: function(error) {
+      console.log(error)
+      if (error.status == 401) {
+        alert('请先登录')
+        GotoLogin()
+      } else {
+        alert(error.responseJSON.error)
+      }
+    }
+	})
 }

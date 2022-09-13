@@ -1,5 +1,6 @@
 var httpUrlData = {                            
 	login: {name: "登录", url: "/login", server: "MarkSixGame"},
+	logOut: {name: "登出", url: "/logOut", type: 'get', server: "MarkSixGame"},
 	getVerifyCode: {name: "获取验证码", url: "http://h6-api-server.wysdjx.com/captcha/captcha.jpg?uuid=", server: "MarkSixGame"},
 	verifyCheckCode: {name: "检查验证码", url: "/index/checkCode", type: 'get', server: "MarkSixGame"},
 	getUserPlay: {name: "检查验证码", url: "/p/user/userPlay", type: 'get', server: "MarkSixGame"},
@@ -25,4 +26,5 @@ var httpUrlData = {
 	getGameList: {name: "获取游戏列表", url: "/p/gametype/getGameTypeList", type: 'get', server: "MarkSixGame"},
 	refresh: {name: "刷新", url: "/index/refresh", type: 'get', server: "MarkSixGame"},
 	testSpeed: {name: "测速", url: "/index/testSpeed", type: 'get', server: "MarkSixGame"},
+	
 }

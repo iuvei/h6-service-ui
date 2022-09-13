@@ -62,6 +62,9 @@ function Send(url, data, successCall, timeoutCallback, errorCall){
 				}
 			},
 			error :function(XMLHttpRequest, errorInfo){
+				if (XMLHttpRequest && XMLHttpRequest.responseText) {
+					alert(XMLHttpRequest.responseText)
+				}
 				if(errorCall != null && errorCall != "" && !isCall){
 					isCall = true;
 					setTimeout(errorCall, 1000);

@@ -33,10 +33,11 @@ function updatePassword(){
 	}
 	Send(httpUrlData.updatePassword, JSON.stringify(data), function(obj){
 		alert("修改成功");
-		window.top.open("ss_index.html?v=" + version, "_self");
+		localStorage.removeItem('token')
+		window.top.open(window.location.origin + "/login.html?auth=true", "_self");
 	})
 }
 
-function clear(){
+function clearForm(){
 	$("#curPassword, #newPassword1, #newPassword2").val("");
 }
