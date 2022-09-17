@@ -8,7 +8,7 @@ function getMemberMaterial(){
 		var html = '';
 		for(var i = 0; i < obj.data.length; i++){
 			html += '<tr>'
-					+ '<td class="typeCell">' + obj.data[i].playType + '</td>'
+					+ '<td class="typeCell">' + obj.data[i].playTypeName + '</td>'
 					+ '<td class="betMinCell">' + obj.data[i].playMin + '</td>'
 					+ '<td class="betMaxCell">' + obj.data[i].playMax + '</td>'
 					+ '<td class="itemMaxCell">' + obj.data[i].max + '</td>'

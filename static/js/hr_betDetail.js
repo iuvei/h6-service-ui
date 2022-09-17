@@ -1,7 +1,7 @@
 var betData = {};
 var total = 0
 $(function(){
-	initPage(getBetDetailData, updateBetDetailData, 10, 20)
+	initPage(getBetDetailData, updateBetDetailData, 10, 50)
 	getBetDetailData(0);
 })
 
@@ -10,7 +10,7 @@ function getBetDetailData(page){
 		"gameId": localStorage.getItem('gameId') || 1,
 		"amount":0,
 		current: page + 1,
-		size: 20
+		size: 50
 	}
 	$.ajax({
 		type: 'post',

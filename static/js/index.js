@@ -903,10 +903,6 @@ function createQuickBetInfo() {
   var betMoney = parseInt($(".quickBetPanel .quickBetMoneyRow .betMoneyInput").val());
   if (isNaN(betMoney) || betMoney < 0)
     return;
-  if (betMoney > quota.orderMaxQuota) {
-    alert("每注金额不得高于单注限额");
-    return;
-  }
   if (betMoney < quota.orderMinQuota) {
     alert("每注金额不得低于最低限额");
     return;
