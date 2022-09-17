@@ -821,11 +821,35 @@ function showQuickBetPanel(rate, index) {
   $(".quickBetPanel .quickBetInfo").html("");
   $(".left .quickBetPanel .quickBetTitle").text(titleStr);
   $(".left .quickBetPanel .creditAmount").text(lotteryData.creditBalance);
-  $(".left .quickBetPanel .orderMinQuota").text(1000);
-  $(".left .quickBetPanel .orderMaxQuota").text(1000);
-  $(".left .quickBetPanel .issueMaxQuota").text(1000);
   $(".left .leftPanel").hide();
   $(".left .quickBetPanel").show();
+  setQuickMoney()
+}
+function setQuickMoney() {
+  $.ajax({
+		url : serverMap[httpUrlData.getMoney.server] + httpUrlData.getMoney.url + '/' + localStorage.getItem('gameId') + '/' + sessionStorage.getItem('creditPlayInfoId'),
+    type: 'get',
+		dataType : "json",
+		contentType: 'application/json;charset=UTF-8',
+		async : true,
+		timeout : 30000,
+		headers: {
+			Authorization: localStorage.getItem('token')
+		},
+    success(obj) {
+      console.log(obj)
+      $(".left .quickBetPanel .orderMinQuota").text(obj.data.playMin);
+      $(".left .quickBetPanel .orderMaxQuota").text(obj.data.playMax);
+      $(".left .quickBetPanel .issueMaxQuota").text(obj.data.max);
+      quota.orderMinQuota = obj.data.playMin
+      quota.orderMaxQuota = obj.data.playMax
+    },
+    error(res) {
+			if (res.responseJSON && res.responseJSON.error) {
+        alert(res.responseJSON.error)
+      }
+    }
+  })
 }
 function setQuickBet(obj, rate) {
    $('.quickBetPanel .quickBetNum').each(function() {
@@ -905,6 +929,10 @@ function createQuickBetInfo() {
     return;
   if (betMoney < quota.orderMinQuota) {
     alert("每注金额不得低于最低限额");
+    return;
+  }
+  if (betMoney > quota.orderMaxQuota) {
+    alert("每注金额不得高于单注限额");
     return;
   }
   var numArr = $(".quickBetPanel .quickBetCtrlTable .row .selected");

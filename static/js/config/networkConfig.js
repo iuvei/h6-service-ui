@@ -3,7 +3,6 @@ var httpUrlData = {
 	logOut: {name: "登出", url: "/logOut", type: 'get', server: "MarkSixGame"},
 	getVerifyCode: {name: "获取验证码", url: "http://h6-api-server.wysdjx.com/captcha/captcha.jpg?uuid=", server: "MarkSixGame"},
 	verifyCheckCode: {name: "检查验证码", url: "/index/checkCode", type: 'get', server: "MarkSixGame"},
-	getUserPlay: {name: "检查验证码", url: "/p/user/userPlay", type: 'get', server: "MarkSixGame"},
 	getUserInfo: {name: "检查验证码", url: "/p/user/userInfo", type: 'get', server: "MarkSixGame"},
 	listDailyLedger: {name: "账户历史查询每日总账", url: "/p/commandLog/findAccountinglog", server: "MarkSixGame"},
 	accountDetail: {name: "查询账户历史明细", url: "/p/commandLog/findAccountinglogDetail", type: 'post', server: "MarkSixGame"},
@@ -12,7 +11,7 @@ var httpUrlData = {
 	getGameData: {name: "获取游戏数据", url: "/p/creditPlayType/findCreditPlayTypeInfo", type: 'post', server: "MarkSixGame"},
 	newListBet: {name: "最新10笔注单", url: "/p/commandLog/top10ByUser", type: 'get', server: "MarkSixGame"},
 	currentPeriod: {name: "当前期数查询列表", url: "/p/gameperiod/queryEarlyMorningSetPeriod", type: 'get', server: "MarkSixGame"},
-	
+	getMoney: {name: "获取快速下注限额", url: "/p/user/findUserPlay", type: 'get', server: "MarkSixGame"},
 
 	generalBet : {name: "普通下注", url: "/p/commandLog/createCommandLog", server: "MarkSixBet"},
 	multiNumBet: {name: "连码下注", url: "/MarkSixBet/Bet/multiNumBet", server: "MarkSixBet"},
