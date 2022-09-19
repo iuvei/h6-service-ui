@@ -944,6 +944,7 @@ function createQuickBetInfo() {
   var titleStr = $(".left .quickBetPanel .quickBetTitle").text();
   var betMap = {};
   var tmpNumArr = [];
+  quickBetData = []
   for (var i = 0; i < numArr.length; i++) {
     numStr = numArr.eq(i).text()
     num = parseInt(numStr);
