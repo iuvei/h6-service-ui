@@ -12,8 +12,8 @@ function getMemberMaterial(){
 					+ '<td class="betMinCell">' + obj.data[i].playMin + '</td>'
 					+ '<td class="betMaxCell">' + obj.data[i].playMax + '</td>'
 					+ '<td class="itemMaxCell">' + obj.data[i].max + '</td>'
-					+ '<td class="aCell">' + obj.data[i].returnAA + '</td>'
-					+ '<td class="bCell">' + obj.data[i].returnBA + '</td>'
+					+ '<td class="aCell">' + (obj.data[i].returnAA || 0) + '</td>'
+					+ '<td class="bCell">' + (obj.data[i].returnBA || 0) + '</td>'
 				+ '</tr>';
 		}
 		$(".systemCont").html(html);
