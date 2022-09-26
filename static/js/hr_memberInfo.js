@@ -12,7 +12,7 @@ function getMemberMaterial(){
 					+ '<div class="cell betMinCell">' + obj.data[i].playMin + '</div>'
 					+ '<div class="cell betMaxCell">' + obj.data[i].playMax + '</div>'
 					+ '<div class="cell itemMaxCell">' + obj.data[i].max + '</div>'
-					+ '<div class="cell aCell">' + (obj.data[i].returnAA || 0) + '</div>'
+					+ '<div class="cell aCell">' + obj.data[i].returnAA + '</div>'
 					+ '<div class="cell bCell">' + (obj.data[i].returnBA || 0) + '</div>'
 				+ '</div>';
 		}
