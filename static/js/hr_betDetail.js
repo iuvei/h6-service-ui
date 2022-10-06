@@ -44,6 +44,9 @@ function updateBetDetailData(){
 	for(var i = 0; i < betData.length; i++){
 		var className =  ""
 		// cancelInfo 删除线
+		if (betData[i].isDelete == 1) {
+			className = ' cancelInfo'
+		}
 		betMoneySum += Number(betData[i].betAmount)
 		recedeMoneySum += Number(betData[i].returnAmount)
 		infoHtml = '<div class="cell infoCell' + className + (betData[i].isClick === 1 ? ' clickCell ' : '') + '" title="' + betData[i].betContent + '" onclick="showLinkBetInfo(\'' + betData[i].id + '\',' + betData[i].isClick + ')">' + betData[i].betContent + '</div>';
