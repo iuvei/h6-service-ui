@@ -178,9 +178,9 @@ function UpdateRateData(data) {
         } else if (sub.creditPlayTypeName == '特码绿波') {
           rateData['1015003'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 绿波
         } else if (sub.creditPlayTypeName == '特码尾大') {
-          rateData['1016002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特尾大
+          rateData['1016001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特尾大
         } else if (sub.creditPlayTypeName == '特码尾小') {
-          rateData['1016001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特尾小
+          rateData['1016002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特尾小
         } else if (sub.creditPlayTypeName == '特码野兽') {
           rateData['1017001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 野兽
         } else if (sub.creditPlayTypeName == '特码家禽') {
