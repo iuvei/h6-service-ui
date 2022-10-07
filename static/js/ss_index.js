@@ -160,31 +160,31 @@ function UpdateRateData(data) {
     if (item.creditPlayName == '特码') { // 特码
       for (var sub of item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList) {
         if (sub.creditPlayTypeName == '特码大') {
-          rateData['1013001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特码大
+          rateData['1013001'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 特码大
         } else if (sub.creditPlayTypeName == '特码小') {
-          rateData['1013002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特码小
+          rateData['1013002'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 特码小
         } else if (sub.creditPlayTypeName == '特码单') {
-          rateData['1012001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特码单
+          rateData['1012001'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 特码单
         } else if (sub.creditPlayTypeName == '特码双') {
-          rateData['1012002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特码双
+          rateData['1012002'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 特码双
         } else if (sub.creditPlayTypeName == '特码合双') {
-          rateData['1014002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 合双
+          rateData['1014002'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 合双
         } else if (sub.creditPlayTypeName == '特码合单') {
-          rateData['1014001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 合单
+          rateData['1014001'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 合单
         } else if (sub.creditPlayTypeName == '特码红波') {
-          rateData['1015001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 红波
+          rateData['1015001'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 红波
         } else if (sub.creditPlayTypeName == '特码蓝波') {
-          rateData['1015002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 蓝波
+          rateData['1015002'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 蓝波
         } else if (sub.creditPlayTypeName == '特码绿波') {
-          rateData['1015003'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 绿波
+          rateData['1015003'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 绿波
         } else if (sub.creditPlayTypeName == '特码尾大') {
-          rateData['1016001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特尾大
+          rateData['1016001'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 特尾大
         } else if (sub.creditPlayTypeName == '特码尾小') {
-          rateData['1016002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 特尾小
+          rateData['1016002'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 特尾小
         } else if (sub.creditPlayTypeName == '特码野兽') {
-          rateData['1017001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 野兽
+          rateData['1017001'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 野兽
         } else if (sub.creditPlayTypeName == '特码家禽') {
-          rateData['1017002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId]; // 家禽
+          rateData['1017002'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId]; // 家禽
         } else if (sub.creditPlayTypeName < 10) {
           rateData['101100' + sub.creditPlayTypeName] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
         } else if (sub.creditPlayTypeName < 50) {
@@ -194,13 +194,13 @@ function UpdateRateData(data) {
     } else if (item.creditPlayName == '正码') { // 正码
       for (var sub of item.creditPlayTypeDtoList[0].creditPlayTypeInfoDtoList) {
         if (sub.creditPlayTypeName == '总单') {
-          rateData['1082001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
+          rateData['1082001'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId];
         } else if (sub.creditPlayTypeName == '总双') {
-          rateData['1082002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
+          rateData['1082002'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId];
         } else if (sub.creditPlayTypeName == '总大') {
-          rateData['1083001'] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
+          rateData['1083001'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId];
         } else if (sub.creditPlayTypeName == '总小') {
-          rateData['1083002'] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
+          rateData['1083002'] = [sub.odds, sub.odds2 || sub.odds, sub.creditPlayTypeId];
         } else if (sub.creditPlayTypeName < 10) {
           rateData['108100' + sub.creditPlayTypeName] = [sub.odds, sub.odds2, sub.creditPlayTypeId];
         } else if (sub.creditPlayTypeName < 50) {
@@ -216,23 +216,23 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName < 50) {
               rateData['10210' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合单') {
-              rateData['1022001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1022001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合双') {
-              rateData['1022002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1022002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正1大') {
-              rateData['1023001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1023001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正1小') {
-              rateData['1023002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1023002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正1单') {
-              rateData['1024001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1024001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正1双') {
-              rateData['1024002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1024002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '红波') {
-              rateData['1025001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1025001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '蓝波') {
-              rateData['1025002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1025002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '绿波') {
-              rateData['1025003'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1025003'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             }
           } else if (sub.creditPlayInfoName == '正2特') { // 正2特
             if (child.creditPlayTypeName < 10) {
@@ -240,23 +240,23 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName < 50) {
               rateData['10310' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合单') {
-              rateData['1032001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1032001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合双') {
-              rateData['1032002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1032002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正2大') {
-              rateData['1033001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1033001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正2小') {
-              rateData['1033002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1033002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正2单') {
-              rateData['1034001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1034001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正2双') {
-              rateData['1034002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1034002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '红波') {
-              rateData['1035001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1035001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '蓝波') {
-              rateData['1035002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1035002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '绿波') {
-              rateData['1035003'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1035003'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             }
           } else if (sub.creditPlayInfoName == '正3特') { // 正3特
             if (child.creditPlayTypeName < 10) {
@@ -264,23 +264,23 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName < 50) {
               rateData['10410' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合单') {
-              rateData['1042001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1042001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合双') {
-              rateData['1042002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1042002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正3大') {
-              rateData['1043001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1043001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正3小') {
-              rateData['1043002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1043002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正3单') {
-              rateData['1044001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1044001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正3双') {
-              rateData['1044002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1044002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '红波') {
-              rateData['1045001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1045001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '蓝波') {
-              rateData['1045002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1045002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '绿波') {
-              rateData['1045003'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1045003'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             }
           } else if (sub.creditPlayInfoName == '正4特') { // 正4特
             if (child.creditPlayTypeName < 10) {
@@ -288,23 +288,23 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName < 50) {
               rateData['10510' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合单') {
-              rateData['1052001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1052001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合双') {
-              rateData['1052002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1052002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正4大') {
-              rateData['1053001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1053001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正4小') {
-              rateData['1053002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1053002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正4单') {
-              rateData['1054001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1054001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正4双') {
-              rateData['1054002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1054002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '红波') {
-              rateData['1055001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1055001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '蓝波') {
-              rateData['1055002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1055002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '绿波') {
-              rateData['1055003'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1055003'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             }
           } else if (sub.creditPlayInfoName == '正5特') { // 正5特
             if (child.creditPlayTypeName < 10) {
@@ -312,23 +312,23 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName < 50) {
               rateData['10610' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合单') {
-              rateData['1062001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1062001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合双') {
-              rateData['1062002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1062002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正5大') {
-              rateData['1063001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1063001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正5小') {
-              rateData['1063002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1063002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正5单') {
-              rateData['1064001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1064001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正5双') {
-              rateData['1064002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1064002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '红波') {
-              rateData['1065001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1065001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '蓝波') {
-              rateData['1065002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1065002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '绿波') {
-              rateData['1065003'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1065003'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             }
           } else if (sub.creditPlayInfoName == '正6特') { // 正6特
             if (child.creditPlayTypeName < 10) {
@@ -336,23 +336,23 @@ function UpdateRateData(data) {
             } else if (child.creditPlayTypeName < 50) {
               rateData['10710' + child.creditPlayTypeName] = [child.odds, child.odds2, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合单') {
-              rateData['1072001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1072001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '合双') {
-              rateData['1072002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1072002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正6大') {
-              rateData['1073001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1073001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正6小') {
-              rateData['1073002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1073002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正6单') {
-              rateData['1074001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1074001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '正6双') {
-              rateData['1074002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1074002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '红波') {
-              rateData['1075001'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1075001'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '蓝波') {
-              rateData['1075002'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1075002'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             } else if (child.creditPlayTypeName == '绿波') {
-              rateData['1075003'] = [child.odds, child.odds2, child.creditPlayTypeId];
+              rateData['1075003'] = [child.odds, child.odds2 || child.odds, child.creditPlayTypeId];
             }
           }
         }
