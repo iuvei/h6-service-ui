@@ -1,7 +1,7 @@
 var httpUrlData = {                            
 	login: {name: "登录", url: "/login", server: "MarkSixGame"},
 	logOut: {name: "登出", url: "/logOut", type: 'get', server: "MarkSixGame"},
-	getVerifyCode: {name: "获取验证码", url: "http://h6-api-server.wysdjx.com/captcha/captcha.jpg?uuid=", server: "MarkSixGame"},
+	getVerifyCode: {name: "获取验证码", url: "http://h6-api-server.wysdjx.com:8888/captcha/captcha.jpg?uuid=", server: "MarkSixGame"},
 	verifyCheckCode: {name: "检查验证码", url: "/index/checkCode", type: 'get', server: "MarkSixGame"},
 	getUserInfo: {name: "检查验证码", url: "/p/user/userInfo", type: 'get', server: "MarkSixGame"},
 	listDailyLedger: {name: "账户历史查询每日总账", url: "/p/commandLog/findAccountinglog", server: "MarkSixGame"},
