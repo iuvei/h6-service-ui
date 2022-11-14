@@ -212,6 +212,16 @@ function clickOpNumBtn(index, obj){
 	$(obj).addClass("curBtn")
 	clearBet();
 	setNormalSpecialNumTab(index)
+	localStorage.setItem('creditPlayName', '正' + index)
+	window.top.lotteryData.rate.forEach(item => {
+		if (item.creditPlayId == localStorage.getItem('creditPlayId')) {
+			item.creditPlayTypeDtoList.forEach(s => {
+				if (s.creditPlayInfoName == ('正' + index + '特')) {
+					sessionStorage.setItem('creditPlayInfoId', s.creditPlayInfoId)
+				}
+			})
+		}
+	})
 	window.top.heartTime = 0;
 }
 
@@ -458,7 +468,7 @@ function updateColorTwoOdds(){
 		// if(window.top.lotteryData.pkStatus == OPEN_STATUS && window.top.otherNumCloseTime > 0) {
 		if(window.top.lotteryData.pkStatus == OPEN_STATUS) {
 			updateItemOdds($("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + (i + 1) + ")"), window.top.rateData[1111001 + i][0]);
-			$("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + (i + 1) + ")").attr('data-creditplaytypeid', window.top.rateData[1091001 + i][2]);
+			$("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + (i + 1) + ")").attr('data-creditplaytypeid', window.top.rateData[1111001 + i][2]);
 		}
 		else
 			updateItemOdds($("#colorTwoPanel .systemCont .numRow .oddsCell:eq(" + (i + 1) + ")"), -1);
